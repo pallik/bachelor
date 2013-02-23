@@ -178,7 +178,8 @@ class AttachmentsController extends AppController {
 		}
 		$users = $this->Attachment->User->find('list');
 		$types = $this->Attachment->Type->find('list');
-		$parentAttachments = $this->Attachment->ParentAttachment->find('list');
+//		$parentAttachments = $this->Attachment->ParentAttachment->find('list');
+		$parentAttachments = $this->Attachment->generateTreeList();
 		$blocks = $this->Attachment->Block->find('list');
 		$this->set(compact('users', 'types', 'parentAttachments', 'blocks'));
 	}

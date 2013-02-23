@@ -48,7 +48,8 @@ class BlocksController extends AppController {
 			}
 		}
 		$lessons = $this->Block->Lesson->find('list');
-		$this->set(compact('lessons'));
+		$attachments = $this->Block->Attachment->find('list');
+		$this->set(compact('lessons', 'attachments'));
 	}
 
 /**
@@ -74,7 +75,8 @@ class BlocksController extends AppController {
 			$this->request->data = $this->Block->find('first', $options);
 		}
 		$lessons = $this->Block->Lesson->find('list');
-		$this->set(compact('lessons'));
+		$attachments = $this->Block->Attachment->find('list');
+		$this->set(compact('lessons', 'attachments'));
 	}
 
 /**
@@ -141,7 +143,8 @@ class BlocksController extends AppController {
 			}
 		}
 		$lessons = $this->Block->Lesson->find('list');
-		$this->set(compact('lessons'));
+		$attachments = $this->Block->Attachment->find('list');
+		$this->set(compact('lessons', 'attachments'));
 	}
 
 /**
@@ -167,7 +170,8 @@ class BlocksController extends AppController {
 			$this->request->data = $this->Block->find('first', $options);
 		}
 		$lessons = $this->Block->Lesson->find('list');
-		$this->set(compact('lessons'));
+		$attachments = $this->Block->Attachment->find('list');
+		$this->set(compact('lessons', 'attachments'));
 	}
 
 /**

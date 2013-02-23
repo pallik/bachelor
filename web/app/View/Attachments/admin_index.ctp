@@ -20,7 +20,7 @@
 	<tr>
 		<td><?php echo h($attachment['Attachment']['id']); ?>&nbsp;</td>
 		<td>
-			<?php echo $this->Html->link($attachment['User']['id'], array('controller' => 'users', 'action' => 'view', $attachment['User']['id'])); ?>
+			<?php echo $this->Html->link($attachment['User']['username'], array('controller' => 'users', 'action' => 'view', $attachment['User']['id'])); ?>
 		</td>
 		<td>
 			<?php echo $this->Html->link($attachment['Type']['name'], array('controller' => 'types', 'action' => 'view', $attachment['Type']['id'])); ?>

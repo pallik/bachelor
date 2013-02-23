@@ -14,7 +14,7 @@
 			<?php echo $this->Html->link($attachmentsBlock['Attachment']['name'], array('controller' => 'attachments', 'action' => 'view', $attachmentsBlock['Attachment']['id'])); ?>
 		</td>
 		<td>
-			<?php echo $this->Html->link($attachmentsBlock['Block']['id'], array('controller' => 'blocks', 'action' => 'view', $attachmentsBlock['Block']['id'])); ?>
+			<?php echo $this->Html->link($attachmentsBlock['Block']['target'], array('controller' => 'blocks', 'action' => 'view', $attachmentsBlock['Block']['id'])); ?>
 		</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $attachmentsBlock['AttachmentsBlock']['id'])); ?>

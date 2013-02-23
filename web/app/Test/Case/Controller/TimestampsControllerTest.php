@@ -19,8 +19,8 @@ class TimestampsControllerTest extends ControllerTestCase {
 		'app.course',
 		'app.lesson',
 		'app.block',
-		'app.type',
-		'app.attachments_block'
+		'app.attachments_block',
+		'app.type'
 	);
 
 /**

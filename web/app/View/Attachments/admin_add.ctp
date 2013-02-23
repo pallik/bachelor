@@ -1,9 +1,3 @@
-<?php
-/**
- * @var $this View
- */
-?>
-
 <div class="attachments form">
 <?php echo $this->Form->create('Attachment'); ?>
 	<fieldset>
@@ -18,8 +12,6 @@
 		echo $this->Form->input('name');
 		echo $this->Form->input('url');
 		echo $this->Form->input('text');
-//		echo $this->Form->input('lft');
-//		echo $this->Form->input('rght');
 		echo $this->Form->input('is_deleted');
 		echo $this->Form->input('Block');
 	?>

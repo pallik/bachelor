@@ -12,13 +12,19 @@ App::uses('AppModel', 'Model');
  */
 class Attachment extends AppModel {
 
+/**
+ * Display field
+ *
+ * @var string
+ */
+	public $displayField = 'name';
+
 
 /**
  * Model behaviour
  * @var array
  */
 	public $actsAs = array('Tree');
-
 
 /**
  * Validation rules
@@ -29,9 +35,17 @@ class Attachment extends AppModel {
 		'user_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
-//				'message' => 'Your custom message here',
-				'allowEmpty' => false,
-				'required' => true,
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+			'notempty' => array(
+				'rule' => array('notempty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
@@ -40,8 +54,26 @@ class Attachment extends AppModel {
 			'numeric' => array(
 				'rule' => array('numeric'),
 				//'message' => 'Your custom message here',
-				'allowEmpty' => false,
-				'required' => true,
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+			'notempty' => array(
+				'rule' => array('notempty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'parent_id' => array(
+			'numeric' => array(
+				'rule' => array('numeric'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
@@ -49,6 +81,16 @@ class Attachment extends AppModel {
 		'name' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'is_deleted' => array(
+			'boolean' => array(
+				'rule' => array('boolean'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,

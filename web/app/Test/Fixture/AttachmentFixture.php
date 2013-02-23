@@ -48,8 +48,8 @@ class AttachmentFixture extends CakeTestFixture {
 			'lft' => 1,
 			'rght' => 1,
 			'is_deleted' => 1,
-			'created' => '2013-02-21 16:44:07',
-			'modified' => '2013-02-21 16:44:07'
+			'created' => '2013-02-23 18:47:07',
+			'modified' => '2013-02-23 18:47:07'
 		),
 	);
 

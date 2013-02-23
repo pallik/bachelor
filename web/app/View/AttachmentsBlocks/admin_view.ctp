@@ -13,7 +13,7 @@
 		</dd>
 		<dt><?php echo __('Block'); ?></dt>
 		<dd>
-			<?php echo $this->Html->link($attachmentsBlock['Block']['id'], array('controller' => 'blocks', 'action' => 'view', $attachmentsBlock['Block']['id'])); ?>
+			<?php echo $this->Html->link($attachmentsBlock['Block']['target'], array('controller' => 'blocks', 'action' => 'view', $attachmentsBlock['Block']['id'])); ?>
 			&nbsp;
 		</dd>
 	</dl>

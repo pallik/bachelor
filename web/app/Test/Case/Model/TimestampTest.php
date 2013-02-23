@@ -19,8 +19,8 @@ class TimestampTest extends CakeTestCase {
 		'app.course',
 		'app.lesson',
 		'app.block',
-		'app.type',
-		'app.attachments_block'
+		'app.attachments_block',
+		'app.type'
 	);
 
 /**

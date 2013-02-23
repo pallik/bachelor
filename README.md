@@ -1,4 +1,4 @@
 bachelor
 ========
 
-bachelor thesistest
+bachelor thesis

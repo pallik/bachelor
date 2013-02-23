@@ -16,7 +16,7 @@
 	<tr>
 		<td><?php echo h($course['Course']['id']); ?>&nbsp;</td>
 		<td>
-			<?php echo $this->Html->link($course['User']['id'], array('controller' => 'users', 'action' => 'view', $course['User']['id'])); ?>
+			<?php echo $this->Html->link($course['User']['username'], array('controller' => 'users', 'action' => 'view', $course['User']['id'])); ?>
 		</td>
 		<td><?php echo h($course['Course']['name']); ?>&nbsp;</td>
 		<td><?php echo h($course['Course']['description']); ?>&nbsp;</td>
