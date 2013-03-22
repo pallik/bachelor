@@ -7,7 +7,7 @@
 		echo $this->Form->input('name');
 		echo $this->Form->input('description');
 		echo $this->Form->input('year');
-		echo $this->Form->input('is_deleted');
+		echo $this->Form->input('status');
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>

@@ -11,6 +11,11 @@
 			<?php echo $this->Html->link($lesson['Course']['name'], array('controller' => 'courses', 'action' => 'view', $lesson['Course']['id'])); ?>
 			&nbsp;
 		</dd>
+		<dt><?php echo __('Attachment'); ?></dt>
+		<dd>
+			<?php echo $this->Html->link($lesson['Attachment']['name'], array('controller' => 'attachments', 'action' => 'view', $lesson['Attachment']['id'])); ?>
+			&nbsp;
+		</dd>
 		<dt><?php echo __('Name'); ?></dt>
 		<dd>
 			<?php echo h($lesson['Lesson']['name']); ?>
@@ -21,9 +26,9 @@
 			<?php echo h($lesson['Lesson']['description']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('Is Deleted'); ?></dt>
+		<dt><?php echo __('Status'); ?></dt>
 		<dd>
-			<?php echo h($lesson['Lesson']['is_deleted']); ?>
+			<?php echo h($lesson['Lesson']['status']); ?>
 			&nbsp;
 		</dd>
 		<dt><?php echo __('Created'); ?></dt>
@@ -36,6 +41,7 @@
 			<?php echo h($lesson['Lesson']['modified']); ?>
 			&nbsp;
 		</dd>
+		<?php echo $this->Html->link(__('Show lesson'), array('admin' => false, 'action' => 'view', $lesson['Lesson']['id'])); ?>
 	</dl>
 </div>
 <div class="actions">
@@ -47,6 +53,8 @@
 		<li><?php echo $this->Html->link(__('New Lesson'), array('action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Courses'), array('controller' => 'courses', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Course'), array('controller' => 'courses', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Attachments'), array('controller' => 'attachments', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Attachment'), array('controller' => 'attachments', 'action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Blocks'), array('controller' => 'blocks', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Block'), array('controller' => 'blocks', 'action' => 'add')); ?> </li>
 	</ul>
@@ -59,8 +67,9 @@
 		<th><?php echo __('Id'); ?></th>
 		<th><?php echo __('Lesson Id'); ?></th>
 		<th><?php echo __('Target'); ?></th>
-		<th><?php echo __('Position'); ?></th>
-		<th><?php echo __('Is Deleted'); ?></th>
+		<th><?php echo __('Style'); ?></th>
+		<th><?php echo __('Status'); ?></th>
+		<th><?php echo __('Master'); ?></th>
 		<th class="actions"><?php echo __('Actions'); ?></th>
 	</tr>
 	<?php
@@ -70,8 +79,9 @@
 			<td><?php echo $block['id']; ?></td>
 			<td><?php echo $block['lesson_id']; ?></td>
 			<td><?php echo $block['target']; ?></td>
-			<td><?php echo $block['position']; ?></td>
-			<td><?php echo $block['is_deleted']; ?></td>
+			<td><?php echo $block['style']; ?></td>
+			<td><?php echo $block['status']; ?></td>
+			<td><?php echo $block['master']; ?></td>
 			<td class="actions">
 				<?php echo $this->Html->link(__('View'), array('controller' => 'blocks', 'action' => 'view', $block['id'])); ?>
 				<?php echo $this->Html->link(__('Edit'), array('controller' => 'blocks', 'action' => 'edit', $block['id'])); ?>

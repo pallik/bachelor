@@ -16,14 +16,19 @@
 			<?php echo h($block['Block']['target']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('Position'); ?></dt>
+		<dt><?php echo __('Style'); ?></dt>
 		<dd>
-			<?php echo h($block['Block']['position']); ?>
+			<?php echo h($block['Block']['style']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('Is Deleted'); ?></dt>
+		<dt><?php echo __('Status'); ?></dt>
 		<dd>
-			<?php echo h($block['Block']['is_deleted']); ?>
+			<?php echo h($block['Block']['status']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Master'); ?></dt>
+		<dd>
+			<?php echo h($block['Block']['master']); ?>
 			&nbsp;
 		</dd>
 	</dl>
@@ -37,49 +42,37 @@
 		<li><?php echo $this->Html->link(__('New Block'), array('action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Lessons'), array('controller' => 'lessons', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Lesson'), array('controller' => 'lessons', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Attachments'), array('controller' => 'attachments', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Attachment'), array('controller' => 'attachments', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Timestamps'), array('controller' => 'timestamps', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Timestamp'), array('controller' => 'timestamps', 'action' => 'add')); ?> </li>
 	</ul>
 </div>
 <div class="related">
-	<h3><?php echo __('Related Attachments'); ?></h3>
-	<?php if (!empty($block['Attachment'])): ?>
+	<h3><?php echo __('Related Timestamps'); ?></h3>
+	<?php if (!empty($block['Timestamp'])): ?>
 	<table cellpadding = "0" cellspacing = "0">
 	<tr>
 		<th><?php echo __('Id'); ?></th>
-		<th><?php echo __('User Id'); ?></th>
-		<th><?php echo __('Type Id'); ?></th>
-		<th><?php echo __('Parent Id'); ?></th>
-		<th><?php echo __('Name'); ?></th>
-		<th><?php echo __('Url'); ?></th>
-		<th><?php echo __('Text'); ?></th>
-		<th><?php echo __('Lft'); ?></th>
-		<th><?php echo __('Rght'); ?></th>
-		<th><?php echo __('Is Deleted'); ?></th>
-		<th><?php echo __('Created'); ?></th>
-		<th><?php echo __('Modified'); ?></th>
+		<th><?php echo __('Attachment Id'); ?></th>
+		<th><?php echo __('Block Id'); ?></th>
+		<th><?php echo __('Chapter'); ?></th>
+		<th><?php echo __('Start'); ?></th>
+		<th><?php echo __('End'); ?></th>
 		<th class="actions"><?php echo __('Actions'); ?></th>
 	</tr>
 	<?php
 		$i = 0;
-		foreach ($block['Attachment'] as $attachment): ?>
+		foreach ($block['Timestamp'] as $timestamp): ?>
 		<tr>
-			<td><?php echo $attachment['id']; ?></td>
-			<td><?php echo $attachment['user_id']; ?></td>
-			<td><?php echo $attachment['type_id']; ?></td>
-			<td><?php echo $attachment['parent_id']; ?></td>
-			<td><?php echo $attachment['name']; ?></td>
-			<td><?php echo $attachment['url']; ?></td>
-			<td><?php echo $attachment['text']; ?></td>
-			<td><?php echo $attachment['lft']; ?></td>
-			<td><?php echo $attachment['rght']; ?></td>
-			<td><?php echo $attachment['is_deleted']; ?></td>
-			<td><?php echo $attachment['created']; ?></td>
-			<td><?php echo $attachment['modified']; ?></td>
+			<td><?php echo $timestamp['id']; ?></td>
+			<td><?php echo $timestamp['attachment_id']; ?></td>
+			<td><?php echo $timestamp['block_id']; ?></td>
+			<td><?php echo $timestamp['chapter']; ?></td>
+			<td><?php echo $timestamp['start']; ?></td>
+			<td><?php echo $timestamp['end']; ?></td>
 			<td class="actions">
-				<?php echo $this->Html->link(__('View'), array('controller' => 'attachments', 'action' => 'view', $attachment['id'])); ?>
-				<?php echo $this->Html->link(__('Edit'), array('controller' => 'attachments', 'action' => 'edit', $attachment['id'])); ?>
-				<?php echo $this->Form->postLink(__('Delete'), array('controller' => 'attachments', 'action' => 'delete', $attachment['id']), null, __('Are you sure you want to delete # %s?', $attachment['id'])); ?>
+				<?php echo $this->Html->link(__('View'), array('controller' => 'timestamps', 'action' => 'view', $timestamp['id'])); ?>
+				<?php echo $this->Html->link(__('Edit'), array('controller' => 'timestamps', 'action' => 'edit', $timestamp['id'])); ?>
+				<?php echo $this->Form->postLink(__('Delete'), array('controller' => 'timestamps', 'action' => 'delete', $timestamp['id']), null, __('Are you sure you want to delete # %s?', $timestamp['id'])); ?>
 			</td>
 		</tr>
 	<?php endforeach; ?>
@@ -88,7 +81,7 @@
 
 	<div class="actions">
 		<ul>
-			<li><?php echo $this->Html->link(__('New Attachment'), array('controller' => 'attachments', 'action' => 'add')); ?> </li>
+			<li><?php echo $this->Html->link(__('New Timestamp'), array('controller' => 'timestamps', 'action' => 'add')); ?> </li>
 		</ul>
 	</div>
 </div>

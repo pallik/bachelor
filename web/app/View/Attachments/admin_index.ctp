@@ -11,7 +11,7 @@
 			<th><?php echo $this->Paginator->sort('text'); ?></th>
 			<th><?php echo $this->Paginator->sort('lft'); ?></th>
 			<th><?php echo $this->Paginator->sort('rght'); ?></th>
-			<th><?php echo $this->Paginator->sort('is_deleted'); ?></th>
+			<th><?php echo $this->Paginator->sort('status'); ?></th>
 			<th><?php echo $this->Paginator->sort('created'); ?></th>
 			<th><?php echo $this->Paginator->sort('modified'); ?></th>
 			<th class="actions"><?php echo __('Actions'); ?></th>
@@ -20,20 +20,18 @@
 	<tr>
 		<td><?php echo h($attachment['Attachment']['id']); ?>&nbsp;</td>
 		<td>
-			<?php echo $this->Html->link($attachment['User']['username'], array('controller' => 'users', 'action' => 'view', $attachment['User']['id'])); ?>
+			<?php echo $this->Html->link($attachment['User']['id'], array('controller' => 'users', 'action' => 'view', $attachment['User']['id'])); ?>
 		</td>
 		<td>
 			<?php echo $this->Html->link($attachment['Type']['name'], array('controller' => 'types', 'action' => 'view', $attachment['Type']['id'])); ?>
 		</td>
-		<td>
-			<?php echo $this->Html->link($attachment['ParentAttachment']['name'], array('controller' => 'attachments', 'action' => 'view', $attachment['ParentAttachment']['id'])); ?>
-		</td>
+		<td><?php echo h($attachment['Attachment']['parent_id']); ?>&nbsp;</td>
 		<td><?php echo h($attachment['Attachment']['name']); ?>&nbsp;</td>
 		<td><?php echo h($attachment['Attachment']['url']); ?>&nbsp;</td>
 		<td><?php echo h($attachment['Attachment']['text']); ?>&nbsp;</td>
 		<td><?php echo h($attachment['Attachment']['lft']); ?>&nbsp;</td>
 		<td><?php echo h($attachment['Attachment']['rght']); ?>&nbsp;</td>
-		<td><?php echo h($attachment['Attachment']['is_deleted']); ?>&nbsp;</td>
+		<td><?php echo h($attachment['Attachment']['status']); ?>&nbsp;</td>
 		<td><?php echo h($attachment['Attachment']['created']); ?>&nbsp;</td>
 		<td><?php echo h($attachment['Attachment']['modified']); ?>&nbsp;</td>
 		<td class="actions">
@@ -66,11 +64,9 @@
 		<li><?php echo $this->Html->link(__('New User'), array('controller' => 'users', 'action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Types'), array('controller' => 'types', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Type'), array('controller' => 'types', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Attachments'), array('controller' => 'attachments', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Parent Attachment'), array('controller' => 'attachments', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Lessons'), array('controller' => 'lessons', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Lesson'), array('controller' => 'lessons', 'action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Timestamps'), array('controller' => 'timestamps', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Timestamp'), array('controller' => 'timestamps', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Blocks'), array('controller' => 'blocks', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Block'), array('controller' => 'blocks', 'action' => 'add')); ?> </li>
 	</ul>
 </div>

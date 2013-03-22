@@ -19,8 +19,7 @@ class LessonTest extends CakeTestCase {
 		'app.attachment',
 		'app.type',
 		'app.timestamp',
-		'app.block',
-		'app.attachments_block'
+		'app.block'
 	);
 
 /**

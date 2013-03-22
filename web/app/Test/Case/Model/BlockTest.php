@@ -15,12 +15,7 @@ class BlockTest extends CakeTestCase {
 	public $fixtures = array(
 		'app.block',
 		'app.lesson',
-		'app.course',
-		'app.user',
-		'app.attachment',
-		'app.type',
-		'app.timestamp',
-		'app.attachments_block'
+		'app.timestamp'
 	);
 
 /**

@@ -8,13 +8,12 @@
 		echo $this->Form->input('type_id');
 		echo $this->Form->input('parent_id', array(
 			'options' => $parentAttachments,
-			'empty' => __('Choose one')
+			'empty' => ''
 		));
 		echo $this->Form->input('name');
 		echo $this->Form->input('url');
 		echo $this->Form->input('text');
-		echo $this->Form->input('is_deleted');
-		echo $this->Form->input('Block');
+		echo $this->Form->input('status');
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>
@@ -29,11 +28,9 @@
 		<li><?php echo $this->Html->link(__('New User'), array('controller' => 'users', 'action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Types'), array('controller' => 'types', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Type'), array('controller' => 'types', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Attachments'), array('controller' => 'attachments', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Parent Attachment'), array('controller' => 'attachments', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Lessons'), array('controller' => 'lessons', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Lesson'), array('controller' => 'lessons', 'action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Timestamps'), array('controller' => 'timestamps', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Timestamp'), array('controller' => 'timestamps', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Blocks'), array('controller' => 'blocks', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Block'), array('controller' => 'blocks', 'action' => 'add')); ?> </li>
 	</ul>
 </div>

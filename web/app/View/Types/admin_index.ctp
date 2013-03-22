@@ -4,14 +4,14 @@
 	<tr>
 			<th><?php echo $this->Paginator->sort('id'); ?></th>
 			<th><?php echo $this->Paginator->sort('name'); ?></th>
-			<th><?php echo $this->Paginator->sort('is_deleted'); ?></th>
+			<th><?php echo $this->Paginator->sort('status'); ?></th>
 			<th class="actions"><?php echo __('Actions'); ?></th>
 	</tr>
 	<?php foreach ($types as $type): ?>
 	<tr>
 		<td><?php echo h($type['Type']['id']); ?>&nbsp;</td>
 		<td><?php echo h($type['Type']['name']); ?>&nbsp;</td>
-		<td><?php echo h($type['Type']['is_deleted']); ?>&nbsp;</td>
+		<td><?php echo h($type['Type']['status']); ?>&nbsp;</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $type['Type']['id'])); ?>
 			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $type['Type']['id'])); ?>

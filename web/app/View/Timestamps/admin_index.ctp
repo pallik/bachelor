@@ -4,6 +4,8 @@
 	<tr>
 			<th><?php echo $this->Paginator->sort('id'); ?></th>
 			<th><?php echo $this->Paginator->sort('attachment_id'); ?></th>
+			<th><?php echo $this->Paginator->sort('block_id'); ?></th>
+			<th><?php echo $this->Paginator->sort('chapter'); ?></th>
 			<th><?php echo $this->Paginator->sort('start'); ?></th>
 			<th><?php echo $this->Paginator->sort('end'); ?></th>
 			<th class="actions"><?php echo __('Actions'); ?></th>
@@ -14,6 +16,10 @@
 		<td>
 			<?php echo $this->Html->link($timestamp['Attachment']['name'], array('controller' => 'attachments', 'action' => 'view', $timestamp['Attachment']['id'])); ?>
 		</td>
+		<td>
+			<?php echo $this->Html->link($timestamp['Block']['target'], array('controller' => 'blocks', 'action' => 'view', $timestamp['Block']['id'])); ?>
+		</td>
+		<td><?php echo h($timestamp['Timestamp']['chapter']); ?>&nbsp;</td>
 		<td><?php echo h($timestamp['Timestamp']['start']); ?>&nbsp;</td>
 		<td><?php echo h($timestamp['Timestamp']['end']); ?>&nbsp;</td>
 		<td class="actions">
@@ -44,5 +50,7 @@
 		<li><?php echo $this->Html->link(__('New Timestamp'), array('action' => 'add')); ?></li>
 		<li><?php echo $this->Html->link(__('List Attachments'), array('controller' => 'attachments', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Attachment'), array('controller' => 'attachments', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Blocks'), array('controller' => 'blocks', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Block'), array('controller' => 'blocks', 'action' => 'add')); ?> </li>
 	</ul>
 </div>

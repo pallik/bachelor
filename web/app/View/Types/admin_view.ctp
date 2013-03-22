@@ -11,9 +11,9 @@
 			<?php echo h($type['Type']['name']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('Is Deleted'); ?></dt>
+		<dt><?php echo __('Status'); ?></dt>
 		<dd>
-			<?php echo h($type['Type']['is_deleted']); ?>
+			<?php echo h($type['Type']['status']); ?>
 			&nbsp;
 		</dd>
 	</dl>
@@ -43,7 +43,7 @@
 		<th><?php echo __('Text'); ?></th>
 		<th><?php echo __('Lft'); ?></th>
 		<th><?php echo __('Rght'); ?></th>
-		<th><?php echo __('Is Deleted'); ?></th>
+		<th><?php echo __('Status'); ?></th>
 		<th><?php echo __('Created'); ?></th>
 		<th><?php echo __('Modified'); ?></th>
 		<th class="actions"><?php echo __('Actions'); ?></th>
@@ -61,7 +61,7 @@
 			<td><?php echo $attachment['text']; ?></td>
 			<td><?php echo $attachment['lft']; ?></td>
 			<td><?php echo $attachment['rght']; ?></td>
-			<td><?php echo $attachment['is_deleted']; ?></td>
+			<td><?php echo $attachment['status']; ?></td>
 			<td><?php echo $attachment['created']; ?></td>
 			<td><?php echo $attachment['modified']; ?></td>
 			<td class="actions">

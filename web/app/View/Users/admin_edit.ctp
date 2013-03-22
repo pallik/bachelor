@@ -6,7 +6,7 @@
 		echo $this->Form->input('id');
 		echo $this->Form->input('username');
 		echo $this->Form->input('password');
-		echo $this->Form->input('is_deleted');
+		echo $this->Form->input('status');
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>

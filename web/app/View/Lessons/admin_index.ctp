@@ -4,9 +4,10 @@
 	<tr>
 			<th><?php echo $this->Paginator->sort('id'); ?></th>
 			<th><?php echo $this->Paginator->sort('course_id'); ?></th>
+			<th><?php echo $this->Paginator->sort('attachment_id'); ?></th>
 			<th><?php echo $this->Paginator->sort('name'); ?></th>
 			<th><?php echo $this->Paginator->sort('description'); ?></th>
-			<th><?php echo $this->Paginator->sort('is_deleted'); ?></th>
+			<th><?php echo $this->Paginator->sort('status'); ?></th>
 			<th><?php echo $this->Paginator->sort('created'); ?></th>
 			<th><?php echo $this->Paginator->sort('modified'); ?></th>
 			<th class="actions"><?php echo __('Actions'); ?></th>
@@ -17,9 +18,12 @@
 		<td>
 			<?php echo $this->Html->link($lesson['Course']['name'], array('controller' => 'courses', 'action' => 'view', $lesson['Course']['id'])); ?>
 		</td>
+		<td>
+			<?php echo $this->Html->link($lesson['Attachment']['name'], array('controller' => 'attachments', 'action' => 'view', $lesson['Attachment']['id'])); ?>
+		</td>
 		<td><?php echo h($lesson['Lesson']['name']); ?>&nbsp;</td>
 		<td><?php echo h($lesson['Lesson']['description']); ?>&nbsp;</td>
-		<td><?php echo h($lesson['Lesson']['is_deleted']); ?>&nbsp;</td>
+		<td><?php echo h($lesson['Lesson']['status']); ?>&nbsp;</td>
 		<td><?php echo h($lesson['Lesson']['created']); ?>&nbsp;</td>
 		<td><?php echo h($lesson['Lesson']['modified']); ?>&nbsp;</td>
 		<td class="actions">
@@ -50,6 +54,8 @@
 		<li><?php echo $this->Html->link(__('New Lesson'), array('action' => 'add')); ?></li>
 		<li><?php echo $this->Html->link(__('List Courses'), array('controller' => 'courses', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Course'), array('controller' => 'courses', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Attachments'), array('controller' => 'attachments', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Attachment'), array('controller' => 'attachments', 'action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Blocks'), array('controller' => 'blocks', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Block'), array('controller' => 'blocks', 'action' => 'add')); ?> </li>
 	</ul>

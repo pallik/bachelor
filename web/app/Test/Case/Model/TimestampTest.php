@@ -16,11 +16,10 @@ class TimestampTest extends CakeTestCase {
 		'app.timestamp',
 		'app.attachment',
 		'app.user',
-		'app.course',
+		'app.type',
 		'app.lesson',
-		'app.block',
-		'app.attachments_block',
-		'app.type'
+		'app.course',
+		'app.block'
 	);
 
 /**

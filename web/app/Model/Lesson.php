@@ -4,16 +4,10 @@ App::uses('AppModel', 'Model');
  * Lesson Model
  *
  * @property Course $Course
+ * @property Attachment $Attachment
  * @property Block $Block
  */
 class Lesson extends AppModel {
-
-/**
- * Display field
- *
- * @var string
- */
-	public $displayField = 'name';
 
 /**
  * Validation rules
@@ -30,8 +24,10 @@ class Lesson extends AppModel {
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
-			'notempty' => array(
-				'rule' => array('notempty'),
+		),
+		'attachment_id' => array(
+			'numeric' => array(
+				'rule' => array('numeric'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -49,7 +45,7 @@ class Lesson extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'is_deleted' => array(
+		'status' => array(
 			'boolean' => array(
 				'rule' => array('boolean'),
 				//'message' => 'Your custom message here',
@@ -72,6 +68,13 @@ class Lesson extends AppModel {
 		'Course' => array(
 			'className' => 'Course',
 			'foreignKey' => 'course_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
+		'Attachment' => array(
+			'className' => 'Attachment',
+			'foreignKey' => 'attachment_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''

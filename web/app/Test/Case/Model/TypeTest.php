@@ -16,10 +16,9 @@ class TypeTest extends CakeTestCase {
 		'app.type',
 		'app.attachment',
 		'app.user',
-		'app.course',
 		'app.lesson',
+		'app.course',
 		'app.block',
-		'app.attachments_block',
 		'app.timestamp'
 	);
 

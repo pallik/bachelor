@@ -13,7 +13,7 @@ class TypeFixture extends CakeTestFixture {
 	public $fields = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary'),
 		'name' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 45, 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'),
-		'is_deleted' => array('type' => 'boolean', 'null' => true, 'default' => '0'),
+		'status' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
 		'indexes' => array(
 			'PRIMARY' => array('column' => 'id', 'unique' => 1)
 		),
@@ -29,7 +29,7 @@ class TypeFixture extends CakeTestFixture {
 		array(
 			'id' => 1,
 			'name' => 'Lorem ipsum dolor sit amet',
-			'is_deleted' => 1
+			'status' => 1
 		),
 	);
 

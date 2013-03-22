@@ -14,7 +14,7 @@ class UserFixture extends CakeTestFixture {
 		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary'),
 		'username' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 50, 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'),
 		'password' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 50, 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'),
-		'is_deleted' => array('type' => 'boolean', 'null' => true, 'default' => '0'),
+		'status' => array('type' => 'boolean', 'null' => false, 'default' => '1'),
 		'created' => array('type' => 'datetime', 'null' => false, 'default' => null),
 		'modified' => array('type' => 'datetime', 'null' => false, 'default' => null),
 		'indexes' => array(
@@ -33,9 +33,9 @@ class UserFixture extends CakeTestFixture {
 			'id' => 1,
 			'username' => 'Lorem ipsum dolor sit amet',
 			'password' => 'Lorem ipsum dolor sit amet',
-			'is_deleted' => 1,
-			'created' => '2013-02-23 20:54:29',
-			'modified' => '2013-02-23 20:54:29'
+			'status' => 1,
+			'created' => '2013-03-12 17:30:31',
+			'modified' => '2013-03-12 17:30:31'
 		),
 	);
 

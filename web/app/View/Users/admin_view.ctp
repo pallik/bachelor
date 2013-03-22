@@ -16,9 +16,9 @@
 			<?php echo h($user['User']['password']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('Is Deleted'); ?></dt>
+		<dt><?php echo __('Status'); ?></dt>
 		<dd>
-			<?php echo h($user['User']['is_deleted']); ?>
+			<?php echo h($user['User']['status']); ?>
 			&nbsp;
 		</dd>
 		<dt><?php echo __('Created'); ?></dt>
@@ -60,7 +60,7 @@
 		<th><?php echo __('Text'); ?></th>
 		<th><?php echo __('Lft'); ?></th>
 		<th><?php echo __('Rght'); ?></th>
-		<th><?php echo __('Is Deleted'); ?></th>
+		<th><?php echo __('Status'); ?></th>
 		<th><?php echo __('Created'); ?></th>
 		<th><?php echo __('Modified'); ?></th>
 		<th class="actions"><?php echo __('Actions'); ?></th>
@@ -78,7 +78,7 @@
 			<td><?php echo $attachment['text']; ?></td>
 			<td><?php echo $attachment['lft']; ?></td>
 			<td><?php echo $attachment['rght']; ?></td>
-			<td><?php echo $attachment['is_deleted']; ?></td>
+			<td><?php echo $attachment['status']; ?></td>
 			<td><?php echo $attachment['created']; ?></td>
 			<td><?php echo $attachment['modified']; ?></td>
 			<td class="actions">
@@ -107,7 +107,7 @@
 		<th><?php echo __('Name'); ?></th>
 		<th><?php echo __('Description'); ?></th>
 		<th><?php echo __('Year'); ?></th>
-		<th><?php echo __('Is Deleted'); ?></th>
+		<th><?php echo __('Status'); ?></th>
 		<th><?php echo __('Created'); ?></th>
 		<th><?php echo __('Modified'); ?></th>
 		<th class="actions"><?php echo __('Actions'); ?></th>
@@ -121,7 +121,7 @@
 			<td><?php echo $course['name']; ?></td>
 			<td><?php echo $course['description']; ?></td>
 			<td><?php echo $course['year']; ?></td>
-			<td><?php echo $course['is_deleted']; ?></td>
+			<td><?php echo $course['status']; ?></td>
 			<td><?php echo $course['created']; ?></td>
 			<td><?php echo $course['modified']; ?></td>
 			<td class="actions">

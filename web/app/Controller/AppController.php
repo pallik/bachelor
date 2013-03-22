@@ -39,10 +39,50 @@ App::uses('Controller', 'Controller');
  */
 class AppController extends Controller {
 
+	/**
+	 * Components
+	 *
+	 * @var array
+	 */
 	public $components = array(
 		'DebugKit.Toolbar',
 		'Session',
 		'RequestHandler'
 	);
+
+	/**
+	 * Helpers
+	 *
+	 * @var array
+	 * @access public
+	 */
+	public $helpers = array(
+		'Html',
+		'Form',
+		'Session',
+		'Text',
+		'Js',
+		'Time',
+		'Layout',
+//		'Paginator'
+	);
+
+	/**
+	 * Using Twig template system
+	 *
+	 * @var string
+	 */
+	public $viewClass = 'TwigView.Twig';
+
+	/**
+	 * before filter
+ 	 */
+	public function beforeFilter() {
+		parent::beforeFilter();
+
+		if ($this->request->is('ajax')) {
+			$this->layout = 'ajax';
+		}
+	}
 
 }

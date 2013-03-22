@@ -5,9 +5,9 @@
 	<?php
 		echo $this->Form->input('lesson_id');
 		echo $this->Form->input('target');
-		echo $this->Form->input('position');
-		echo $this->Form->input('is_deleted');
-		echo $this->Form->input('Attachment');
+		echo $this->Form->input('style');
+		echo $this->Form->input('status');
+		echo $this->Form->input('master');
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>
@@ -19,7 +19,7 @@
 		<li><?php echo $this->Html->link(__('List Blocks'), array('action' => 'index')); ?></li>
 		<li><?php echo $this->Html->link(__('List Lessons'), array('controller' => 'lessons', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Lesson'), array('controller' => 'lessons', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Attachments'), array('controller' => 'attachments', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Attachment'), array('controller' => 'attachments', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Timestamps'), array('controller' => 'timestamps', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Timestamp'), array('controller' => 'timestamps', 'action' => 'add')); ?> </li>
 	</ul>
 </div>

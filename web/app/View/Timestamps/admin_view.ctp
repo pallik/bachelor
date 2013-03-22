@@ -11,6 +11,16 @@
 			<?php echo $this->Html->link($timestamp['Attachment']['name'], array('controller' => 'attachments', 'action' => 'view', $timestamp['Attachment']['id'])); ?>
 			&nbsp;
 		</dd>
+		<dt><?php echo __('Block'); ?></dt>
+		<dd>
+			<?php echo $this->Html->link($timestamp['Block']['target'], array('controller' => 'blocks', 'action' => 'view', $timestamp['Block']['id'])); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Chapter'); ?></dt>
+		<dd>
+			<?php echo h($timestamp['Timestamp']['chapter']); ?>
+			&nbsp;
+		</dd>
 		<dt><?php echo __('Start'); ?></dt>
 		<dd>
 			<?php echo h($timestamp['Timestamp']['start']); ?>
@@ -32,5 +42,7 @@
 		<li><?php echo $this->Html->link(__('New Timestamp'), array('action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Attachments'), array('controller' => 'attachments', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Attachment'), array('controller' => 'attachments', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Blocks'), array('controller' => 'blocks', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Block'), array('controller' => 'blocks', 'action' => 'add')); ?> </li>
 	</ul>
 </div>

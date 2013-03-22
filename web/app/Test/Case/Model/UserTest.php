@@ -16,11 +16,10 @@ class UserTest extends CakeTestCase {
 		'app.user',
 		'app.attachment',
 		'app.type',
-		'app.timestamp',
-		'app.block',
 		'app.lesson',
 		'app.course',
-		'app.attachments_block'
+		'app.block',
+		'app.timestamp'
 	);
 
 /**

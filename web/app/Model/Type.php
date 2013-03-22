@@ -8,13 +8,6 @@ App::uses('AppModel', 'Model');
 class Type extends AppModel {
 
 /**
- * Display field
- *
- * @var string
- */
-	public $displayField = 'name';
-
-/**
  * Validation rules
  *
  * @var array
@@ -30,7 +23,7 @@ class Type extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'is_deleted' => array(
+		'status' => array(
 			'boolean' => array(
 				'rule' => array('boolean'),
 				//'message' => 'Your custom message here',

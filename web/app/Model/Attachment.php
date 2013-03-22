@@ -5,25 +5,16 @@ App::uses('AppModel', 'Model');
  *
  * @property User $User
  * @property Type $Type
- * @property Attachment $ParentAttachment
- * @property Attachment $ChildAttachment
+ * @property Lesson $Lesson
  * @property Timestamp $Timestamp
- * @property Block $Block
  */
 class Attachment extends AppModel {
 
-/**
- * Display field
- *
- * @var string
- */
-	public $displayField = 'name';
-
-
-/**
- * Model behaviour
- * @var array
- */
+	/**
+	 * Model behaviuors
+	 *
+	 * @var array
+	 */
 	public $actsAs = array('Tree');
 
 /**
@@ -41,34 +32,8 @@ class Attachment extends AppModel {
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
-			'notempty' => array(
-				'rule' => array('notempty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
 		),
 		'type_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-			'notempty' => array(
-				'rule' => array('notempty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'parent_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
 				//'message' => 'Your custom message here',
@@ -88,7 +53,7 @@ class Attachment extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'is_deleted' => array(
+		'status' => array(
 			'boolean' => array(
 				'rule' => array('boolean'),
 				//'message' => 'Your custom message here',
@@ -122,13 +87,6 @@ class Attachment extends AppModel {
 			'fields' => '',
 			'order' => ''
 		),
-		'ParentAttachment' => array(
-			'className' => 'Attachment',
-			'foreignKey' => 'parent_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
 	);
 
 /**
@@ -137,9 +95,9 @@ class Attachment extends AppModel {
  * @var array
  */
 	public $hasMany = array(
-		'ChildAttachment' => array(
-			'className' => 'Attachment',
-			'foreignKey' => 'parent_id',
+		'Lesson' => array(
+			'className' => 'Lesson',
+			'foreignKey' => 'attachment_id',
 			'dependent' => false,
 			'conditions' => '',
 			'fields' => '',
@@ -162,30 +120,6 @@ class Attachment extends AppModel {
 			'exclusive' => '',
 			'finderQuery' => '',
 			'counterQuery' => ''
-		)
-	);
-
-
-/**
- * hasAndBelongsToMany associations
- *
- * @var array
- */
-	public $hasAndBelongsToMany = array(
-		'Block' => array(
-			'className' => 'Block',
-			'joinTable' => 'attachments_blocks',
-			'foreignKey' => 'attachment_id',
-			'associationForeignKey' => 'block_id',
-			'unique' => 'keepExisting',
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'finderQuery' => '',
-			'deleteQuery' => '',
-			'insertQuery' => ''
 		)
 	);
 

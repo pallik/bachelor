@@ -4,6 +4,7 @@ App::uses('AppModel', 'Model');
  * Timestamp Model
  *
  * @property Attachment $Attachment
+ * @property Block $Block
  */
 class Timestamp extends AppModel {
 
@@ -22,8 +23,10 @@ class Timestamp extends AppModel {
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
-			'notempty' => array(
-				'rule' => array('notempty'),
+		),
+		'block_id' => array(
+			'numeric' => array(
+				'rule' => array('numeric'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -64,6 +67,13 @@ class Timestamp extends AppModel {
 		'Attachment' => array(
 			'className' => 'Attachment',
 			'foreignKey' => 'attachment_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
+		'Block' => array(
+			'className' => 'Block',
+			'foreignKey' => 'block_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''

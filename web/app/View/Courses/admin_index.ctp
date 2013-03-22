@@ -7,7 +7,7 @@
 			<th><?php echo $this->Paginator->sort('name'); ?></th>
 			<th><?php echo $this->Paginator->sort('description'); ?></th>
 			<th><?php echo $this->Paginator->sort('year'); ?></th>
-			<th><?php echo $this->Paginator->sort('is_deleted'); ?></th>
+			<th><?php echo $this->Paginator->sort('status'); ?></th>
 			<th><?php echo $this->Paginator->sort('created'); ?></th>
 			<th><?php echo $this->Paginator->sort('modified'); ?></th>
 			<th class="actions"><?php echo __('Actions'); ?></th>
@@ -16,12 +16,12 @@
 	<tr>
 		<td><?php echo h($course['Course']['id']); ?>&nbsp;</td>
 		<td>
-			<?php echo $this->Html->link($course['User']['username'], array('controller' => 'users', 'action' => 'view', $course['User']['id'])); ?>
+			<?php echo $this->Html->link($course['User']['id'], array('controller' => 'users', 'action' => 'view', $course['User']['id'])); ?>
 		</td>
 		<td><?php echo h($course['Course']['name']); ?>&nbsp;</td>
 		<td><?php echo h($course['Course']['description']); ?>&nbsp;</td>
 		<td><?php echo h($course['Course']['year']); ?>&nbsp;</td>
-		<td><?php echo h($course['Course']['is_deleted']); ?>&nbsp;</td>
+		<td><?php echo h($course['Course']['status']); ?>&nbsp;</td>
 		<td><?php echo h($course['Course']['created']); ?>&nbsp;</td>
 		<td><?php echo h($course['Course']['modified']); ?>&nbsp;</td>
 		<td class="actions">

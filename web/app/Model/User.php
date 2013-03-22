@@ -9,13 +9,6 @@ App::uses('AppModel', 'Model');
 class User extends AppModel {
 
 /**
- * Display field
- *
- * @var string
- */
-	public $displayField = 'username';
-
-/**
  * Validation rules
  *
  * @var array
@@ -41,7 +34,7 @@ class User extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'is_deleted' => array(
+		'status' => array(
 			'boolean' => array(
 				'rule' => array('boolean'),
 				//'message' => 'Your custom message here',

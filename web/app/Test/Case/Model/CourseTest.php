@@ -15,12 +15,7 @@ class CourseTest extends CakeTestCase {
 	public $fixtures = array(
 		'app.course',
 		'app.user',
-		'app.attachment',
-		'app.type',
-		'app.timestamp',
-		'app.block',
-		'app.lesson',
-		'app.attachments_block'
+		'app.lesson'
 	);
 
 /**

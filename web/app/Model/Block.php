@@ -4,7 +4,7 @@ App::uses('AppModel', 'Model');
  * Block Model
  *
  * @property Lesson $Lesson
- * @property Attachment $Attachment
+ * @property Timestamp $Timestamp
  */
 class Block extends AppModel {
 
@@ -30,14 +30,6 @@ class Block extends AppModel {
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
-			'notempty' => array(
-				'rule' => array('notempty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
 		),
 		'target' => array(
 			'notempty' => array(
@@ -49,7 +41,17 @@ class Block extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'is_deleted' => array(
+		'status' => array(
+			'boolean' => array(
+				'rule' => array('boolean'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'master' => array(
 			'boolean' => array(
 				'rule' => array('boolean'),
 				//'message' => 'Your custom message here',
@@ -79,25 +81,23 @@ class Block extends AppModel {
 	);
 
 /**
- * hasAndBelongsToMany associations
+ * hasMany associations
  *
  * @var array
  */
-	public $hasAndBelongsToMany = array(
-		'Attachment' => array(
-			'className' => 'Attachment',
-			'joinTable' => 'attachments_blocks',
+	public $hasMany = array(
+		'Timestamp' => array(
+			'className' => 'Timestamp',
 			'foreignKey' => 'block_id',
-			'associationForeignKey' => 'attachment_id',
-			'unique' => 'keepExisting',
+			'dependent' => false,
 			'conditions' => '',
 			'fields' => '',
 			'order' => '',
 			'limit' => '',
 			'offset' => '',
+			'exclusive' => '',
 			'finderQuery' => '',
-			'deleteQuery' => '',
-			'insertQuery' => ''
+			'counterQuery' => ''
 		)
 	);
 

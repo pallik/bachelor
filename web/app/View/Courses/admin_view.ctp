@@ -8,7 +8,7 @@
 		</dd>
 		<dt><?php echo __('User'); ?></dt>
 		<dd>
-			<?php echo $this->Html->link($course['User']['username'], array('controller' => 'users', 'action' => 'view', $course['User']['id'])); ?>
+			<?php echo $this->Html->link($course['User']['id'], array('controller' => 'users', 'action' => 'view', $course['User']['id'])); ?>
 			&nbsp;
 		</dd>
 		<dt><?php echo __('Name'); ?></dt>
@@ -26,9 +26,9 @@
 			<?php echo h($course['Course']['year']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('Is Deleted'); ?></dt>
+		<dt><?php echo __('Status'); ?></dt>
 		<dd>
-			<?php echo h($course['Course']['is_deleted']); ?>
+			<?php echo h($course['Course']['status']); ?>
 			&nbsp;
 		</dd>
 		<dt><?php echo __('Created'); ?></dt>
@@ -63,9 +63,10 @@
 	<tr>
 		<th><?php echo __('Id'); ?></th>
 		<th><?php echo __('Course Id'); ?></th>
+		<th><?php echo __('Attachment Id'); ?></th>
 		<th><?php echo __('Name'); ?></th>
 		<th><?php echo __('Description'); ?></th>
-		<th><?php echo __('Is Deleted'); ?></th>
+		<th><?php echo __('Status'); ?></th>
 		<th><?php echo __('Created'); ?></th>
 		<th><?php echo __('Modified'); ?></th>
 		<th class="actions"><?php echo __('Actions'); ?></th>
@@ -76,9 +77,10 @@
 		<tr>
 			<td><?php echo $lesson['id']; ?></td>
 			<td><?php echo $lesson['course_id']; ?></td>
+			<td><?php echo $lesson['attachment_id']; ?></td>
 			<td><?php echo $lesson['name']; ?></td>
 			<td><?php echo $lesson['description']; ?></td>
-			<td><?php echo $lesson['is_deleted']; ?></td>
+			<td><?php echo $lesson['status']; ?></td>
 			<td><?php echo $lesson['created']; ?></td>
 			<td><?php echo $lesson['modified']; ?></td>
 			<td class="actions">
