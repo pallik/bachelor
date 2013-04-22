@@ -24,11 +24,11 @@
 		));
 
 		echo $this->Js->set('url', $this->request->base);
+		echo $this->Js->set('request', $this->request);
 		echo $this->Js->writeBuffer();
 
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
-		echo $this->fetch('script');
 	?>
 </head>
 <body>
@@ -56,5 +56,6 @@
 		</div>
 	</div>
 <!--	--><?php //echo $this->element('sql_dump'); ?>
+<?php echo $this->fetch('script'); ?>
 </body>
 </html>

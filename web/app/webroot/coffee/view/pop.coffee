@@ -22,34 +22,45 @@ class Pop
 							@addPopcornText timestamp
 
 	###
-    add popcorn video
+        add popcorn video
 	###
 	addPopcornVideo: (timestamp) ->
 		console.log 'video'
 
 	###
-    add popcorn image
+        add popcorn image
 	###
 	addPopcornImage: (timestamp) ->
 		@popcorn.image
 			start: timestamp.start
 			end: timestamp.end
 			src: app.url + timestamp.Attachment.url
-			target: timestamp.block_id
+			target: 'popcorn-container' + timestamp.block_id
 
 	###
-    add popcorn text
+		add popcorn text
 	###
 	addPopcornText: (timestamp) ->
 		@popcorn.footnote
 			start: timestamp.start
 			end: timestamp.end
 			text: timestamp.Attachment.text
-			target: timestamp.block_id
+			target: 'popcorn-container' + timestamp.block_id
 
 	###
-    set video time at
+		set video time at
+		add active class to link
 	###
 	jumpTo: (time) ->
 		adjustedTime = if time is 0 then 1 else time
 		@popcorn.currentTime(adjustedTime)
+
+	###
+        on timeupdate
+	###
+	onTimeUpdate: ->
+		_this = @
+		@popcorn.on 'timeupdate', ->
+			currentTime = _this.popcorn.currentTime()
+			$('.chapter').trigger 'timeupdate', currentTime
+			$('.jcarousel li').trigger 'timeupdate', currentTime

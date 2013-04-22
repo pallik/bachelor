@@ -1,27 +1,37 @@
-{{ html.css('view', null, {'inline': false}) }}
+{{ html.css(['view'], null, {'inline': false}) }}
 
-{{ html.script(['view/pop', 'view/main'], {'inline': false}) }}
+{{ html.script(['lib/jquery-ui-1.8.13.custom.min', 'lib/jquery.thumbnailScroller',
+	'lib/jcarousel/core', 'lib/jcarousel/core_plugin',
+	'view/main', 'view/pop', 'view/scroller', 'view/chapter'], {'inline': false}) }}
 
-<h2>Lekcia: {{ lesson['Lesson']['name'] }}</h2>
-<h3>Kurz: {{ lesson['Course']['name'] }}</h3>
+<h2>Lekcia: {{ lesson.Lesson.name }}</h2>
+<h3>Kurz: {{ lesson.Course.name }}</h3>
 
 <div class="blocks">
-	{% for block in lesson['Block'] %}
-		<div class="block {{ block['target'] }}"
-			 id="{{ block['id'] }}"
-			 style="{{ block['style'] }}">
+	{% for block in lesson.Block %}
+		<div class="block {{ block.target }}"
+			 id="{{ block.id }}"
+			 style="{{ block.style }}">
+
+			{% if block.Timestamp %}
+				{% include 'Elements/view/scroller.tpl' %}
+			{% endif %}
+
+			<div id="popcorn-container{{ block.id }}" class="popcorn-container"></div>
 
 		</div>
 	{% endfor %}
+
+
+	<div class="clearfix"></div>
 </div>
 
-<div class="clearfix"></div>
 
 <div class="chapters">
 	<ul>
-	{% for title, time in layout.getLessonChapters(lesson['Block']) %}
-		<li>{{ html.link(title, '#', {'data-time': time, 'class': 'chapter'}) }}</li>
-	{% endfor %}
+		{% for chapter in layout.getLessonChapters(lesson.Block) %}
+			<li>{{ html.link(chapter.name, '#', {
+				'data-start': chapter.start, 'data-end': chapter.end, 'class': 'chapter'}) }}</li>
+		{% endfor %}
 	</ul>
-
 </div>

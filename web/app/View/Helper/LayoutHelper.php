@@ -40,19 +40,68 @@ class LayoutHelper extends AppHelper {
 		return $output;
 	}
 
+	/**
+	 * @param $blocks
+	 * @return array
+	 */
 	public function getLessonChapters($blocks) {
 		$chapters = array();
 
 		foreach ($blocks as $block) {
 			foreach ($block['Timestamp'] as $timestamp) {
 				if ($timestamp['chapter']) {
-					$chapters[$timestamp['chapter']] = $timestamp['start'];
+					$chapters[$timestamp['start']] = array(
+						'name' => $timestamp['chapter'],
+						'start' => $timestamp['start'],
+						'end' => $timestamp['end']
+					);
 				}
 			}
 
 		}
 
-		asort($chapters);
+		ksort($chapters);
 		return $chapters;
+	}
+
+	/**
+	 * @param $timestamp
+	 * @return string
+	 */
+	public function getThumbnailForScroller($timestamp) {
+
+		$output = '';
+		switch($timestamp['Attachment']['Type']['name']) {
+			case 'image':
+				$output = $this->imageForScroller($timestamp);
+				break;
+			case 'text':
+				$output = $this->textForScroller($timestamp);
+				break;
+			case 'video':
+				break;
+			default:
+				break;
+		}
+
+		return $output;
+	}
+
+	/**
+	 * @param $timestamp
+	 * @return mixed
+	 */
+	private function imageForScroller($timestamp) {
+		return $this->Html->image($timestamp['Attachment']['url'], array(
+				'width' => '100',
+			));
+	}
+
+	/**
+	 * @param $timestamp
+	 * @return mixed
+	 */
+	private function textForScroller($timestamp) {
+		return $timestamp['Attachment']['name'];
 	}
 }

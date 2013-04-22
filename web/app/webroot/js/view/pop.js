@@ -51,7 +51,7 @@ Pop = (function() {
   };
 
   /*
-     add popcorn video
+         add popcorn video
   */
 
 
@@ -60,7 +60,7 @@ Pop = (function() {
   };
 
   /*
-     add popcorn image
+         add popcorn image
   */
 
 
@@ -69,12 +69,12 @@ Pop = (function() {
       start: timestamp.start,
       end: timestamp.end,
       src: app.url + timestamp.Attachment.url,
-      target: timestamp.block_id
+      target: 'popcorn-container' + timestamp.block_id
     });
   };
 
   /*
-     add popcorn text
+  		add popcorn text
   */
 
 
@@ -83,12 +83,13 @@ Pop = (function() {
       start: timestamp.start,
       end: timestamp.end,
       text: timestamp.Attachment.text,
-      target: timestamp.block_id
+      target: 'popcorn-container' + timestamp.block_id
     });
   };
 
   /*
-     set video time at
+  		set video time at
+  		add active class to link
   */
 
 
@@ -96,6 +97,22 @@ Pop = (function() {
     var adjustedTime;
     adjustedTime = time === 0 ? 1 : time;
     return this.popcorn.currentTime(adjustedTime);
+  };
+
+  /*
+         on timeupdate
+  */
+
+
+  Pop.prototype.onTimeUpdate = function() {
+    var _this;
+    _this = this;
+    return this.popcorn.on('timeupdate', function() {
+      var currentTime;
+      currentTime = _this.popcorn.currentTime();
+      $('.chapter').trigger('timeupdate', currentTime);
+      return $('.jcarousel li').trigger('timeupdate', currentTime);
+    });
   };
 
   return Pop;
