@@ -1,6 +1,6 @@
 {{ html.css(['view'], null, {'inline': false}) }}
 
-{{ html.script(['lib/jquery-ui-1.8.13.custom.min', 'lib/jquery.thumbnailScroller',
+{{ html.script(['lib/jquery-ui-1.8.13.custom.min',
 	'lib/jcarousel/core', 'lib/jcarousel/core_plugin',
 	'view/main', 'view/pop', 'view/scroller', 'view/chapter'], {'inline': false}) }}
 

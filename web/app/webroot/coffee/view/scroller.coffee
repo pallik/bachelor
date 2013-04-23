@@ -28,6 +28,7 @@ $ ->
 			$(@).addClass 'active' if not $(@).hasClass 'active'
 
 			$jcarousel = $(@).closest '.jcarousel'
+			$jcarouselContainer = $jcarousel.closest '.jcarousel-container'
 			mouseenter = $jcarousel.data 'mouseenter'
 			fullyVisible = $jcarousel.jcarousel 'fullyvisible'
 			fullyVisibleCount = fullyVisible.length
@@ -37,7 +38,20 @@ $ ->
 			indexShouldBeOnTop = currentIndex - aboveElementsCount
 			indexShouldBeOnTop = currentIndex if indexShouldBeOnTop < 0
 
-			$jcarousel.jcarousel 'scroll', indexShouldBeOnTop if not mouseenter
+			liWillBeOnTop = $jcarousel.find 'li:eq(' + indexShouldBeOnTop + ')'
+			finalTopPosition = liWillBeOnTop.position().top
+			curentTopPosition = $jcarouselContainer.scrollTop()
+
+			isCorrectPosition = finalTopPosition is curentTopPosition
+			isScrolling = $jcarouselContainer.data 'scrolling'
+
+			if not mouseenter and not isScrolling and not isCorrectPosition
+				$jcarouselContainer.data 'scrolling', true
+				$jcarouselContainer.animate
+					scrollTop: finalTopPosition
+					600
+					->
+						$jcarouselContainer.data 'scrolling', false
 
 		else
 			$(@).removeClass 'active'
@@ -111,27 +125,27 @@ $ ->
 		if scrollTo
 			e.preventDefault()
 			$(this).scrollTop scrollTo + $(this).scrollTop()
-			scrolling -scrollTo
+#			scrolling -scrollTo
 
 	###
 		scrolling scroller with mousewheel
         forbid scroll outside of ul range
 	###
-	scrolling = (px) ->
-		$curentScroller = $jcarousels.filter ->
-			$(@).data('mouseenter') is true
+#	scrolling = (px) ->
+#		$curentScroller = $jcarousels.filter ->
+#			$(@).data('mouseenter') is true
+#
+#		$ul = $curentScroller.find 'ul'
+#
+#		currentTop = parseInt $ul.css('top').slice(0, -2)
+#		adjustedTop = currentTop + px
+#		adjustedTop = 0 if adjustedTop > 0
+#
+#		visibleUlHeight = $curentScroller.height()
+#		totalUlHeight = 0
+#		$ul.children().each ->
+#			totalUlHeight += $(@).outerHeight true
+#
+#		adjustedTop = -totalUlHeight + visibleUlHeight if adjustedTop - visibleUlHeight < -totalUlHeight
 
-		$ul = $curentScroller.find 'ul'
-
-		currentTop = parseInt $ul.css('top').slice(0, -2)
-		adjustedTop = currentTop + px
-		adjustedTop = 0 if adjustedTop > 0
-
-		visibleUlHeight = $curentScroller.height()
-		totalUlHeight = 0
-		$ul.children().each ->
-			totalUlHeight += $(@).outerHeight true
-
-		adjustedTop = -totalUlHeight + visibleUlHeight if adjustedTop - visibleUlHeight < -totalUlHeight
-
-		$ul.css 'top', adjustedTop + 'px'
+#		$ul.css 'top', adjustedTop + 'px'
