@@ -28,7 +28,8 @@
 		<td><?php echo h($attachment['Attachment']['parent_id']); ?>&nbsp;</td>
 		<td><?php echo h($attachment['Attachment']['name']); ?>&nbsp;</td>
 		<td><?php echo h($attachment['Attachment']['url']); ?>&nbsp;</td>
-		<td><?php echo h($attachment['Attachment']['text']); ?>&nbsp;</td>
+		<td><?php echo $this->Text->truncate(h($attachment['Attachment']['text']),
+			100); ?>&nbsp;</td>
 		<td><?php echo h($attachment['Attachment']['lft']); ?>&nbsp;</td>
 		<td><?php echo h($attachment['Attachment']['rght']); ?>&nbsp;</td>
 		<td><?php echo h($attachment['Attachment']['status']); ?>&nbsp;</td>

@@ -4,10 +4,18 @@
 		<legend><?php echo __('Admin Edit Course'); ?></legend>
 	<?php
 		echo $this->Form->input('id');
-		echo $this->Form->input('user_id');
+		echo $this->Form->hidden('user_id', array('value' => $authUser['id']));
 		echo $this->Form->input('name');
 		echo $this->Form->input('description');
-		echo $this->Form->input('year');
+		echo $this->Form->input('year', array(
+			'selected' => array(
+				'year' => $this->request->data['Course']['year']
+			),
+			'type' => 'date',
+			'dateFormat' => 'Y',
+			'minYear' => date('Y') - 2,
+			'maxYear' => date('Y') + 2,
+		));
 		echo $this->Form->input('status');
 	?>
 	</fieldset>

@@ -7,7 +7,7 @@
 		echo $this->Form->input('attachment_id');
 		echo $this->Form->input('name');
 		echo $this->Form->input('description');
-		echo $this->Form->input('status');
+		echo $this->Form->input('status', array('checked' => 'checked'));
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>

@@ -17,11 +17,11 @@ class Attachment extends AppModel {
 	 */
 	public $actsAs = array('Tree');
 
-/**
- * Validation rules
- *
- * @var array
- */
+	/**
+	 * Validation rules
+	 *
+	 * @var array
+	 */
 	public $validate = array(
 		'user_id' => array(
 			'numeric' => array(
@@ -67,11 +67,11 @@ class Attachment extends AppModel {
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-/**
- * belongsTo associations
- *
- * @var array
- */
+	/**
+	 * belongsTo associations
+	 *
+	 * @var array
+	 */
 	public $belongsTo = array(
 		'User' => array(
 			'className' => 'User',
@@ -89,11 +89,11 @@ class Attachment extends AppModel {
 		),
 	);
 
-/**
- * hasMany associations
- *
- * @var array
- */
+	/**
+	 * hasMany associations
+	 *
+	 * @var array
+	 */
 	public $hasMany = array(
 		'Lesson' => array(
 			'className' => 'Lesson',

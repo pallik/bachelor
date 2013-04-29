@@ -14,6 +14,11 @@ class CoursesController extends AppController {
  */
 	public function admin_index() {
 		$this->Course->recursive = 0;
+		$this->paginate = array(
+			'conditions' => array(
+				'Course.user_id' => $this->Auth->user('id')
+			)
+		);
 		$this->set('courses', $this->paginate());
 	}
 
@@ -40,6 +45,7 @@ class CoursesController extends AppController {
 	public function admin_add() {
 		if ($this->request->is('post')) {
 			$this->Course->create();
+			$this->request->data['Course']['year'] = $this->request->data['Course']['year']['year'];
 			if ($this->Course->save($this->request->data)) {
 				$this->Session->setFlash(__('The course has been saved'));
 				$this->redirect(array('action' => 'index'));
@@ -63,6 +69,7 @@ class CoursesController extends AppController {
 			throw new NotFoundException(__('Invalid course'));
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
+			$this->request->data['Course']['year'] = $this->request->data['Course']['year']['year'];
 			if ($this->Course->save($this->request->data)) {
 				$this->Session->setFlash(__('The course has been saved'));
 				$this->redirect(array('action' => 'index'));

@@ -6,6 +6,10 @@ $(function() {
   $jcarousels = $('.jcarousel');
   $jcarouselContainers = $('.jcarousel-container');
   $blocks = $('.block');
+  /*
+         start all scrollers
+  */
+
   $jcarousels.jcarousel({
     vertical: 'true'
   });
@@ -129,7 +133,7 @@ $(function() {
          mousewheel on scroller dont scroll page
   */
 
-  return $jcarouselContainers.bind('mousewheel DOMMouseScroll', function(e) {
+  $jcarouselContainers.bind('mousewheel DOMMouseScroll', function(e) {
     var scrollTo;
     scrollTo = null;
     if (e.type === 'mousewheel') {
@@ -143,8 +147,10 @@ $(function() {
     }
   });
   /*
-  		scrolling scroller with mousewheel
-         forbid scroll outside of ul range
+         hide all scrollers when page loads
   */
 
+  return $jcarouselContainers.each(function() {
+    return hideScroller($(this));
+  });
 });

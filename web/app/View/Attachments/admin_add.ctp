@@ -1,18 +1,18 @@
 <div class="attachments form">
-<?php echo $this->Form->create('Attachment'); ?>
+	<?php echo $this->Form->create('Attachment', array('type' => 'file')); ?>
 	<fieldset>
 		<legend><?php echo __('Admin Add Attachment'); ?></legend>
 	<?php
-		echo $this->Form->input('user_id');
 		echo $this->Form->input('type_id');
-		echo $this->Form->input('parent_id', array(
-			'options' => $parentAttachments,
-			'empty' => ''
-		));
+//		echo $this->Form->input('parent_id', array(
+//			'options' => $parentAttachments,
+//			'empty' => ''
+//		));
 		echo $this->Form->input('name');
 		echo $this->Form->input('url');
 		echo $this->Form->input('text');
-		echo $this->Form->input('status');
+		echo $this->Form->input('files.', array('type' => 'file', 'multiple', 'label' => 'Files'));
+		echo $this->Form->input('status', array('checked' => 'checked'));
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>

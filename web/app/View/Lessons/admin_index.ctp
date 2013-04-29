@@ -27,6 +27,7 @@
 		<td><?php echo h($lesson['Lesson']['created']); ?>&nbsp;</td>
 		<td><?php echo h($lesson['Lesson']['modified']); ?>&nbsp;</td>
 		<td class="actions">
+			<?php echo $this->Html->link(__('Editor'), array('action' => 'editor', $lesson['Lesson']['id'])); ?>
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $lesson['Lesson']['id'])); ?>
 			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $lesson['Lesson']['id'])); ?>
 			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $lesson['Lesson']['id']), null, __('Are you sure you want to delete # %s?', $lesson['Lesson']['id'])); ?>

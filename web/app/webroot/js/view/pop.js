@@ -94,9 +94,10 @@ Pop = (function() {
 
 
   Pop.prototype.jumpTo = function(time) {
-    var adjustedTime;
-    adjustedTime = time === 0 ? 1 : time;
-    return this.popcorn.currentTime(adjustedTime);
+    if (time === 0) {
+      time = 1;
+    }
+    return this.popcorn.currentTime(time);
   };
 
   /*

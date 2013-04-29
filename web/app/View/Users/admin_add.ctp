@@ -5,7 +5,7 @@
 	<?php
 		echo $this->Form->input('username');
 		echo $this->Form->input('password');
-		echo $this->Form->input('status');
+		echo $this->Form->hidden('status', array('value' => true));
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>

@@ -7,6 +7,35 @@ App::uses('AppController', 'Controller');
  */
 class UsersController extends AppController {
 
+
+	/**
+	 * before filter
+	 */
+	public function beforeFilter() {
+		parent::beforeFilter();
+		$this->Auth->allow('admin_add');
+	}
+
+	/**
+	 * login
+	 */
+	public function admin_login() {
+		if ($this->request->is('post')) {
+			if ($this->Auth->login()) {
+				$this->redirect($this->Auth->redirectUrl());
+			} else {
+				$this->Session->setFlash(__('Invalid username or password, try again'));
+			}
+		}
+	}
+
+	/**
+	 * logout
+	 */
+	public function admin_logout() {
+		$this->redirect($this->Auth->logout());
+	}
+
 /**
  * admin_index method
  *

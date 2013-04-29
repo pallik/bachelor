@@ -2,16 +2,19 @@
 
 {{ html.script(['lib/jquery-ui-1.8.13.custom.min',
 	'lib/jcarousel/core', 'lib/jcarousel/core_plugin',
-	'view/main', 'view/pop', 'view/scroller', 'view/chapter'], {'inline': false}) }}
+	'view/main', 'view/pop', 'view/scroller', 'view/chapter', 'view/maximize', 'view/content'],
+	{'inline': false}) }}
 
 <h2>Lekcia: {{ lesson.Lesson.name }}</h2>
 <h3>Kurz: {{ lesson.Course.name }}</h3>
 
 <div class="blocks">
 	{% for block in lesson.Block %}
-		<div class="block {{ block.target }}"
-			 id="{{ block.id }}"
-			 style="{{ block.style }}">
+		<div
+			class="block {{ block.target }}"
+			id="{{ block.id }}"
+			style="{{ block.style }}"
+			data-style="{{ block.style }}">
 
 			{% if block.Timestamp %}
 				{% include 'Elements/view/scroller.tpl' %}
@@ -19,6 +22,7 @@
 
 			<div id="popcorn-container{{ block.id }}" class="popcorn-container"></div>
 
+			{% include 'Elements/view/tools.tpl' %}
 		</div>
 	{% endfor %}
 

@@ -3,11 +3,18 @@
 	<fieldset>
 		<legend><?php echo __('Admin Add Course'); ?></legend>
 	<?php
-		echo $this->Form->input('user_id');
+		echo $this->Form->hidden('user_id', array('value' => $authUser['id']));
 		echo $this->Form->input('name');
 		echo $this->Form->input('description');
-		echo $this->Form->input('year');
-		echo $this->Form->input('status');
+		echo $this->Form->input('year', array(
+			'value' => date('Y'),
+			'type' => 'date',
+			'dateFormat' => 'Y',
+			'minYear' => date('Y') - 2,
+			'maxYear' => date('Y') + 2,
+			'value' => date('Y')
+		));
+		echo $this->Form->input('status', array('checked' => 'checked'));
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>

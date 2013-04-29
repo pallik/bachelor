@@ -32,10 +32,28 @@ App::uses('Model', 'Model');
  */
 class AppModel extends Model {
 
-/**
- * Behaviours
- *
- * @var array
- */
+	/**
+	 * Behaviours
+	 *
+	 * @var array
+	 */
 	public $actsAs = array('Containable');
+
+	/**
+	 * @var array
+	 */
+	public $insertedIds = array();
+
+	/**
+	 * @param bool $created
+	 * @return bool|void
+	 */
+	public function afterSave($created) {
+
+		if ($created) {
+			$this->insertedIds[] = $this->getInsertID();
+		}
+
+		return true;
+	}
 }

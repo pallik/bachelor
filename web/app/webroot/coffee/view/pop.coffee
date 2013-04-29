@@ -52,8 +52,8 @@ class Pop
 		add active class to link
 	###
 	jumpTo: (time) ->
-		adjustedTime = if time is 0 then 1 else time
-		@popcorn.currentTime(adjustedTime)
+		time = 1 if time is 0
+		@popcorn.currentTime(time)
 
 	###
         on timeupdate

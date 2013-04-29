@@ -13,6 +13,12 @@ class LessonsController extends AppController {
  * @return void
  */
 	public function admin_index() {
+		$courseIds = $this->Lesson->Course->field('id', array('Course.user_id' => $this->Auth->User('id')));
+		$this->paginate = array(
+			'conditions' => array(
+				'Lesson.id' => $courseIds
+			)
+		);
 		$this->Lesson->recursive = 0;
 		$this->set('lessons', $this->paginate());
 	}
@@ -48,7 +54,13 @@ class LessonsController extends AppController {
 			}
 		}
 		$courses = $this->Lesson->Course->find('list');
-		$attachments = $this->Lesson->Attachment->find('list');
+		$videoId = $this->Lesson->Attachment->Type->field('id', array('Type.name' => 'video'));
+		$attachments = $this->Lesson->Attachment->find('list', array(
+			'conditions' => array(
+				'Attachment.type_id' => $videoId,
+				'Attachment.status' => true
+			)
+		));
 		$this->set(compact('courses', 'attachments'));
 	}
 
@@ -75,7 +87,13 @@ class LessonsController extends AppController {
 			$this->request->data = $this->Lesson->find('first', $options);
 		}
 		$courses = $this->Lesson->Course->find('list');
-		$attachments = $this->Lesson->Attachment->find('list');
+		$videoId = $this->Lesson->Attachment->Type->field('id', array('Type.name' => 'video'));
+		$attachments = $this->Lesson->Attachment->find('list', array(
+			'conditions' => array(
+				'Attachment.type_id' => $videoId,
+				'Attachment.status' => true
+			)
+		));
 		$this->set(compact('courses', 'attachments'));
 	}
 
@@ -127,6 +145,10 @@ class LessonsController extends AppController {
 				'Attachment'
 			)
 		));
+
+		if (!$lesson['Lesson']['status']) {
+			$this->redirect(array('admin' => true, 'action' => 'index'));
+		}
 
 		$title_for_layout = $lesson['Lesson']['name'];
 		$this->set(compact('lesson', 'title_for_layout'));

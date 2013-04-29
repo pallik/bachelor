@@ -8,11 +8,11 @@ App::uses('AppModel', 'Model');
  */
 class User extends AppModel {
 
-/**
- * Validation rules
- *
- * @var array
- */
+	/**
+	 * Validation rules
+	 *
+	 * @var array
+	 */
 	public $validate = array(
 		'username' => array(
 			'notempty' => array(
@@ -48,11 +48,11 @@ class User extends AppModel {
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-/**
- * hasMany associations
- *
- * @var array
- */
+	/**
+	 * hasMany associations
+	 *
+	 * @var array
+	 */
 	public $hasMany = array(
 		'Attachment' => array(
 			'className' => 'Attachment',
@@ -82,4 +82,14 @@ class User extends AppModel {
 		)
 	);
 
+	/**
+	 * @param array $options
+	 * @return bool
+	 */
+	public function beforeSave($options = array()) {
+		if (isset($this->data[$this->alias]['password'])) {
+			$this->data[$this->alias]['password'] = AuthComponent::password($this->data[$this->alias]['password']);
+		}
+		return true;
+	}
 }

@@ -4,9 +4,12 @@ $ ->
 	$jcarouselContainers = $('.jcarousel-container')
 	$blocks = $('.block')
 
+
+	###
+        start all scrollers
+    ###
 	$jcarousels.jcarousel
 		vertical: 'true'
-
 
 	###
         click on li
@@ -125,27 +128,9 @@ $ ->
 		if scrollTo
 			e.preventDefault()
 			$(this).scrollTop scrollTo + $(this).scrollTop()
-#			scrolling -scrollTo
 
 	###
-		scrolling scroller with mousewheel
-        forbid scroll outside of ul range
+        hide all scrollers when page loads
 	###
-#	scrolling = (px) ->
-#		$curentScroller = $jcarousels.filter ->
-#			$(@).data('mouseenter') is true
-#
-#		$ul = $curentScroller.find 'ul'
-#
-#		currentTop = parseInt $ul.css('top').slice(0, -2)
-#		adjustedTop = currentTop + px
-#		adjustedTop = 0 if adjustedTop > 0
-#
-#		visibleUlHeight = $curentScroller.height()
-#		totalUlHeight = 0
-#		$ul.children().each ->
-#			totalUlHeight += $(@).outerHeight true
-#
-#		adjustedTop = -totalUlHeight + visibleUlHeight if adjustedTop - visibleUlHeight < -totalUlHeight
-
-#		$ul.css 'top', adjustedTop + 'px'
+	$jcarouselContainers.each ->
+		hideScroller( $(@) )

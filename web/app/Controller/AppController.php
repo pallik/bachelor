@@ -47,7 +47,11 @@ class AppController extends Controller {
 	public $components = array(
 		'DebugKit.Toolbar',
 		'Session',
-		'RequestHandler'
+		'RequestHandler',
+		'Auth' => array(
+			'loginRedirect' => array('controller' => 'courses', 'action' => 'index'),
+			'logoutRedirect' => array('controller' => 'users', 'action' => 'login')
+		)
 	);
 
 	/**
@@ -80,9 +84,15 @@ class AppController extends Controller {
 	public function beforeFilter() {
 		parent::beforeFilter();
 
+		if (!isset($this->params['admin'])) {
+			$this->Auth->allow();
+		}
+
 		if ($this->request->is('ajax')) {
 			$this->layout = 'ajax';
 		}
+
+		$this->set('authUser', $this->Auth->user());
 	}
 
 }
