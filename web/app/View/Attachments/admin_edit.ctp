@@ -4,15 +4,10 @@
 		<legend><?php echo __('Admin Edit Attachment'); ?></legend>
 	<?php
 		echo $this->Form->input('id');
-		echo $this->Form->input('type_id');
-//		echo $this->Form->input('parent_id', array(
-//			'options' => $parentAttachments,
-//			'empty' => ''
-//		));
+		echo $this->Form->hidden('type_id');
 		echo $this->Form->input('name');
 		echo $this->Form->input('url');
 		echo $this->Form->input('text');
-//		echo $this->Form->input('files.', array('type' => 'file', 'multiple')); // nema vyznam
 		echo $this->Form->input('status');
 	?>
 	</fieldset>

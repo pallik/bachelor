@@ -47,11 +47,11 @@ class AttachmentsController extends AppController {
 	}
 
 	/**
-	 * admin_add method
+	 * admin add method
 	 *
-	 * @return void
+	 * @param null $type
 	 */
-	public function admin_add() {
+	public function admin_add($type = null) {
 		if ($this->request->is('post')) {
 			$this->Attachment->create();
 			$this->request->data['Attachment']['user_id'] = $this->Auth->user('id');
@@ -74,9 +74,18 @@ class AttachmentsController extends AppController {
 		}
 
 		$users = $this->Attachment->User->find('list');
-		$types = $this->Attachment->Type->find('list', array('conditions' => array('Type.status' => true)));
+		$typesConditions = array('Type.status' => true);
+
+		if ($type) {
+			$typesConditions['Type.name'] = $type;
+		}
+
+		$types = $this->Attachment->Type->find('list', array('conditions' => $typesConditions));
+		if (empty($types)) {
+			$type = null;
+		}
 //		$parentAttachments = $this->Attachment->generateTreeList();
-		$this->set(compact('users', 'types', 'parentAttachments'));
+		$this->set(compact('users', 'types', 'parentAttachments', 'type'));
 	}
 
 	/**
@@ -102,6 +111,11 @@ class AttachmentsController extends AppController {
 			$options = array('conditions' => array('Attachment.' . $this->Attachment->primaryKey => $id));
 			$this->request->data = $this->Attachment->find('first', $options);
 		}
+
+		if ($this->request->data['Attachment']['parent_id']) {
+			$this->redirect(array('action' => 'index'));
+		}
+
 		$users = $this->Attachment->User->find('list');
 		$types = $this->Attachment->Type->find('list', array('conditions' => array('Type.status' => true)));
 //		$parentAttachments = $this->Attachment->generateTreeList();
@@ -130,9 +144,64 @@ class AttachmentsController extends AppController {
 		$this->redirect(array('action' => 'index'));
 	}
 
+	/**
+	 * upload video to youtube and save it
+	 */
+	public function admin_uploadVideo() {
+		$typeId = $this->Attachment->Type->field('id', array('Type.name' => 'video'));
+		$action = 'uploadVideo';
+		$token = null;
+		$uniqueId = isset($this->request->query['id']) ? $this->request->query['id'] : null;
+		$status = isset($this->request->query['status']) ? $this->request->query['status'] : null;
 
+		// get token
+		if ($this->request->is('post')) {
+			$response = $this->Files->getYoutubeToken($this->request->data);
+
+			if ($response->token != '') {
+				$nextUrl = Router::url(array(
+					'admin' => true,
+					'controller' => 'attachments',
+					'action' => 'uploadVideo',
+				), true);
+				$action = $response->url . '?nexturl=' . urlencode($nextUrl);
+				$token = $response->token;
+				$data = array(
+					'name' => $this->request->data['Attachment']['name'],
+					'text' => $this->request->data['Attachment']['text'],
+					'type_id' => $this->request->data['Attachment']['type_id'],
+					'user_id' => $this->Auth->user('id'),
+					'status' => $this->request->data['Attachment']['status'],
+				);
+				$this->Session->write('Video', $data);
+			}
+		}
+
+		// save uploaded video
+		if ($uniqueId != '' && $status == 200 && $this->Session->check('Video')) {
+			$this->request->data['Attachment'] = $this->Session->read('Video');
+			$this->Session->delete('Video');
+			$this->request->data['Attachment']['url'] = 'http://www.youtube.com/watch?v=' . $uniqueId;
+
+			if ($this->Attachment->save($this->request->data)) {
+				$this->Session->setFlash(__('The attachment has been saved'));
+				$this->redirect(array('action' => 'index'));
+			} else {
+				$this->Session->setFlash(__('The attachment could not be saved. Please, try again.'));
+			}
+		}
+
+		$this->set(compact('action', 'token', 'typeId'));
+	}
+
+
+	/**
+	 * inserted url
+	 * in case of upload there is specific action
+	 *
+	 * @return array
+	 */
 	private function getCorrectDataVideo() {
-		//TODO
 		return $this->request->data;
 	}
 
