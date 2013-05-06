@@ -89,7 +89,7 @@ class Block extends AppModel {
 		'Timestamp' => array(
 			'className' => 'Timestamp',
 			'foreignKey' => 'block_id',
-			'dependent' => false,
+			'dependent' => true,
 			'conditions' => '',
 			'fields' => '',
 			'order' => '',

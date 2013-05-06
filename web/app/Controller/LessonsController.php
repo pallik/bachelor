@@ -13,10 +13,17 @@ class LessonsController extends AppController {
  * @return void
  */
 	public function admin_index() {
-		$courseIds = $this->Lesson->Course->field('id', array('Course.user_id' => $this->Auth->User('id')));
+		$courseIds = $this->Lesson->Course->find('list', array(
+			'conditions' => array(
+				'Course.user_id' => $this->Auth->User('id')
+			)
+		));
+
+		$courseIds = array_keys($courseIds);
+
 		$this->paginate = array(
 			'conditions' => array(
-				'Lesson.id' => $courseIds
+				'Lesson.course_id' => $courseIds
 			)
 		);
 		$this->Lesson->recursive = 0;
@@ -44,11 +51,16 @@ class LessonsController extends AppController {
  * @return void
  */
 	public function admin_add() {
+		// doplnit, nech sa vytvori master video block
 		if ($this->request->is('post')) {
 			$this->Lesson->create();
 			if ($this->Lesson->save($this->request->data)) {
-				$this->Session->setFlash(__('The lesson has been saved'));
-				$this->redirect(array('action' => 'index'));
+				if ($this->saveMasterVideoBlock($this->Lesson->getInsertID())) {
+					$this->Session->setFlash(__('The lesson has been saved'));
+					$this->redirect(array('action' => 'index'));
+				} else {
+					$this->Session->setFlash(__('Can\'t save video block.'));
+				}
 			} else {
 				$this->Session->setFlash(__('The lesson could not be saved. Please, try again.'));
 			}
@@ -177,5 +189,22 @@ class LessonsController extends AppController {
 
 //		http://www.tuxradar.com/content/cakephp-tutorial-build-file-sharing-application
 
+	}
+
+	/**
+	 * @param $lessonId
+	 * @return mixed
+	 */
+	private function saveMasterVideoBlock($lessonId) {
+		$blockData = array(
+			'lesson_id' => $lessonId,
+			'target' => 'masterVideo',
+			'style' => 'width: 400px; height: 400px;',
+			'status' => true,
+			'master' => true
+		);
+
+		$this->Lesson->Block->create();
+		return $this->Lesson->Block->save($blockData);
 	}
 }

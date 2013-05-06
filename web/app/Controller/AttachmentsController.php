@@ -56,8 +56,8 @@ class AttachmentsController extends AppController {
 			$this->Attachment->create();
 			$this->request->data['Attachment']['user_id'] = $this->Auth->user('id');
 
-			$type = $this->Attachment->Type->field('name', array(
-				'Type.id' => $this->request->data['Attachment']['type_id']));
+//			$type = $this->Attachment->Type->field('name', array(
+//				'Type.id' => $this->request->data['Attachment']['type_id']));
 			$correctDataFunction = 'getCorrectData' . ucfirst($type);
 
 			$data = $this->$correctDataFunction();
@@ -80,12 +80,12 @@ class AttachmentsController extends AppController {
 			$typesConditions['Type.name'] = $type;
 		}
 
-		$types = $this->Attachment->Type->find('list', array('conditions' => $typesConditions));
-		if (empty($types)) {
+		$typeId = $this->Attachment->Type->field('id', $typesConditions);
+		if (empty($typeId)) {
 			$type = null;
 		}
 //		$parentAttachments = $this->Attachment->generateTreeList();
-		$this->set(compact('users', 'types', 'parentAttachments', 'type'));
+		$this->set(compact('users', 'typeId', 'parentAttachments', 'type'));
 	}
 
 	/**

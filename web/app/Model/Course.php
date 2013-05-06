@@ -72,7 +72,7 @@ class Course extends AppModel {
 		'Lesson' => array(
 			'className' => 'Lesson',
 			'foreignKey' => 'course_id',
-			'dependent' => false,
+			'dependent' => true,
 			'conditions' => '',
 			'fields' => '',
 			'order' => '',

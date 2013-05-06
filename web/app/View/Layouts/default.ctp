@@ -49,6 +49,8 @@
 				echo $this->Html->link('Log out', array('admin' => true, 'controller' => 'users', 'action' => 'logout'));
 			} else {
 				echo $this->Html->link('Log in', array('admin' => true, 'controller' => 'users', 'action' => 'login'));
+				echo ' | ';
+				echo $this->Html->link('Register', array('admin' => true, 'controller' => 'users', 'action' => 'add'));
 			}
 			?>
 		</div>
@@ -62,7 +64,6 @@
 			<i>by Palli &copy; 2013</i>
 		</div>
 	</div>
-<!--	--><?php //echo $this->element('sql_dump'); ?>
 <?php echo $this->fetch('script'); ?>
 </body>
 </html>

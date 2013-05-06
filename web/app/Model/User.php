@@ -57,7 +57,7 @@ class User extends AppModel {
 		'Attachment' => array(
 			'className' => 'Attachment',
 			'foreignKey' => 'user_id',
-			'dependent' => false,
+			'dependent' => true,
 			'conditions' => '',
 			'fields' => '',
 			'order' => '',
@@ -70,7 +70,7 @@ class User extends AppModel {
 		'Course' => array(
 			'className' => 'Course',
 			'foreignKey' => 'user_id',
-			'dependent' => false,
+			'dependent' => true,
 			'conditions' => '',
 			'fields' => '',
 			'order' => '',

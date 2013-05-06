@@ -20,6 +20,10 @@ class UsersController extends AppController {
 	 * login
 	 */
 	public function admin_login() {
+		if ($this->Auth->loggedIn()) {
+			$this->redirect($this->Auth->redirectUrl());
+		}
+
 		if ($this->request->is('post')) {
 			if ($this->Auth->login()) {
 				$this->redirect($this->Auth->redirectUrl());

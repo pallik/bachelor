@@ -90,7 +90,7 @@ class Lesson extends AppModel {
 		'Block' => array(
 			'className' => 'Block',
 			'foreignKey' => 'lesson_id',
-			'dependent' => false,
+			'dependent' => true,
 			'conditions' => array('Block.status' => true),
 			'fields' => '',
 			'order' => '',

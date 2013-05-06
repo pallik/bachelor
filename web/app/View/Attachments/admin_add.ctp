@@ -17,7 +17,7 @@
 				break;
 			case 'image':
 			case 'presentation':
-				$subtitle =  'Insert URL of file OR choose file from your computer';
+				$subtitle =  'Insert URL of file OR choose files from your computer';
 				$inputs = $this->Form->input('url');
 				$inputs .= $this->Form->input('files.', array('type' => 'file', 'multiple', 'label' => 'Files'));
 				break;
@@ -32,7 +32,7 @@
 
 			echo $subtitle;
 
-			echo $this->Form->hidden('type_id', array('value' => $type));
+			echo $this->Form->hidden('type_id', array('value' => $typeId));
 			echo $this->Form->input('name');
 
 			echo $inputs;

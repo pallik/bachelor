@@ -111,7 +111,7 @@ class Attachment extends AppModel {
 		'Timestamp' => array(
 			'className' => 'Timestamp',
 			'foreignKey' => 'attachment_id',
-			'dependent' => false,
+			'dependent' => true,
 			'conditions' => '',
 			'fields' => '',
 			'order' => '',
