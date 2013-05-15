@@ -28,7 +28,6 @@ $(function() {
   */
 
   handleLessonResult = function(data) {
-    console.log(data);
     handlePopcorn(data.lesson);
     return adjustBlocksContainterHeight();
   };

@@ -25,7 +25,7 @@ class Pop
         add popcorn video
 	###
 	addPopcornVideo: (timestamp) ->
-		console.log 'video'
+		console.log 'here should be addPopcornVideo implementation'
 
 	###
         add popcorn image

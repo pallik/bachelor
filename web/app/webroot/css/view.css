@@ -64,14 +64,14 @@
 .jcarousel-skin-default .jcarousel-vertical {
 	position: relative;
 	/*overflow: hidden;*/
-	width: 50%;
-	width: 75px;
+	/*width: 50%;*/
+	width: 100px;
 	height: 100%;
 }
 
 .jcarousel-skin-default .jcarousel-vertical ul {
 	/*height: 20000px;*/
-	width: 75px;
+	width: 100px;
 	position: absolute;
 	list-style: none;
 	margin: 0;

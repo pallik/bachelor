@@ -56,7 +56,7 @@ Pop = (function() {
 
 
   Pop.prototype.addPopcornVideo = function(timestamp) {
-    return console.log('video');
+    return console.log('here should be addPopcornVideo implementation');
   };
 
   /*

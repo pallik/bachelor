@@ -20,7 +20,6 @@ $ ->
 	  hande result from ajax
 	###
 	handleLessonResult = (data) ->
-		console.log data
 		handlePopcorn(data.lesson)
 		adjustBlocksContainterHeight()
 

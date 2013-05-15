@@ -92,7 +92,10 @@ class LayoutHelper extends AppHelper {
 	 * @return mixed
 	 */
 	private function imageForScroller($timestamp) {
-		return $this->Html->image($timestamp['Attachment']['url'], array(
+		$urlInfo = pathinfo($timestamp['Attachment']['url']);
+		$thumbUrl = $urlInfo['dirname'] . DS . 'thumb' . DS . $urlInfo['basename'];
+
+		return $this->Html->image($thumbUrl, array(
 				'width' => '100',
 			));
 	}
