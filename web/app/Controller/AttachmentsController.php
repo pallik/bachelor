@@ -56,8 +56,6 @@ class AttachmentsController extends AppController {
 			$this->Attachment->create();
 			$this->request->data['Attachment']['user_id'] = $this->Auth->user('id');
 
-//			$type = $this->Attachment->Type->field('name', array(
-//				'Type.id' => $this->request->data['Attachment']['type_id']));
 			$correctDataFunction = 'getCorrectData' . ucfirst($type);
 
 			$data = $this->$correctDataFunction();
@@ -129,6 +127,7 @@ class AttachmentsController extends AppController {
 	 * @throws MethodNotAllowedException
 	 * @param string $id
 	 * @return void
+	 * TODO: dorobit delete = unlink() ku obrazkom + thumbs, prezentaciam + obrazky, videam
 	 */
 	public function admin_delete($id = null) {
 		$this->Attachment->id = $id;
@@ -196,8 +195,8 @@ class AttachmentsController extends AppController {
 
 
 	/**
-	 * inserted url
-	 * in case of upload there is specific action
+	 * only for inserted url
+	 * in case of upload there is specific action admin_uploadVideo
 	 *
 	 * @return array
 	 */
@@ -213,10 +212,17 @@ class AttachmentsController extends AppController {
 	 */
 	private function getCorrectDataImage() {
 		if (!empty($this->request->data['Attachment']['url'])) {
+			$uid = $this->Auth->user('id');
+			$this->saveFileFromUrl($uid);
+
+			$urlWithoutSlash = substr($this->request->data['Attachment']['url'], 1);
+			$this->createThumbnail($urlWithoutSlash);
+
 			return $this->request->data;
 		}
 
 		$data = $this->uploadFiles('image');
+		//todo: este tu dorobit, zeby sa uploadnute obrazky tiez mali thumbs
 
 		return $data;
 	}
@@ -250,11 +256,25 @@ class AttachmentsController extends AppController {
 			$outputUrl = $folderUrl . DS . 'page%d.png';
 			$source = $urlWithoutSlash;
 
-			$shellTemplate = 'gs -dSAFER -dBATCH -dNOPAUSE -r300 -sDEVICE=png16m -sOutputFile=OUTPUT SOURCE';
+			$shellTemplate = 'gs -dSAFER -dBATCH -dNOPAUSE -r200 -sDEVICE=png16m -sOutputFile=OUTPUT SOURCE';
 			$script = str_replace('OUTPUT', $outputUrl, $shellTemplate);
 			$script = str_replace('SOURCE', $source, $script);
 
 			shell_exec($script);
+
+
+			// make small thumbnail for each page
+			$thumbnailFolderUrl = $folderUrl . DS . 'thumb';
+			if (!is_dir($thumbnailFolderUrl)) {
+				mkdir($thumbnailFolderUrl);
+			}
+
+			$thumbnailOutputUrl = $thumbnailFolderUrl . DS . 'page%d.png';
+			$thumbailShellTemplate = 'gs -dSAFER -dBATCH -dNOPAUSE -r20 -sDEVICE=png16m -sOutputFile=OUTPUT SOURCE';
+			$thumbnailScript = str_replace('OUTPUT', $thumbnailOutputUrl, $thumbailShellTemplate);
+			$thumbnailScript = str_replace('SOURCE', $source, $thumbnailScript);
+
+			shell_exec($thumbnailScript);
 		}
 
 
@@ -358,6 +378,11 @@ class AttachmentsController extends AppController {
 						'status' => $status,
 						'user_id' => $userId
 					);
+
+					if ($type == 'image') {
+						$url = $relUrl . DS . $filename;
+						$this->createThumbnail($url);
+					}
 				}
 			}
 		}
@@ -379,5 +404,58 @@ class AttachmentsController extends AppController {
 		file_put_contents($dest, file_get_contents($source));
 
 		$this->request->data['Attachment']['url'] = DS . $dest;
+	}
+
+
+	/**
+	 * @param $fullUrl
+	 */
+	private function createThumbnail($fullUrl) {
+		$urlInfo = pathinfo($fullUrl);
+		$ext = $urlInfo['extension'];
+		$sourceImage = null;
+
+		switch ($ext) {
+			case 'jpg':
+			case 'jpeg':
+				$sourceImage = imagecreatefromjpeg($fullUrl);
+				break;
+			case 'gif':
+				$sourceImage = imagecreatefromstring(file_get_contents($fullUrl));
+				break;
+			case 'png':
+				$sourceImage = imagecreatefrompng($fullUrl);
+				break;
+		}
+
+		$width = imagesx($sourceImage);
+		$height = imagesy($sourceImage);
+
+		$desiredWidth = 200;
+		$desiredHeight = floor($height * ($desiredWidth / $width));
+
+		$virtualImage = imagecreatetruecolor($desiredWidth, $desiredHeight);
+
+		imagecopyresampled($virtualImage, $sourceImage, 0, 0, 0, 0, $desiredWidth, $desiredHeight, $width, $height);
+
+		$thumbDir = $urlInfo['dirname'] . DS . 'thumb';
+		if (!is_dir($thumbDir)) {
+			mkdir($thumbDir);
+		}
+
+		$thumbUrl = $thumbDir . DS . $urlInfo['basename'];
+
+		switch ($ext) {
+			case 'jpg':
+			case 'jpeg':
+				imagejpeg($virtualImage, $thumbUrl);
+				break;
+			case 'gif':
+				imagegif($virtualImage, $thumbUrl);
+				break;
+			case 'png':
+				imagepng($virtualImage, $thumbUrl);
+				break;
+		}
 	}
 }

@@ -7,11 +7,11 @@ App::uses('AppController', 'Controller');
  */
 class LessonsController extends AppController {
 
-/**
- * admin_index method
- *
- * @return void
- */
+	/**
+	 * admin_index method
+	 *
+	 * @return void
+	 */
 	public function admin_index() {
 		$courseIds = $this->Lesson->Course->find('list', array(
 			'conditions' => array(
@@ -30,28 +30,58 @@ class LessonsController extends AppController {
 		$this->set('lessons', $this->paginate());
 	}
 
-/**
- * admin_view method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
+	/**
+	 * admin_view method
+	 *
+	 * @throws NotFoundException
+	 * @param string $id
+	 * @return void
+	 */
 	public function admin_view($id = null) {
 		if (!$this->Lesson->exists($id)) {
 			throw new NotFoundException(__('Invalid lesson'));
 		}
-		$options = array('conditions' => array('Lesson.' . $this->Lesson->primaryKey => $id));
-		$this->set('lesson', $this->Lesson->find('first', $options));
+
+//		$courseIds = $this->Lesson->Course->find('list', array(
+//			'conditions' => array(
+//				'Course.user_id' => $this->Auth->User('id')
+//			)
+//		));
+//		$courseIds = array_keys($courseIds);
+//
+//		if (!in_array($id, $courseIds)) {
+//			$this->redirect(array('action' => 'index'));
+//		}
+
+
+
+		$lesson = $data = $this->Lesson->find('first', array(
+			'conditions' => array(
+				'Lesson.id' => $id
+			),
+			'contain' => array(
+				'Block' => array(
+					'Timestamp' => array(
+						'Attachment' => array(
+							'Type'
+						)
+					)
+				),
+				'Course',
+				'Attachment'
+			)
+		));
+
+		$this->set(compact('lesson', 'data'));
+		$this->set('_serialize', array('data'));
 	}
 
-/**
- * admin_add method
- *
- * @return void
- */
+	/**
+	 * admin_add method
+	 *
+	 * @return void
+	 */
 	public function admin_add() {
-		// doplnit, nech sa vytvori master video block
 		if ($this->request->is('post')) {
 			$this->Lesson->create();
 			if ($this->Lesson->save($this->request->data)) {
@@ -76,13 +106,13 @@ class LessonsController extends AppController {
 		$this->set(compact('courses', 'attachments'));
 	}
 
-/**
- * admin_edit method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
+	/**
+	 * admin_edit method
+	 *
+	 * @throws NotFoundException
+	 * @param string $id
+	 * @return void
+	 */
 	public function admin_edit($id = null) {
 		if (!$this->Lesson->exists($id)) {
 			throw new NotFoundException(__('Invalid lesson'));
@@ -109,14 +139,25 @@ class LessonsController extends AppController {
 		$this->set(compact('courses', 'attachments'));
 	}
 
-/**
- * admin_delete method
- *
- * @throws NotFoundException
- * @throws MethodNotAllowedException
- * @param string $id
- * @return void
- */
+
+	/**
+	 * @param $id
+	 * @throws NotFoundException
+	 */
+	public function admin_editor($id) {
+		if (!$this->Lesson->exists($id)) {
+			throw new NotFoundException(__('Invalid lesson'));
+		}
+	}
+
+	/**
+	 * admin_delete method
+	 *
+	 * @throws NotFoundException
+	 * @throws MethodNotAllowedException
+	 * @param string $id
+	 * @return void
+	 */
 	public function admin_delete($id = null) {
 		$this->Lesson->id = $id;
 		if (!$this->Lesson->exists()) {
