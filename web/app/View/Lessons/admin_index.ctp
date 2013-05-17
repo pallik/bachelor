@@ -27,10 +27,10 @@
 		<td><?php echo h($lesson['Lesson']['created']); ?>&nbsp;</td>
 		<td><?php echo h($lesson['Lesson']['modified']); ?>&nbsp;</td>
 		<td class="actions">
-			<?php echo $this->Html->link(__('Editor'), array('action' => 'editor', $lesson['Lesson']['id'])); ?>
-			<?php echo $this->Html->link(__('View'), array('action' => 'view', $lesson['Lesson']['id'])); ?>
-			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $lesson['Lesson']['id'])); ?>
-			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $lesson['Lesson']['id']), null, __('Are you sure you want to delete # %s?', $lesson['Lesson']['id'])); ?>
+			<?php echo $this->Html->link(__('Editor'), array('admin' => true, 'action' => 'editor', $lesson['Lesson']['id'])); ?>
+			<?php echo $this->Html->link(__('View'), array('admin' => true, 'action' => 'view', $lesson['Lesson']['id'])); ?>
+			<?php echo $this->Html->link(__('Edit'), array('admin' => true, 'action' => 'edit', $lesson['Lesson']['id'])); ?>
+			<?php echo $this->Form->postLink(__('Delete'), array('admin' => true, 'action' => 'delete', $lesson['Lesson']['id']), null, __('Are you sure you want to delete # %s?', $lesson['Lesson']['id'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
@@ -52,12 +52,8 @@
 <div class="actions">
 	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
-		<li><?php echo $this->Html->link(__('New Lesson'), array('action' => 'add')); ?></li>
-		<li><?php echo $this->Html->link(__('List Courses'), array('controller' => 'courses', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Course'), array('controller' => 'courses', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Attachments'), array('controller' => 'attachments', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Attachment'), array('controller' => 'attachments', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Blocks'), array('controller' => 'blocks', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Block'), array('controller' => 'blocks', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Lesson'), array('admin' => true, 'action' => 'add')); ?></li>
+		<li><?php echo $this->Html->link(__('New Course'), array('admin' => true, 'controller' => 'courses', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Attachment'), array('admin' => true, 'controller' => 'attachments', 'action' => 'add')); ?> </li>
 	</ul>
 </div>

@@ -25,7 +25,7 @@
 
 		echo $this->Js->set('url', $this->request->base);
 		echo $this->Js->set('request', $this->request);
-		echo $this->Js->writeBuffer();
+		echo $this->Js->writeBuffer(array('onDomReady' => false));
 
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
@@ -35,16 +35,15 @@
 	<div id="container">
 		<div id="header">
 			<?php
-			echo $this->Html->link('[Users]', array('admin' => true, 'controller' => 'users', 'action' => 'index'));
-			echo $this->Html->link('Courses', array('admin' => true, 'controller' => 'courses', 'action' => 'index'));
-			echo $this->Html->link('Lessons', array('admin' => true, 'controller' => 'lessons', 'action' => 'index'));
-			echo $this->Html->link('[Blocks]', array('admin' => true, 'controller' => 'blocks', 'action' => 'index'));
-			echo $this->Html->link('Attachments', array('admin' => true, 'controller' => 'attachments', 'action' => 'index'));
-			echo $this->Html->link('[Types]', array('admin' => true, 'controller' => 'types', 'action' => 'index'));
-			echo $this->Html->link('[Timestamps]', array('admin' => true, 'controller' => 'timestamps', 'action' => 'index'));
-			echo ' | ';
-
 			if ($authUser) {
+				echo $this->Html->link('[Users]', array('admin' => true, 'controller' => 'users', 'action' => 'index'));
+				echo $this->Html->link('Courses', array('admin' => true, 'controller' => 'courses', 'action' => 'index'));
+				echo $this->Html->link('Lessons', array('admin' => true, 'controller' => 'lessons', 'action' => 'index'));
+				echo $this->Html->link('[Blocks]', array('admin' => true, 'controller' => 'blocks', 'action' => 'index'));
+				echo $this->Html->link('Attachments', array('admin' => true, 'controller' => 'attachments', 'action' => 'index'));
+				echo $this->Html->link('[Types]', array('admin' => true, 'controller' => 'types', 'action' => 'index'));
+				echo $this->Html->link('[Timestamps]', array('admin' => true, 'controller' => 'timestamps', 'action' => 'index'));
+				echo ' | ';
 				echo 'Logged in as: <i>' . $authUser['username'] . '</i> | ';
 				echo $this->Html->link('Log out', array('admin' => true, 'controller' => 'users', 'action' => 'logout'));
 			} else {

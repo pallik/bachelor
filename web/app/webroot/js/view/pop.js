@@ -20,7 +20,7 @@ Pop = (function() {
     _results = [];
     for (_i = 0, _len = blocks.length; _i < _len; _i++) {
       block = blocks[_i];
-      if (block.target !== 'masterVideo') {
+      if (!block.master) {
         _results.push((function() {
           var _j, _len1, _ref, _results1;
           _ref = block.Timestamp;
@@ -114,6 +114,36 @@ Pop = (function() {
       $('.chapter').trigger('timeupdate', currentTime);
       return $('.jcarousel li').trigger('timeupdate', currentTime);
     });
+  };
+
+  /*
+         on timeupdate for editor section
+  */
+
+
+  Pop.prototype.editorsInit = function() {
+    var _this = this;
+    this.popcorn.on('timeupdate', function() {
+      var currentTime;
+      currentTime = _this.popcorn.currentTime();
+      return Backbone.Events.trigger('popcornTimeUpdate', currentTime);
+    });
+    return this.popcorn.on('durationchange', function() {
+      return Backbone.Events.trigger('durationchange');
+    });
+  };
+
+  /*
+         get ratio video to timeline
+  */
+
+
+  Pop.prototype.getRatio = function() {
+    var _ref, _ref1;
+    if ((_ref = this.duration) == null) {
+      this.duration = this.popcorn.duration();
+    }
+    return (_ref1 = this.ratio) != null ? _ref1 : this.ratio = this.duration / 100;
   };
 
   return Pop;

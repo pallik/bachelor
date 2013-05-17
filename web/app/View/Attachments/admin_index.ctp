@@ -36,9 +36,9 @@
 		<td><?php echo h($attachment['Attachment']['created']); ?>&nbsp;</td>
 		<td><?php echo h($attachment['Attachment']['modified']); ?>&nbsp;</td>
 		<td class="actions">
-			<?php echo $this->Html->link(__('View'), array('action' => 'view', $attachment['Attachment']['id'])); ?>
-			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $attachment['Attachment']['id'])); ?>
-			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $attachment['Attachment']['id']), null, __('Are you sure you want to delete # %s?', $attachment['Attachment']['id'])); ?>
+			<?php echo $this->Html->link(__('View'), array('admin' => true, 'action' => 'view', $attachment['Attachment']['id'])); ?>
+			<?php echo $this->Html->link(__('Edit'), array('admin' => true, 'action' => 'edit', $attachment['Attachment']['id'])); ?>
+			<?php echo $this->Form->postLink(__('Delete'), array('admin' => true, 'action' => 'delete', $attachment['Attachment']['id']), null, __('Are you sure you want to delete # %s?', $attachment['Attachment']['id'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
@@ -60,14 +60,8 @@
 <div class="actions">
 	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
-		<li><?php echo $this->Html->link(__('New Attachment'), array('action' => 'add')); ?></li>
-		<li><?php echo $this->Html->link(__('List Users'), array('controller' => 'users', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New User'), array('controller' => 'users', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Types'), array('controller' => 'types', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Type'), array('controller' => 'types', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Lessons'), array('controller' => 'lessons', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Lesson'), array('controller' => 'lessons', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Timestamps'), array('controller' => 'timestamps', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Timestamp'), array('controller' => 'timestamps', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Attachment'), array('admin' => true, 'action' => 'add')); ?></li>
+		<li><?php echo $this->Html->link(__('List Lessons'), array('admin' => true, 'controller' => 'lessons', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Lesson'), array('admin' => true, 'controller' => 'lessons', 'action' => 'add')); ?> </li>
 	</ul>
 </div>

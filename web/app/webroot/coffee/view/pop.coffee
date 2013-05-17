@@ -10,7 +10,8 @@ class Pop
 	###
 	addPopcornElements: (blocks) ->
 		for block in blocks
-			if block.target isnt 'masterVideo'
+#			if block.target isnt 'masterVideo'
+			if not block.master
 
 				for timestamp in block.Timestamp
 					switch timestamp.Attachment.Type.name
@@ -64,3 +65,23 @@ class Pop
 			currentTime = _this.popcorn.currentTime()
 			$('.chapter').trigger 'timeupdate', currentTime
 			$('.jcarousel li').trigger 'timeupdate', currentTime
+
+
+	###
+        on timeupdate for editor section
+	###
+	editorsInit: ->
+		@popcorn.on 'timeupdate', =>
+			currentTime = @popcorn.currentTime()
+			Backbone.Events.trigger 'popcornTimeUpdate', currentTime
+
+		@popcorn.on 'durationchange', =>
+			Backbone.Events.trigger 'durationchange'
+
+
+	###
+        get ratio video to timeline
+	###
+	getRatio: ->
+		@duration ?= @popcorn.duration()
+		@ratio ?= @duration / 100;

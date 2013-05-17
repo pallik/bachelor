@@ -52,9 +52,8 @@ $ ->
 	###
         set default img max dimensions
 	###
-	$(window).load ->
+	window.onload = ->
 		$('.block').trigger 'resize'
-
 
 	###
         maximize block

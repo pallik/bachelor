@@ -1,0 +1,71 @@
+/********** ADD BUTTONS **********/
+
+
+.add-buttons div.input-name {
+	display: none;
+}
+
+
+/********** BLOCKS **********/
+
+
+.blocks {
+	height: 400px;
+}
+
+.blocks .block {
+	border-width: 2px;
+}
+
+.blocks .block.masterVideo {
+	border: none;
+}
+
+
+/********** TIMELINE **********/
+
+
+.timeline {
+	margin: 100px 0 50px 0;
+}
+
+.timeline .timeline-pin {
+	position: absolute;
+	font-size: 30px;
+	z-index: 1;
+	top: -22px;
+	margin-left: -15px;
+	cursor: pointer;
+	cursor: hand;
+}
+
+
+/********** BLOCKS ROWS **********/
+
+
+.block-row {
+	height: 80px;
+	border: 2px solid;
+	margin-bottom: 20px;
+	width: 100%;
+	white-space: nowrap;
+	overflow-x: auto;
+	overflow-y: hidden;
+}
+
+.block-row .thumbnail {
+	height: 80px;
+	width: 80px;
+	/*float: left;*/
+	display: inline-block;
+	cursor: pointer;
+	cursor: hand;
+	border-right: 1px solid #000000;
+	overflow: hidden;
+	font-size: 12px;
+}
+
+.block-row .thumbnail img {
+	width: 80px;
+	height: 80px;
+}

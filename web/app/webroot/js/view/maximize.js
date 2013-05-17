@@ -62,9 +62,9 @@ $(function() {
          set default img max dimensions
   */
 
-  $(window).load(function() {
+  window.onload = function() {
     return $('.block').trigger('resize');
-  });
+  };
   /*
          maximize block
   */

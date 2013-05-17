@@ -11,7 +11,7 @@ class FilesComponent extends Component {
 	 * @return array
 	 */
 	public function getDirFiles($path) {
-		$scanned_directory = array_diff(scandir($path), array('..', '.'));
+		$scanned_directory = array_diff(scandir($path), array('..', '.', 'thumb'));
 
 		return $scanned_directory;
 	}
