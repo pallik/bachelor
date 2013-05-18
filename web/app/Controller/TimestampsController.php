@@ -100,4 +100,14 @@ class TimestampsController extends AppController {
 		$this->Session->setFlash(__('Timestamp was not deleted'));
 		$this->redirect(array('action' => 'index'));
 	}
+
+
+	public function admin_saveAll() {
+		$this->redirectIfNotAjax();
+
+		$result = $this->Timestamp->saveMany($this->request->data);
+
+		$this->autoRender = false;
+		return json_encode($result);
+	}
 }

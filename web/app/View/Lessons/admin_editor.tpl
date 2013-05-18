@@ -4,9 +4,9 @@
 	'editor/backbone/globals', 'editor/backbone/functions',
 	'editor/backbone/models/attachment', 'editor/backbone/models/block', 'editor/backbone/models/lesson',
 		'editor/backbone/models/timestamp',
-	'editor/backbone/views/add_buttons', 'editor/backbone/views/block', 'editor/backbone/views/blocks',
-		'editor/backbone/views/blocks_rows', 'editor/backbone/views/block_row', 'editor/backbone/views/lesson',
-		'editor/backbone/views/timestamp', 'editor/backbone/views/timeline', 'editor/backbone/views/pin',
+	'editor/backbone/views/add_buttons', 'editor/backbone/views/save_button', 'editor/backbone/views/block',
+		'editor/backbone/views/blocks', 'editor/backbone/views/blocks_rows', 'editor/backbone/views/block_row',
+		'editor/backbone/views/lesson',	'editor/backbone/views/timestamp', 'editor/backbone/views/timeline', 'editor/backbone/views/pin',
 	'editor/backbone/_app', 'editor/main', 'editor/effects'],
 	{'inline': false}) }}
 
@@ -43,6 +43,6 @@
 </div>
 
 
-<div class="save-button">
-	{{ html.link('Save lesson', '#', {'class': 'save-lesson'}) }}
+<div class="save-lesson">
+	{{ html.link('Save lesson', {'admin': true, 'action': 'index'}, {'class': 'save-button'}) }}
 </div>

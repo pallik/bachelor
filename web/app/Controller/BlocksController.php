@@ -98,4 +98,19 @@ class BlocksController extends AppController {
 		$this->Session->setFlash(__('Block was not deleted'));
 		$this->redirect(array('action' => 'index'));
 	}
+
+
+	/**
+	 * saves all blocks via ajax - editor
+	 *
+	 * @return string
+	 */
+	public function admin_saveAll() {
+		$this->redirectIfNotAjax();
+
+		$result = $this->Block->saveMany($this->request->data);
+
+		$this->autoRender = false;
+		return json_encode($result);
+	}
 }

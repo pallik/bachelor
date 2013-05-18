@@ -30,6 +30,7 @@ this.Bachelor.App = {
     this.Views.blocksView = new Bachelor.Views.BlocksView();
     this.Views.addButtonsView = new Bachelor.Views.AddButtonsView();
     this.Views.timelineView = new Bachelor.Views.TimelineView();
+    this.Views.saveButtonView = new Bachelor.Views.SaveButtonView();
     this.addBlocksToCollection();
     this.addTimestampsToCollection();
     return this.initPopcorn();

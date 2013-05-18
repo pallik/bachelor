@@ -1,9 +1,3 @@
-#	nacitat data, mali by sa zobrazit
-#	lesson info, ale aj ostatne bloky a vsetko
-#	vlozit do jednotlivych collections
-
-#	new blocks - to bude collections blokov
-
 this.Bachelor.App =
 
 	lessonId: Bachelor.lessonId
@@ -39,6 +33,7 @@ this.Bachelor.App =
 		@Views.blocksView = new Bachelor.Views.BlocksView()
 		@Views.addButtonsView = new Bachelor.Views.AddButtonsView()
 		@Views.timelineView = new Bachelor.Views.TimelineView()
+		@Views.saveButtonView = new Bachelor.Views.SaveButtonView()
 
 
 		@addBlocksToCollection()

@@ -95,4 +95,13 @@ class AppController extends Controller {
 		$this->set('authUser', $this->Auth->user());
 	}
 
+	/**
+	 * redirects if not ajax call
+	 */
+	public function redirectIfNotAjax() {
+		if (!$this->request->is('ajax')) {
+			$this->redirect($this->Auth->loginRedirect);
+		}
+	}
+
 }
