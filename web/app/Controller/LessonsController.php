@@ -240,7 +240,7 @@ class LessonsController extends AppController {
 		$blockData = array(
 			'lesson_id' => $lessonId,
 			'target' => 'masterVideo',
-			'style' => 'width: 400px; height: 400px;',
+//			'style' => 'top: 10px; left: 10px; width: 400px; height: 400px;',
 			'status' => true,
 			'master' => true
 		);

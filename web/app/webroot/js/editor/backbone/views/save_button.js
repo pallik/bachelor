@@ -9,6 +9,9 @@ Bachelor.Views.SaveButtonView = (function(_super) {
 
   function SaveButtonView() {
     var _this = this;
+    this.refreshLesson = function(e) {
+      return SaveButtonView.prototype.refreshLesson.apply(_this, arguments);
+    };
     this.onError = function(returnedData) {
       return SaveButtonView.prototype.onError.apply(_this, arguments);
     };
@@ -24,7 +27,8 @@ Bachelor.Views.SaveButtonView = (function(_super) {
   SaveButtonView.prototype.el = $('.save-lesson');
 
   SaveButtonView.prototype.events = {
-    'click .save-button': 'saveLesson'
+    'click .save-button': 'saveLesson',
+    'click .refresh-lesson': 'refreshLesson'
   };
 
   SaveButtonView.prototype.saveLesson = function(e) {
@@ -53,14 +57,16 @@ Bachelor.Views.SaveButtonView = (function(_super) {
   };
 
   SaveButtonView.prototype.onSuccess = function(returnedData) {
-    var nextUrl;
-    debug(returnedData);
-    nextUrl = this.$el.find('.save-button').attr('href');
-    return window.location.href(nextUrl);
+    return debug(returnedData);
   };
 
   SaveButtonView.prototype.onError = function(returnedData) {
     return debug(returnedData);
+  };
+
+  SaveButtonView.prototype.refreshLesson = function(e) {
+    e.preventDefault();
+    return window.location.href = app.request.here;
   };
 
   return SaveButtonView;

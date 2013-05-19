@@ -6,7 +6,7 @@ root = typeof exports !== "undefined" && exports !== null ? exports : this;
 root.pop = null;
 
 $(function() {
-  var Lesson, adjustBlocksContainterHeight, handleLessonResult, handlePopcorn, id, lesson;
+  var Lesson, adjustBlocksContainerHeight, handleLessonResult, handlePopcorn, id, lesson;
   Lesson = Backbone.Model.extend({
     urlRoot: app.url + "/lessons"
   });
@@ -29,7 +29,7 @@ $(function() {
 
   handleLessonResult = function(data) {
     handlePopcorn(data.lesson);
-    return adjustBlocksContainterHeight();
+    return adjustBlocksContainerHeight();
   };
   /*
   		create popcorn instance
@@ -46,7 +46,7 @@ $(function() {
          sets div.blocks height
   */
 
-  return adjustBlocksContainterHeight = function() {
+  return adjustBlocksContainerHeight = function() {
     var blocksContainerHeight, divBlocks, maxYposition;
     divBlocks = $('.blocks');
     maxYposition = 0;

@@ -18,7 +18,8 @@ Bachelor.Views.BlocksView = (function(_super) {
   BlocksView.prototype.el = $('.blocks');
 
   BlocksView.prototype.initialize = function() {
-    return Bachelor.App.Collections.blocks.on('add', this.addBlockView);
+    Bachelor.App.Collections.blocks.on('add', this.addBlockView);
+    return this.setResizable();
   };
 
   BlocksView.prototype.addBlockView = function(block) {
@@ -26,7 +27,14 @@ Bachelor.Views.BlocksView = (function(_super) {
     view = new Bachelor.Views.BlockView({
       model: block
     });
-    return this.$el.append(view.render().el);
+    this.$el.append(view.render().el);
+    return adjustBlocksContainerHeight();
+  };
+
+  BlocksView.prototype.setResizable = function() {
+    return this.$el.resizable({
+      containment: 'parent'
+    });
   };
 
   return BlocksView;

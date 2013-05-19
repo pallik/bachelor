@@ -25,6 +25,12 @@ Bachelor.Models.Block = (function(_super) {
     return this.get('master');
   };
 
+  Block.prototype["delete"] = function() {
+    this.set('status', false);
+    this.view.remove();
+    return this.rowView.remove();
+  };
+
   return Block;
 
 })(Backbone.Model);

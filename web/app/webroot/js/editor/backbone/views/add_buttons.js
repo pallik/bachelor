@@ -9,14 +9,11 @@ Bachelor.Views.AddButtonsView = (function(_super) {
 
   function AddButtonsView() {
     var _this = this;
-    this.slideUpInput = function() {
-      return AddButtonsView.prototype.slideUpInput.apply(_this, arguments);
+    this.addAttachment = function(e) {
+      return AddButtonsView.prototype.addAttachment.apply(_this, arguments);
     };
-    this.toggleInput = function(e) {
-      return AddButtonsView.prototype.toggleInput.apply(_this, arguments);
-    };
-    this.addBlockOrAttachment = function(e) {
-      return AddButtonsView.prototype.addBlockOrAttachment.apply(_this, arguments);
+    this.addBlock = function(e) {
+      return AddButtonsView.prototype.addBlock.apply(_this, arguments);
     };
     return AddButtonsView.__super__.constructor.apply(this, arguments);
   }
@@ -24,41 +21,19 @@ Bachelor.Views.AddButtonsView = (function(_super) {
   AddButtonsView.prototype.el = $('.add-buttons');
 
   AddButtonsView.prototype.events = {
-    'click .add-block': 'toggleInput',
-    'click .add-attachment': 'toggleInput',
-    'keyup input#name': 'addBlockOrAttachment'
+    'click .add-block': 'addBlock',
+    'click .add-attachment': 'addAttachment'
   };
 
-  AddButtonsView.prototype.addBlockOrAttachment = function(e) {
-    var ENTER_KEYCODE, ESC_KEYCODE, action, currentKey, input, name, what;
-    ENTER_KEYCODE = 13;
-    ESC_KEYCODE = 27;
-    currentKey = e.which;
-    if (currentKey === ESC_KEYCODE) {
-      this.slideUpInput();
-    }
-    if (currentKey === ENTER_KEYCODE) {
-      input = this.$('input');
-      name = input.val();
-      what = input.data('what');
-      what = capitalizeFirst(what);
-      action = "add" + what;
-      Backbone.Events.trigger(action, name);
-      return this.slideUpInput();
-    }
-  };
-
-  AddButtonsView.prototype.toggleInput = function(e) {
-    var what;
+  AddButtonsView.prototype.addBlock = function(e) {
+    var newBlock;
     e.preventDefault();
-    what = $(e.target).data('what');
-    return this.$('.input-name').slideToggle().find('input').data('what', what);
+    newBlock = new Bachelor.Models.Block();
+    return Bachelor.App.Collections.blocks.add(newBlock);
   };
 
-  AddButtonsView.prototype.slideUpInput = function() {
-    return this.$('.input-name').slideUp(function() {
-      return $(this).find('input').val('');
-    });
+  AddButtonsView.prototype.addAttachment = function(e) {
+    return e.preventDefault();
   };
 
   return AddButtonsView;

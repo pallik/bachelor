@@ -4,6 +4,7 @@ class Bachelor.Views.SaveButtonView extends Backbone.View
 
 	events:
 		'click .save-button': 'saveLesson'
+		'click .refresh-lesson': 'refreshLesson'
 
 
 	saveLesson: (e) =>
@@ -34,9 +35,14 @@ class Bachelor.Views.SaveButtonView extends Backbone.View
 
 	onSuccess: (returnedData) =>
 		debug returnedData
-		nextUrl = @$el.find('.save-button').attr 'href'
-		window.location.href nextUrl
+#		nextUrl = @$el.find('.save-button').attr 'href'
+#		window.location.href = nextUrl
 
 
 	onError: (returnedData) =>
 		debug returnedData
+
+
+	refreshLesson: (e) =>
+		e.preventDefault()
+		window.location.href = app.request.here

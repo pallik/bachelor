@@ -9,6 +9,12 @@ Bachelor.Views.BlockView = (function(_super) {
 
   function BlockView() {
     var _this = this;
+    this.editModelsPosition = function(event, ui) {
+      return BlockView.prototype.editModelsPosition.apply(_this, arguments);
+    };
+    this.editModelsSize = function(event, ui) {
+      return BlockView.prototype.editModelsSize.apply(_this, arguments);
+    };
     this.render = function() {
       return BlockView.prototype.render.apply(_this, arguments);
     };
@@ -21,10 +27,22 @@ Bachelor.Views.BlockView = (function(_super) {
 
   BlockView.prototype.id = '';
 
+  BlockView.prototype.styles = {
+    width: 400,
+    height: 400,
+    top: 0,
+    left: 0
+  };
+
+  BlockView.prototype.events = {
+    'click .typicn.cancel': 'delete'
+  };
+
   BlockView.prototype.initialize = function() {
-    this.model.on('change', this.render);
     this.model.view = this;
-    return this.addPopcornContainer();
+    this.addPopcornContainer();
+    this.setResizable();
+    return this.setDraggable();
   };
 
   BlockView.prototype.render = function() {
@@ -34,11 +52,14 @@ Bachelor.Views.BlockView = (function(_super) {
 
   BlockView.prototype.setContent = function() {
     var style, target;
-    style = this.model.get('style');
     target = this.model.get('target');
+    style = this.model.get('style');
     this.$el.attr('style', style);
     this.$el.addClass(target);
-    return this.$el.css('border-color', this.model.get('color'));
+    return this.$el.css({
+      position: 'absolute',
+      borderColor: this.model.get('color')
+    });
   };
 
   BlockView.prototype.addPopcornContainer = function() {
@@ -46,6 +67,62 @@ Bachelor.Views.BlockView = (function(_super) {
     modelId = this.model.get('id');
     div = "<div id=\"popcorn-container" + modelId + "\" class='popcorn-container'></div>";
     return this.$el.append(div);
+  };
+
+  BlockView.prototype.setResizable = function() {
+    return this.$el.resizable({
+      containment: 'parent',
+      stop: this.editModelsSize
+    });
+  };
+
+  BlockView.prototype.setDraggable = function() {
+    this.$el.draggable({
+      containment: 'parent',
+      stop: this.editModelsPosition
+    });
+    if (this.model.isMasterVideo()) {
+      this.appendVideoTools();
+      return this.$el.draggable('option', 'handle', '.typicn.move');
+    } else {
+      return this.appendTools();
+    }
+  };
+
+  BlockView.prototype.appendTools = function() {
+    var tools;
+    tools = "<div class='tools'><span class='typicn cancel'></span></div>";
+    return this.$el.append(tools);
+  };
+
+  BlockView.prototype.appendVideoTools = function() {
+    var tools;
+    tools = "<div class='tools'><span class='typicn move'></span></div>";
+    return this.$el.append(tools);
+  };
+
+  BlockView.prototype.editModelsSize = function(event, ui) {
+    var height, left, newStyle, top, width;
+    top = "top: " + (this.$el.css('top')) + ";";
+    left = "left: " + (this.$el.css('left')) + ";";
+    width = "width: " + ui.size.width + "px;";
+    height = "height: " + ui.size.height + "px;";
+    newStyle = "" + top + " " + left + " " + width + " " + height;
+    return this.model.set('style', newStyle);
+  };
+
+  BlockView.prototype.editModelsPosition = function(event, ui) {
+    var height, left, newStyle, top, width;
+    top = "top: " + ui.position.top + "px;";
+    left = "left: " + ui.position.left + "px;";
+    width = "width: " + (this.$el.css('width')) + ";";
+    height = "height: " + (this.$el.css('height')) + ";";
+    newStyle = "" + top + " " + left + " " + width + " " + height;
+    return this.model.set('style', newStyle);
+  };
+
+  BlockView.prototype["delete"] = function() {
+    return this.model["delete"]();
   };
 
   return BlockView;

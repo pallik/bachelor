@@ -15,6 +15,13 @@ class Bachelor.Models.Block extends Backbone.Model
 		@get 'master'
 
 
+	delete: ->
+		@set 'status', false
+		@view.remove()
+		@rowView.remove()
+
+
+
 class Bachelor.Collections.Blocks extends Backbone.Collection
 
 	model: Bachelor.Models.Block

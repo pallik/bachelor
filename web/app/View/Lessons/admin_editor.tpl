@@ -12,16 +12,13 @@
 
 
 <div class="lesson-info">
-	<h2 class="lesson-name">Lekcia: </h2>
-	<h3 class="course-name">Kurz: </h3>
+	<h2 class="lesson-name">Lesson: </h2>
+	<h3 class="course-name">Course: </h3>
 </div>
 
 <div class="add-buttons">
-	{{ html.link('Add block', '#', {'class': 'add-block', 'data-what': 'block'}) }}
-	{{ html.link('Add attachment', '#', {'class': 'add-attachment', 'data-what': 'attachment'}) }}
-	<div class="input-name">
-		{{ form.input('name', {'placeholder': 'Write name and press Enter', 'label': false, 'div': false}) }}
-	</div>
+	{{ html.link('Add block', '#', {'class': 'add-block'}) }}
+	{{ html.link('Add attachment to block', '#', {'class': 'add-attachment'}) }}
 </div>
 
 <div class="blocks">
@@ -45,4 +42,5 @@
 
 <div class="save-lesson">
 	{{ html.link('Save lesson', {'admin': true, 'action': 'index'}, {'class': 'save-button'}) }}
+	{{ html.link('Refresh lesson', '#', {'class': 'refresh-lesson'}) }}
 </div>

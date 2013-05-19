@@ -92,6 +92,8 @@ $ ->
 				position: 'fixed'
 				width: '100px'
 				height: '100px'
+				top: 'auto'
+				left: 'auto'
 				bottom: '50px'
 				right: rightPosition + 'px'
 

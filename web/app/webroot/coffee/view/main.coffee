@@ -21,7 +21,7 @@ $ ->
 	###
 	handleLessonResult = (data) ->
 		handlePopcorn(data.lesson)
-		adjustBlocksContainterHeight()
+		adjustBlocksContainerHeight()
 
 	###
 		create popcorn instance
@@ -36,7 +36,7 @@ $ ->
 	###
         sets div.blocks height
 	###
-	adjustBlocksContainterHeight = ->
+	adjustBlocksContainerHeight = ->
 		divBlocks = $('.blocks')
 		maxYposition = 0
 

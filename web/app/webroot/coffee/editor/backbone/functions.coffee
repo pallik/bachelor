@@ -6,6 +6,21 @@ capitalizeFirst = (string) ->
 	string.charAt(0).toUpperCase() + string.slice(1)
 
 
+adjustBlocksContainerHeight = ->
+	divBlocks = $('.blocks')
+	maxYposition = 0
+	reserve = 50
+
+	$('.block').each ->
+		offsetTop = $(@).offset().top
+		height = $(@).height()
+		positionY = offsetTop + height
+		maxYposition = positionY if positionY > maxYposition
+
+	blocksContainerHeight = maxYposition - divBlocks.offset().top
+	divBlocks.height blocksContainerHeight + reserve
+
+
 getRandomColor = ->
 	Colors.current = 0 if Colors.current is Colors.names.length
 	Colors.names[Colors.current++]
