@@ -48,10 +48,15 @@ $(function() {
   */
 
   $('.block').resize(function() {
-    var blockHeight, blockWidth, images, style;
+    var blockHeight, blockWidth, images, maximized, minimized, style;
     blockWidth = $(this).width();
     blockHeight = $(this).height();
     images = $(this).find('.popcorn-container img');
+    maximized = $(this).hasClass('maximized');
+    minimized = $(this).hasClass('minimized');
+    if (!maximized && !minimized) {
+      $('.blocks').trigger('adjustBlocksContainerHeight');
+    }
     style = {
       maxWidth: blockWidth + 'px',
       maxHeight: blockHeight + 'px'
@@ -83,6 +88,8 @@ $(function() {
       'z-index': 3
     };
     $block.removeAttr('style').css(style);
+    $block.removeClass('minimized');
+    $block.addClass('maximized');
     $jcarouselContainer.show();
     $tools.hide();
     $restoreIcon.show();
@@ -109,6 +116,8 @@ $(function() {
         right: rightPosition + 'px'
       };
       $(this).removeAttr('style').css(style);
+      $(this).removeClass('maximized');
+      $(this).addClass('minimized');
       $jcarouselContainer.hide();
       $tools.show();
       $restoreIcon.hide();
@@ -127,6 +136,7 @@ $(function() {
       $restoreIcon = $(this).find('.restore-icon');
       $jcarouselContainer = $(this).find('.jcarousel-container');
       $(this).removeAttr('style').attr('style', style);
+      $(this).removeClass('maximized minimized');
       $tools.show();
       $restoreIcon.hide();
       $jcarouselContainer.show();

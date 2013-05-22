@@ -41,6 +41,9 @@ $ ->
 		blockWidth = $(@).width()
 		blockHeight = $(@).height()
 		images = $(@).find '.popcorn-container img'
+		maximized = $(@).hasClass 'maximized'
+		minimized = $(@).hasClass 'minimized'
+		$('.blocks').trigger('adjustBlocksContainerHeight') if not maximized and not minimized
 
 		style =
 			maxWidth: blockWidth + 'px'
@@ -72,6 +75,8 @@ $ ->
 			'z-index': 3
 
 		$block.removeAttr('style').css style
+		$block.removeClass 'minimized'
+		$block.addClass 'maximized'
 		$jcarouselContainer.show()
 		$tools.hide()
 		$restoreIcon.show()
@@ -98,6 +103,8 @@ $ ->
 				right: rightPosition + 'px'
 
 			$(@).removeAttr('style').css style
+			$(@).removeClass 'maximized'
+			$(@).addClass 'minimized'
 			$jcarouselContainer.hide()
 			$tools.show()
 			$restoreIcon.hide()
@@ -114,6 +121,7 @@ $ ->
 			$jcarouselContainer = $(@).find '.jcarousel-container'
 
 			$(@).removeAttr('style').attr 'style', style
+			$(@).removeClass 'maximized minimized'
 			$tools.show()
 			$restoreIcon.hide()
 			$jcarouselContainer.show()

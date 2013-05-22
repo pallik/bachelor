@@ -8,7 +8,7 @@ USERS VIEW
 				- scrollbar
 					- osetrit este aby bol current v strede, niekedy to nefunguje
 					- UTRIEDIT nahlady podlat data-start
-				- pridat RESIZABLE a DRAGGABLE
+				+ pridat RESIZABLE a DRAGGABLE
 
 //////////////////////////////////////////////////////////////////////
 

@@ -6,7 +6,7 @@ root = typeof exports !== "undefined" && exports !== null ? exports : this;
 root.pop = null;
 
 $(function() {
-  var Lesson, adjustBlocksContainerHeight, handleLessonResult, handlePopcorn, id, lesson;
+  var Lesson, handleLessonResult, handlePopcorn, id, lesson;
   Lesson = Backbone.Model.extend({
     urlRoot: app.url + "/lessons"
   });
@@ -29,7 +29,7 @@ $(function() {
 
   handleLessonResult = function(data) {
     handlePopcorn(data.lesson);
-    return adjustBlocksContainerHeight();
+    return $('.blocks').trigger('adjustBlocksContainerHeight');
   };
   /*
   		create popcorn instance
@@ -37,29 +37,9 @@ $(function() {
   		on time update thumbnails-scroller and chapters
   */
 
-  handlePopcorn = function(lesson) {
+  return handlePopcorn = function(lesson) {
     root.pop = new Pop(lesson.Attachment.url);
     root.pop.addPopcornElements(lesson.Block);
     return root.pop.onTimeUpdate();
-  };
-  /*
-         sets div.blocks height
-  */
-
-  return adjustBlocksContainerHeight = function() {
-    var blocksContainerHeight, divBlocks, maxYposition;
-    divBlocks = $('.blocks');
-    maxYposition = 0;
-    $('.block').each(function() {
-      var height, offsetTop, positionY;
-      offsetTop = $(this).offset().top;
-      height = $(this).height();
-      positionY = offsetTop + height;
-      if (positionY > maxYposition) {
-        return maxYposition = positionY;
-      }
-    });
-    blocksContainerHeight = maxYposition - divBlocks.offset().top;
-    return divBlocks.height(blocksContainerHeight);
   };
 });

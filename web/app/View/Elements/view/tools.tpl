@@ -1,7 +1,9 @@
 <div class="tools">
-	{{ html.link(html.image('icons/maximize.png', {'alt': 'maximize'}), '#', {'escape': false, 'class': 'maximize'}) }}
-	{{ html.link(html.image('icons/cancel.png', {'alt': 'close'}), '#', {'escape': false, 'class': 'close'}) }}
+	<span class="typcn typcn-arrow-maximise maximize"></span>
+	<span class="typcn typcn-arrow-move move"></span>
+	<span class="typcn typcn-delete close"></span>
 </div>
 <div class="restore-icon">
-	{{ html.link(html.image('icons/restore.png', {'alt': 'restore'}), '#', {'escape': false, 'class': 'restore'}) }}
+	<span class="typcn typcn-arrow-minimise-outline restore"></span>
+	{#{{ html.link(html.image('icons/restore.png', {'alt': 'restore'}), '#', {'escape': false, 'class': 'restore'}) }}#}
 </div>

@@ -35,7 +35,7 @@ Bachelor.Views.BlockView = (function(_super) {
   };
 
   BlockView.prototype.events = {
-    'click .typicn.cancel': 'delete'
+    'click .typcn.typcn-delete': 'delete'
   };
 
   BlockView.prototype.initialize = function() {
@@ -83,7 +83,7 @@ Bachelor.Views.BlockView = (function(_super) {
     });
     if (this.model.isMasterVideo()) {
       this.appendVideoTools();
-      return this.$el.draggable('option', 'handle', '.typicn.move');
+      return this.$el.draggable('option', 'handle', '.typcn.typcn-arrow-move');
     } else {
       return this.appendTools();
     }
@@ -91,13 +91,13 @@ Bachelor.Views.BlockView = (function(_super) {
 
   BlockView.prototype.appendTools = function() {
     var tools;
-    tools = "<div class='tools'><span class='typicn cancel'></span></div>";
+    tools = "<div class='tools'><span class='typcn typcn-delete'></span></div>";
     return this.$el.append(tools);
   };
 
   BlockView.prototype.appendVideoTools = function() {
     var tools;
-    tools = "<div class='tools'><span class='typicn move'></span></div>";
+    tools = "<div class='tools'><span class='typcn typcn-arrow-move'></span></div>";
     return this.$el.append(tools);
   };
 

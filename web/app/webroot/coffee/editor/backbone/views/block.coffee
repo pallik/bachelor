@@ -12,7 +12,7 @@ class Bachelor.Views.BlockView extends Backbone.View
 
 
 	events:
-		'click .typicn.cancel': 'delete'
+		'click .typcn.typcn-delete': 'delete'
 
 
 	initialize: ->
@@ -56,18 +56,18 @@ class Bachelor.Views.BlockView extends Backbone.View
 
 		if @model.isMasterVideo()
 			@appendVideoTools()
-			@$el.draggable 'option', 'handle', '.typicn.move'
+			@$el.draggable 'option', 'handle', '.typcn.typcn-arrow-move'
 		else
 			@appendTools()
 
 
 	appendTools: ->
-		tools = "<div class='tools'><span class='typicn cancel'></span></div>"
+		tools = "<div class='tools'><span class='typcn typcn-delete'></span></div>"
 		@$el.append tools
 
 
 	appendVideoTools: ->
-		tools = "<div class='tools'><span class='typicn move'></span></div>"
+		tools = "<div class='tools'><span class='typcn typcn-arrow-move'></span></div>"
 		@$el.append tools
 
 
