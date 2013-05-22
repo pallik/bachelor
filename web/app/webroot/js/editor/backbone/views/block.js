@@ -121,7 +121,9 @@ Bachelor.Views.BlockView = (function(_super) {
     return this.model.set('style', newStyle);
   };
 
-  BlockView.prototype["delete"] = function() {};
+  BlockView.prototype["delete"] = function() {
+    return this.model["delete"]();
+  };
 
   return BlockView;
 

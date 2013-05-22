@@ -92,3 +92,4 @@ class Bachelor.Views.BlockView extends Backbone.View
 
 
 	delete: ->
+		@model.delete()
