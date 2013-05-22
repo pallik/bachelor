@@ -10,6 +10,7 @@ this.Bachelor.App =
 	Collections:
 		blocks: null
 		timestamps: null
+		attachments: null
 
 	Views:
 		addButtonsView: null
@@ -28,6 +29,7 @@ this.Bachelor.App =
 
 		@Collections.blocks = new Bachelor.Collections.Blocks()
 		@Collections.timestamps = new Bachelor.Collections.Timestamps()
+		@Collections.attachments = new Bachelor.Collections.Attachments()
 
 		@Views.blocksRowsView = new Bachelor.Views.BlocksRowsView()
 		@Views.blocksView = new Bachelor.Views.BlocksView()
@@ -52,7 +54,15 @@ this.Bachelor.App =
 
 	addTimestampsToCollection: ->
 		_.each @blocksData, (block) =>
-			@Collections.timestamps.add block.Timestamp
+			blockId = block.id
+			blockModel = @Collections.blocks.get blockId
+			blockCid = blockModel.cid
+			_.each block.Timestamp, (timestamp) =>
+				timestamp.blockCid = blockCid
+				@Collections.timestamps.add timestamp
+
+		@Collections.timestamps.each (timestamp) =>
+			timestamp.set 'status', true
 
 		Backbone.Events.trigger 'renderAllTimestamps'
 

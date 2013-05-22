@@ -31,10 +31,10 @@ Bachelor.Views.BlockRowView = (function(_super) {
   };
 
   BlockRowView.prototype.setContent = function() {
-    var blockId, target;
+    var blockCid, target;
     target = this.model.get('target');
-    blockId = this.model.get('id');
-    this.$el.attr('data-block-id', blockId);
+    blockCid = this.model.cid;
+    this.$el.attr('data-block-cid', blockCid);
     this.$el.addClass(target);
     return this.$el.css('border-color', this.model.get('color'));
   };

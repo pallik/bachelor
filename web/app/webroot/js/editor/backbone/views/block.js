@@ -63,9 +63,9 @@ Bachelor.Views.BlockView = (function(_super) {
   };
 
   BlockView.prototype.addPopcornContainer = function() {
-    var div, modelId;
-    modelId = this.model.get('id');
-    div = "<div id=\"popcorn-container" + modelId + "\" class='popcorn-container'></div>";
+    var div, modelCid;
+    modelCid = this.model.cid;
+    div = "<div id=\"popcorn-container" + modelCid + "\" class='popcorn-container'></div>";
     return this.$el.append(div);
   };
 
@@ -121,9 +121,7 @@ Bachelor.Views.BlockView = (function(_super) {
     return this.model.set('style', newStyle);
   };
 
-  BlockView.prototype["delete"] = function() {
-    return this.model["delete"]();
-  };
+  BlockView.prototype["delete"] = function() {};
 
   return BlockView;
 

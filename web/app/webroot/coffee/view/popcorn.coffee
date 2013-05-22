@@ -1,6 +1,7 @@
 class Pop
 
 	popcorn: null
+	duration: null
 
 	constructor: (@url) ->
 		@popcorn = new Popcorn.smart ".masterVideo", @url
@@ -32,21 +33,23 @@ class Pop
         add popcorn image
 	###
 	addPopcornImage: (timestamp) ->
+		blockId =  timestamp.blockCid ? timestamp.block_id
 		@popcorn.image
 			start: timestamp.start
 			end: timestamp.end
 			src: app.url + timestamp.Attachment.url
-			target: 'popcorn-container' + timestamp.block_id
+			target: 'popcorn-container' + blockId
 
 	###
 		add popcorn text
 	###
 	addPopcornText: (timestamp) ->
+		blockId =  timestamp.blockCid ? timestamp.block_id
 		@popcorn.footnote
 			start: timestamp.start
 			end: timestamp.end
 			text: timestamp.Attachment.text
-			target: 'popcorn-container' + timestamp.block_id
+			target: 'popcorn-container' + blockId
 
 	###
 		set video time at
@@ -77,6 +80,7 @@ class Pop
 
 		@popcorn.on 'durationchange', =>
 			Backbone.Events.trigger 'durationchange'
+			@duration = @popcorn.duration()
 
 
 	###

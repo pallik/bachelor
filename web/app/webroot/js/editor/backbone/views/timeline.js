@@ -9,6 +9,9 @@ Bachelor.Views.TimelineView = (function(_super) {
 
   function TimelineView() {
     var _this = this;
+    this.pinStatusChanged = function(timestamp) {
+      return TimelineView.prototype.pinStatusChanged.apply(_this, arguments);
+    };
     this.addPinView = function(timestamp) {
       return TimelineView.prototype.addPinView.apply(_this, arguments);
     };
@@ -36,8 +39,9 @@ Bachelor.Views.TimelineView = (function(_super) {
   TimelineView.prototype.initialize = function() {
     this.setSlider();
     Backbone.Events.on('popcornTimeUpdate', this.setSliderValue);
+    Backbone.Events.on('durationchange', this.setRatioAndEnableSlider);
     Bachelor.App.Collections.timestamps.on('add', this.addPinView);
-    return Backbone.Events.on('durationchange', this.setRatioAndEnableSlider);
+    return Bachelor.App.Collections.timestamps.on('change:status', this.pinStatusChanged);
   };
 
   TimelineView.prototype.setSlider = function() {
@@ -77,10 +81,19 @@ Bachelor.Views.TimelineView = (function(_super) {
 
   TimelineView.prototype.addPinView = function(timestamp) {
     var view;
-    view = new Bachelor.Views.PinView({
+    return view = new Bachelor.Views.PinView({
       model: timestamp
     });
-    return this.$el.append(view.render().el);
+  };
+
+  TimelineView.prototype.pinStatusChanged = function(timestamp) {
+    var status;
+    status = timestamp.get('status');
+    if (status) {
+      return this.$el.append(timestamp.pinView.render().el);
+    } else {
+      return timestamp.pinView.remove();
+    }
   };
 
   return TimelineView;

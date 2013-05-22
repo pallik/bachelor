@@ -1,7 +1,7 @@
 {{ html.css(['view'], null, {'inline': false}) }}
 
 {{ html.script(['lib/jcarousel/core', 'lib/jcarousel/core_plugin',
-	'view/main', 'view/pop', 'view/scroller', 'view/chapter', 'view/maximize', 'view/content'],
+	'view/main', 'view/popcorn', 'view/scroller', 'view/chapter', 'view/maximize', 'view/content'],
 	{'inline': false}) }}
 
 <h2>Lekcia: {{ lesson.Lesson.name }}</h2>

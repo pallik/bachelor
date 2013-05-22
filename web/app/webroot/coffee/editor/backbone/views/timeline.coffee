@@ -9,8 +9,9 @@ class Bachelor.Views.TimelineView extends Backbone.View
 	initialize: ->
 		@setSlider()
 		Backbone.Events.on 'popcornTimeUpdate', @setSliderValue
-		Bachelor.App.Collections.timestamps.on 'add', @addPinView
 		Backbone.Events.on 'durationchange', @setRatioAndEnableSlider
+		Bachelor.App.Collections.timestamps.on 'add', @addPinView
+		Bachelor.App.Collections.timestamps.on 'change:status', @pinStatusChanged
 
 
 
@@ -47,4 +48,11 @@ class Bachelor.Views.TimelineView extends Backbone.View
 
 	addPinView: (timestamp) =>
 		view = new Bachelor.Views.PinView(model: timestamp)
-		@$el.append( view.render().el )
+
+
+	pinStatusChanged: (timestamp) =>
+		status = timestamp.get 'status'
+		if status
+			@$el.append( timestamp.pinView.render().el )
+		else
+			timestamp.pinView.remove()

@@ -28,7 +28,8 @@ Bachelor.Models.Block = (function(_super) {
   Block.prototype["delete"] = function() {
     this.set('status', false);
     this.view.remove();
-    return this.rowView.remove();
+    this.rowView.remove();
+    return Backbone.Events.trigger('setTimestampFalse', this.cid);
   };
 
   return Block;

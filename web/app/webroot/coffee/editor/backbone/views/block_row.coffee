@@ -20,8 +20,8 @@ class Bachelor.Views.BlockRowView extends Backbone.View
 
 	setContent: ->
 		target = @model.get 'target'
-		blockId = @model.get 'id'
+		blockCid = @model.cid
 
-		@$el.attr 'data-block-id', blockId
+		@$el.attr 'data-block-cid', blockCid
 		@$el.addClass target
 		@$el.css 'border-color', @model.get 'color'

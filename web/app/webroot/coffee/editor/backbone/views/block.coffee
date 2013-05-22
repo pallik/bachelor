@@ -38,8 +38,8 @@ class Bachelor.Views.BlockView extends Backbone.View
 
 
 	addPopcornContainer: ->
-		modelId = @model.get 'id'
-		div = "<div id=\"popcorn-container#{modelId}\" class='popcorn-container'></div>"
+		modelCid = @model.cid
+		div = "<div id=\"popcorn-container#{modelCid}\" class='popcorn-container'></div>"
 		@$el.append div
 
 
@@ -92,4 +92,3 @@ class Bachelor.Views.BlockView extends Backbone.View
 
 
 	delete: ->
-		@model.delete()

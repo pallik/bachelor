@@ -31,6 +31,60 @@ class AttachmentsController extends AppController {
 		$this->set('attachments', $this->paginate());
 	}
 
+
+	/**
+	 * shows only presentations and images without parent_id
+	 *
+	 * @return string
+	 */
+	public function admin_list() {
+		$this->redirectIfNotAjax();
+
+		$this->Attachment->recursive = 0;
+		$videoTypeId = $this->Attachment->Type->field('id', array('Type.name' => 'video'));
+		$list = $this->Attachment->find('all', array(
+			'conditions' => array(
+				'Attachment.user_id' => $this->Auth->user('id'),
+				'Attachment.parent_id' => null,
+				'Attachment.type_id !=' => $videoTypeId,
+				'Attachment.status' => true
+			)
+		));
+
+		$this->autoRender = false;
+		return json_encode(array('list' => $list));
+	}
+
+
+	/**
+	 * get data based on request
+	 * images for presentation
+	 *
+	 * @return string
+	 */
+	public function admin_getDataFromRequest() {
+		$this->redirectIfNotAjax();
+
+		$this->Attachment->recursive = 0;
+
+		$result = $this->Attachment->find('all', array(
+			'conditions' => array(
+				'Attachment.user_id' => $this->Auth->user('id'),
+				'Attachment.status' => true,
+				'OR' => array(
+					'Attachment.id' => array_merge($this->request->data['image'], $this->request->data['text']),
+					'AND' => array(
+						'Attachment.parent_id' => $this->request->data['presentation'],
+						'Attachment.parent_id !=' => null
+					)
+				)
+			)
+		));
+
+		$this->autoRender = false;
+		return json_encode($result);
+	}
+
 	/**
 	 * admin_view method
 	 *
@@ -253,7 +307,7 @@ class AttachmentsController extends AppController {
 				mkdir($folderUrl);
 			}
 
-			$outputUrl = $folderUrl . DS . 'page%d.png';
+			$outputUrl = $folderUrl . DS . '%d.png';
 			$source = $urlWithoutSlash;
 
 			$shellTemplate = 'gs -dSAFER -dBATCH -dNOPAUSE -r200 -sDEVICE=png16m -sOutputFile=OUTPUT SOURCE';
@@ -269,7 +323,7 @@ class AttachmentsController extends AppController {
 				mkdir($thumbnailFolderUrl);
 			}
 
-			$thumbnailOutputUrl = $thumbnailFolderUrl . DS . 'page%d.png';
+			$thumbnailOutputUrl = $thumbnailFolderUrl . DS . '%d.png';
 			$thumbailShellTemplate = 'gs -dSAFER -dBATCH -dNOPAUSE -r20 -sDEVICE=png16m -sOutputFile=OUTPUT SOURCE';
 			$thumbnailScript = str_replace('OUTPUT', $thumbnailOutputUrl, $thumbailShellTemplate);
 			$thumbnailScript = str_replace('SOURCE', $source, $thumbnailScript);

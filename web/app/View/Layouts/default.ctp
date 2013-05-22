@@ -25,6 +25,9 @@
 
 		echo $this->Js->set('url', $this->request->base);
 		echo $this->Js->set('request', $this->request);
+		if ($authUser) {
+			echo $this->Js->set('authUser', $authUser);
+		}
 		echo $this->Js->writeBuffer(array('onDomReady' => false));
 
 		echo $this->fetch('meta');

@@ -5,17 +5,19 @@ class Bachelor.Views.TimestampView extends Backbone.View
 	id: ''
 
 
-#	events:
+	events:
+		'click': 'handleClick'
 
 
 	initialize: ->
-		@model.on 'change', @render
+#		@model.on 'change', @render #asi netreba
 		@model.view = @
 
 
 	render: =>
 		@setContent()
 		@appendAttachment()
+		@setOpacity()
 		return @
 
 
@@ -37,9 +39,59 @@ class Bachelor.Views.TimestampView extends Backbone.View
 	appendImage: ->
 		urlInfo = pathinfo(app.url + @attachment.url)
 		thumbUrl = urlInfo.dirname + '/thumb/' + urlInfo.basename
-		img = "<img src=\"#{thumbUrl}\" />"
+		img = "<img src=\"#{thumbUrl}\" class='thumbnail-content' />"
 		@$el.append img
 
 
 	appendText: ->
-		@$el.append @attachment.name
+		textDiv = "<div class='text thumbnail-content'>#{@attachment.name}</div>"
+		@$el.append textDiv
+
+
+	setOpacity: ->
+		@$el.find('.thumbnail-content').css('opacity', 0.7) if @model.isSet()
+
+
+	handleClick: (e) =>
+		LEFT_CLICK = 1
+		RIGHT_CLICK = 3
+		@toggleStartEnd() if e.which is LEFT_CLICK
+		@showContext() if e.which is RIGHT_CLICK
+
+
+	toggleStartEnd: ->
+		return if @model.get 'status'
+
+		currentTime = Bachelor.App.pop.popcorn.currentTime()
+		if not @model.get 'timing'
+			blockCid = @model.get 'blockCid'
+			Bachelor.App.Views.blocksRowsView.setAllTimestampsTimingEnd blockCid, currentTime
+			@setTimingStart currentTime
+		else
+			@setTimingEnd currentTime
+
+
+	setTimingStart: (currentTime) ->
+		@model.set 'timing', true
+		@model.set 'start', currentTime
+		@$el.toggleClass 'timing'
+
+
+	setTimingEnd: (currentTime = Bachelor.App.pop.popcorn.currentTime()) ->
+		@model.set 'timing', false
+		@model.set 'end', currentTime
+		@model.set 'status', true
+		@$el.toggleClass 'timing'
+		@render()
+		@addTimestampToPopcorn()
+
+
+	addTimestampToPopcorn: ->
+		type = @model.get('Attachment').Type.name
+		timestamp = @model.attributes
+		Bachelor.App.pop.addPopcornImage(timestamp) if type is 'image'
+		Bachelor.App.pop.addPopcornText(timestamp) if type is 'text'
+
+
+	showContext: ->
+		debug 'showContext'

@@ -5,6 +5,8 @@ Pop = (function() {
 
   Pop.prototype.popcorn = null;
 
+  Pop.prototype.duration = null;
+
   function Pop(url) {
     this.url = url;
     this.popcorn = new Popcorn.smart(".masterVideo", this.url);
@@ -65,11 +67,13 @@ Pop = (function() {
 
 
   Pop.prototype.addPopcornImage = function(timestamp) {
+    var blockId, _ref;
+    blockId = (_ref = timestamp.blockCid) != null ? _ref : timestamp.block_id;
     return this.popcorn.image({
       start: timestamp.start,
       end: timestamp.end,
       src: app.url + timestamp.Attachment.url,
-      target: 'popcorn-container' + timestamp.block_id
+      target: 'popcorn-container' + blockId
     });
   };
 
@@ -79,11 +83,13 @@ Pop = (function() {
 
 
   Pop.prototype.addPopcornText = function(timestamp) {
+    var blockId, _ref;
+    blockId = (_ref = timestamp.blockCid) != null ? _ref : timestamp.block_id;
     return this.popcorn.footnote({
       start: timestamp.start,
       end: timestamp.end,
       text: timestamp.Attachment.text,
-      target: 'popcorn-container' + timestamp.block_id
+      target: 'popcorn-container' + blockId
     });
   };
 
@@ -129,7 +135,8 @@ Pop = (function() {
       return Backbone.Events.trigger('popcornTimeUpdate', currentTime);
     });
     return this.popcorn.on('durationchange', function() {
-      return Backbone.Events.trigger('durationchange');
+      Backbone.Events.trigger('durationchange');
+      return _this.duration = _this.popcorn.duration();
     });
   };
 

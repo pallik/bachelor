@@ -15,8 +15,11 @@ Bachelor.Views.SaveButtonView = (function(_super) {
     this.onError = function(returnedData) {
       return SaveButtonView.prototype.onError.apply(_this, arguments);
     };
-    this.onSuccess = function(returnedData) {
-      return SaveButtonView.prototype.onSuccess.apply(_this, arguments);
+    this.onTimestampsSuccess = function(returnedData) {
+      return SaveButtonView.prototype.onTimestampsSuccess.apply(_this, arguments);
+    };
+    this.onBlocksSuccess = function(returnedData) {
+      return SaveButtonView.prototype.onBlocksSuccess.apply(_this, arguments);
     };
     this.saveLesson = function(e) {
       return SaveButtonView.prototype.saveLesson.apply(_this, arguments);
@@ -32,32 +35,43 @@ Bachelor.Views.SaveButtonView = (function(_super) {
   };
 
   SaveButtonView.prototype.saveLesson = function(e) {
-    var blocks, blocksAjaxUrl, blocksData, timestamps, timestampsAjaxUrl, timestampsData;
+    var blocks, blocksAjaxUrl, blocksData;
     e.preventDefault();
-    blocksAjaxUrl = Bachelor.App.Collections.blocks.url + "/saveAll";
-    blocks = Bachelor.App.Collections.blocks;
-    blocksData = JSON.stringify(blocks);
-    timestampsAjaxUrl = Bachelor.App.Collections.timestamps.url + "/saveAll";
-    timestamps = Bachelor.App.Collections.timestamps;
-    timestampsData = JSON.stringify(timestamps);
-    this.ajaxSend(blocksAjaxUrl, blocksData);
-    return this.ajaxSend(timestampsAjaxUrl, timestampsData);
-  };
-
-  SaveButtonView.prototype.ajaxSend = function(url, data) {
-    return $.ajax({
-      type: "POST",
-      url: url,
-      contentType: 'application/json',
-      data: data,
-      dataType: "json",
-      success: this.onSuccess,
-      error: this.onError
+    blocks = Bachelor.App.Collections.blocks.filter(function(block) {
+      block.set('cid', block.cid);
+      return true;
     });
+    blocksData = JSON.stringify(blocks);
+    blocksAjaxUrl = Bachelor.App.Collections.blocks.url + "/saveAll";
+    return ajaxPost(blocksAjaxUrl, blocksData, this.onBlocksSuccess, this.onError);
   };
 
-  SaveButtonView.prototype.onSuccess = function(returnedData) {
-    return debug(returnedData);
+  SaveButtonView.prototype.onBlocksSuccess = function(returnedData) {
+    var timestampsAjaxUrl, timestampsData, timestampsFinished;
+    timestampsFinished = Bachelor.App.Collections.timestamps.filter(function(timestamp) {
+      var block;
+      block = _.find(returnedData.blocks, function(block) {
+        return block.cid === timestamp.get('blockCid');
+      });
+      if (block.insertedId != null) {
+        timestamp.set('block_id', block.insertedId);
+      }
+      if (timestamp.get('timing')) {
+        timestamp.view.setTimingEnd();
+      }
+      return timestamp.get('status');
+    });
+    timestampsData = JSON.stringify(timestampsFinished);
+    timestampsAjaxUrl = Bachelor.App.Collections.timestamps.url + "/saveAll";
+    return ajaxPost(timestampsAjaxUrl, timestampsData, this.onTimestampsSuccess, this.onError);
+  };
+
+  SaveButtonView.prototype.onTimestampsSuccess = function(returnedData) {
+    var nextUrl;
+    if (returnedData.success) {
+      nextUrl = this.$el.find('.save-button').attr('href');
+      return window.location.href = nextUrl;
+    }
   };
 
   SaveButtonView.prototype.onError = function(returnedData) {

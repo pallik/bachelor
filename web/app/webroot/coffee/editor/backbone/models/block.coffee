@@ -19,6 +19,7 @@ class Bachelor.Models.Block extends Backbone.Model
 		@set 'status', false
 		@view.remove()
 		@rowView.remove()
+		Backbone.Events.trigger 'setTimestampFalse', @cid
 
 
 

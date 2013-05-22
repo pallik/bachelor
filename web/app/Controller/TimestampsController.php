@@ -105,7 +105,9 @@ class TimestampsController extends AppController {
 	public function admin_saveAll() {
 		$this->redirectIfNotAjax();
 
-		$result = $this->Timestamp->saveMany($this->request->data);
+		$result['success'] = $this->Timestamp->saveMany($this->request->data);
+		$result['log'] = $this->Timestamp->getDataSource()->getLog(false, false);
+		$result['data'] = $this->request->data;
 
 		$this->autoRender = false;
 		return json_encode($result);

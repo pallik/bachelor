@@ -107,8 +107,18 @@ class BlocksController extends AppController {
 	 */
 	public function admin_saveAll() {
 		$this->redirectIfNotAjax();
+		$result['success'] = true;
 
-		$result = $this->Block->saveMany($this->request->data);
+		foreach ($this->request->data as $i => $block) {
+			$this->Block->create();
+			$result['success'] = $result['success'] && $this->Block->save($block);
+			$this->request->data[$i]['insertedId'] = $this->Block->getInsertID();
+		}
+
+
+//		$result['success'] = $this->Block->saveMany($this->request->data);
+//		$result['ids'] = $this->Block->insertedIds;
+		$result['blocks'] = $this->request->data;
 
 		$this->autoRender = false;
 		return json_encode($result);

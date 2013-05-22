@@ -8,6 +8,7 @@ class Bachelor.Views.BlocksRowsView extends Backbone.View
 		Bachelor.App.Collections.blocks.on 'add', @addBlockRowView
 		Bachelor.App.Collections.timestamps.on 'add', @addTimestampView
 		Backbone.Events.on 'renderAllTimestamps', @renderAllTimestamps
+		Backbone.Events.on 'setTimestampFalse', @setTimestampStatusFalse
 
 
 	addBlockRowView: (block) =>
@@ -23,12 +24,22 @@ class Bachelor.Views.BlocksRowsView extends Backbone.View
 
 	appendTimestampViewToBlockRow: (timestamp) ->
 		view = timestamp.view
-		blockId = timestamp.get 'block_id'
-		$blockRow = @$el.find ".block-row[data-block-id=#{blockId}]"
+		blockCid = timestamp.get 'blockCid'
+		$blockRow = @$el.find ".block-row[data-block-cid=#{blockCid}]"
 		$blockRow.append( view.render().el )
 
 
 	renderAllTimestamps: =>
+		Bachelor.App.Collections.timestamps.sort()
 		_.each Bachelor.App.Collections.timestamps.models, (timestamp) =>
-			timestamp.view.remove()
 			@appendTimestampViewToBlockRow timestamp
+
+
+	setTimestampStatusFalse: (blockCid) =>
+		_.each Bachelor.App.Collections.timestamps.where(blockCid: blockCid), (timestamp) ->
+			timestamp.set 'status', false
+
+
+	setAllTimestampsTimingEnd: (blockCid, currentTime) =>
+		_.each Bachelor.App.Collections.timestamps.where(blockCid: blockCid, status: false, timing: true), (timestamp) ->
+			timestamp.view.setTimingEnd currentTime

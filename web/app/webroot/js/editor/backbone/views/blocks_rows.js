@@ -9,6 +9,12 @@ Bachelor.Views.BlocksRowsView = (function(_super) {
 
   function BlocksRowsView() {
     var _this = this;
+    this.setAllTimestampsTimingEnd = function(blockCid, currentTime) {
+      return BlocksRowsView.prototype.setAllTimestampsTimingEnd.apply(_this, arguments);
+    };
+    this.setTimestampStatusFalse = function(blockCid) {
+      return BlocksRowsView.prototype.setTimestampStatusFalse.apply(_this, arguments);
+    };
     this.renderAllTimestamps = function() {
       return BlocksRowsView.prototype.renderAllTimestamps.apply(_this, arguments);
     };
@@ -26,7 +32,8 @@ Bachelor.Views.BlocksRowsView = (function(_super) {
   BlocksRowsView.prototype.initialize = function() {
     Bachelor.App.Collections.blocks.on('add', this.addBlockRowView);
     Bachelor.App.Collections.timestamps.on('add', this.addTimestampView);
-    return Backbone.Events.on('renderAllTimestamps', this.renderAllTimestamps);
+    Backbone.Events.on('renderAllTimestamps', this.renderAllTimestamps);
+    return Backbone.Events.on('setTimestampFalse', this.setTimestampStatusFalse);
   };
 
   BlocksRowsView.prototype.addBlockRowView = function(block) {
@@ -48,18 +55,36 @@ Bachelor.Views.BlocksRowsView = (function(_super) {
   };
 
   BlocksRowsView.prototype.appendTimestampViewToBlockRow = function(timestamp) {
-    var $blockRow, blockId, view;
+    var $blockRow, blockCid, view;
     view = timestamp.view;
-    blockId = timestamp.get('block_id');
-    $blockRow = this.$el.find(".block-row[data-block-id=" + blockId + "]");
+    blockCid = timestamp.get('blockCid');
+    $blockRow = this.$el.find(".block-row[data-block-cid=" + blockCid + "]");
     return $blockRow.append(view.render().el);
   };
 
   BlocksRowsView.prototype.renderAllTimestamps = function() {
     var _this = this;
+    Bachelor.App.Collections.timestamps.sort();
     return _.each(Bachelor.App.Collections.timestamps.models, function(timestamp) {
-      timestamp.view.remove();
       return _this.appendTimestampViewToBlockRow(timestamp);
+    });
+  };
+
+  BlocksRowsView.prototype.setTimestampStatusFalse = function(blockCid) {
+    return _.each(Bachelor.App.Collections.timestamps.where({
+      blockCid: blockCid
+    }), function(timestamp) {
+      return timestamp.set('status', false);
+    });
+  };
+
+  BlocksRowsView.prototype.setAllTimestampsTimingEnd = function(blockCid, currentTime) {
+    return _.each(Bachelor.App.Collections.timestamps.where({
+      blockCid: blockCid,
+      status: false,
+      timing: true
+    }), function(timestamp) {
+      return timestamp.view.setTimingEnd(currentTime);
     });
   };
 

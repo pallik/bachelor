@@ -10,23 +10,24 @@ class Bachelor.Views.PinView extends Backbone.View
 
 
 	initialize: ->
-#		@model.on 'change', @render
+#		@model.on 'change', @render #asi nebude
 		@model.pinView = @
-		Backbone.Events.on 'durationchange', @setRatioAndPosition
+		Backbone.Events.on 'durationchange', @render
 		@setContent()
 
 
 	render: =>
-		return @
+		@setRatio()
 		@setPosition()
+		return @
 
 
 	setContent: ->
-		blockId = @model.get 'block_id'
-		block = Bachelor.App.Collections.blocks.where(id: blockId)[0]
+		blockCid = @model.get 'blockCid'
+		block = Bachelor.App.Collections.blocks.get blockCid
 		blockIndexOf = Bachelor.App.Collections.blocks.indexOf block
 
-		marginTop = (blockIndexOf - 1) * -10
+		marginTop = (blockIndexOf - 1) * -13
 		color = block.get 'color'
 
 		@$el.css color: color, marginTop: marginTop
@@ -39,6 +40,5 @@ class Bachelor.Views.PinView extends Backbone.View
 			@$el.css 'left', "#{position}%"
 
 
-	setRatioAndPosition: =>
-		@ratio = Bachelor.App.pop.getRatio()
-		@setPosition()
+	setRatio: ->
+		@ratio ?= Bachelor.App.Views.timelineView.ratio

@@ -9,7 +9,8 @@ this.Bachelor.App = {
   },
   Collections: {
     blocks: null,
-    timestamps: null
+    timestamps: null,
+    attachments: null
   },
   Views: {
     addButtonsView: null,
@@ -26,6 +27,7 @@ this.Bachelor.App = {
     this.data = this.Models.lesson.get('data');
     this.Collections.blocks = new Bachelor.Collections.Blocks();
     this.Collections.timestamps = new Bachelor.Collections.Timestamps();
+    this.Collections.attachments = new Bachelor.Collections.Attachments();
     this.Views.blocksRowsView = new Bachelor.Views.BlocksRowsView();
     this.Views.blocksView = new Bachelor.Views.BlocksView();
     this.Views.addButtonsView = new Bachelor.Views.AddButtonsView();
@@ -45,7 +47,17 @@ this.Bachelor.App = {
   addTimestampsToCollection: function() {
     var _this = this;
     _.each(this.blocksData, function(block) {
-      return _this.Collections.timestamps.add(block.Timestamp);
+      var blockCid, blockId, blockModel;
+      blockId = block.id;
+      blockModel = _this.Collections.blocks.get(blockId);
+      blockCid = blockModel.cid;
+      return _.each(block.Timestamp, function(timestamp) {
+        timestamp.blockCid = blockCid;
+        return _this.Collections.timestamps.add(timestamp);
+      });
+    });
+    this.Collections.timestamps.each(function(timestamp) {
+      return timestamp.set('status', true);
     });
     return Backbone.Events.trigger('renderAllTimestamps');
   },

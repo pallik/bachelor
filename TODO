@@ -1,0 +1,139 @@
+TODO:
+
+
+//////////////////////////////////////////////////////////////////////
+
+USERS VIEW
+				- vycentrovat obrazky a text
+				- scrollbar
+					- osetrit este aby bol current v strede, niekedy to nefunguje
+					- UTRIEDIT nahlady podlat data-start
+				- pridat RESIZABLE a DRAGGABLE
+
+//////////////////////////////////////////////////////////////////////
+
+ADMINS VIEW
+				+ blocks
+					+ posuvanie vo vymedzenom priestore div.blocks
+					+ resizovanie
+					+ do db ulozit, left, top, width, height
+					+ nastavovanie velkosti div.blocks (parent vsetkych)
+					+ target je css .class
+					+ masterVideo - jedina prednastavene classa
+
+				- users 	- schovat heslo
+							+ REGISTRACIA uzivatelov
+							+ autorizaciu uzivatelov, registracia, heslo musim hashovat sam...
+							- uniq username
+							- PRIDAT NAME (aj do db) - cele meno ucitela, zobrazi sa vo view lekcii
+
+				- courses 	+ add/edit userId podla prihlaseneho uzivatela
+							- pri danom kurze bude moznost vytvorit lekciu - lessons/add/id
+
+				- lessons	- add() s parametrom course_id
+							+ add() pri ukladani, nech sa vytvori aj masterVideo blok - saveAssociated()
+
+				- attachments	? add timestamp pre konkretny attachment, predvyplneny attachment_id v timestamp
+								+ pri zobrazovani, sa zobrazia, len s parent_id == null
+								- text - zmenit na wysiwyg, moze si uz dopredu podavat nejake texty
+								- file - pridat novy typ, bude v lekcii zobrazeny ako subory na stiahnutie
+								+ add()
+									+ prepinanie medzi typmi => zobrazovanie spravnych policok
+									+ prepinanie upload, direct url
+								- edit()
+									- upravit trochu tie polia podla typu
+								- index() - multiple delete
+								- delete() - zmazat aj subory
+
+
+				- OPRAVIT
+					- treba popridavat ku linkom prefix => admin, kvoli oprave routes
+					- BEZPECNOST
+						- aby uzivatel mohol vidiet/menit len svoje [modely]
+						- takisto aby pri pridavanie lessons videl len svoje courses, attachments
+
+				- upload suborov 	+ pdf a nasledna konverzia do obrazkov
+									+ obrazkov
+									+ mozno prerobit na multiple files = attachments
+									+ konverzia: gs -dSAFER -dBATCH -dNOPAUSE -r300 -sDEVICE=png16m -sOutputFile=img/single%d.png source.pdf
+									+ vytvorit aj thumbnails pre kazdy jeden obrazok
+									- vytvaranie thumbnails pre prezentacie cez php a nie cez script
+
+				- nastavit conditions pri listoch status => true
+				- bud nastavit v modely na status => true pri hasMany, alebo v metodach (asi v metodach)
+
+				- upload videa
+				 	- dat obmedzenie na velkost
+				 	- vytvorit novy profil na youtube.com
+				 	+ nahrat video na moj profil youtube
+				 	+ dat moznost zadat url videa alebo youtube alebo vimeo
+
+
+//////////////////////////////////////////////////////////////////////
+
+funkcny proces 	+ ucitel sa zaregistruje
+				+ ucitel nahra attachments, ktore bude chciet pouzivat (videa, prezentacie, texty, obrazky)
+					+ pri tom vyberie typ attachmentu
+					+ ak nahra prezentaciu, tak ta sa automaticky rozbije do jednotlivych obrazkov
+						+ parent_id pre obrazok bude id prezentacie
+				+ ucitel vytvori kurz, zada nazov a rok
+				- ucitel ide vytvorit lekciu
+					+ vyberie video, ktore bude masterVideo (attachment_id)
+						+ automaticky sa vytvori blok - master = true
+					+ lekcia ma v tomto bode len 1 okno - video
+					+ moze vytvorit dalsie bloky
+						+ resizovanie, posuvanie - meni sa styl hned
+						+ kazdy blok bude mat svoju farbu, na zaklade ktorej bude zafarbeny PIN na casovej osy
+						+ kazdy blok bude mat svoju lajnu pod casovou osou
+					+ pridat novy attachment - prezentacia, video, image, text
+						+ ak si vyberie presentation/image
+							+ zobrazi sa mu ponuka attachmentov typu presentation a image (parent_id == null)
+							+ moze oznacit, ktore chce aby mal pridane
+							+ vyberie si do ktoreho bloku sa maju pridat (z aktualnych blokov, okrem mastra)
+								+ blok uz musi byt vytvoreny
+							+ ak oznaci nejaku presentation, tak sa vytiahnu vsetky rozsekane obrazky
+							+ obrazky sa zobrazia pod casovou osou - v lajne pre dany blok
+							+ po kliknuti na nejaky obrazok sa urobi TIMESTAMP pre konkretny blok a attachment
+						- ak si vyberie text
+							- vyskoci popup s wysiwygom, kde moze napisat co chce
+							+ vyberie si blok, do ktoreho sa to ma pridat
+							+ pod casovou osou sa zobrazi nejaka ikona textu s hodnotou "name"
+							+ kliknutim nanho bude moct vytvorit TIMESTAMP
+						x NEBUDE (ak si vyberie video)
+							x vyberie si z dostupnych video attachmentov
+							x zobrazi sa pod casovou osou nejaka ikona videa s hodnotou "name"
+							x kliknutim v dany cas sa vytvori TIMESTAMP
+					+ vytvaranie TIMESTAMPOV
+						+ kliknutim na dany prvok (obrazok, text, video) sa zaznamena start mark
+						+ ak sa klikne znovu, tak sa vytvori end mark
+						+ ak sa neklikne do konca videa,
+							tak na konci sa vsetky (mal by byt len 1 v ramci jednej lajny) ukoncia konecnym casom master videa
+						+ ak sa klikne na prvok a iny prvok z toho isteho bloku este bezi,
+							tak beziaci sa zastavi (end mark) a startne sa tento prvok
+						+ na konci sa ulozia len tie, ktore maju STATUS true, tie ktore maju TMING true, tak sa ulozia tiez s konecnym casom
+						+ pridavat ich hned do POPCORNu
+						+ prvok, ktory uz ma nejaky timestamp bude oznaceny (napriklad opacity 0.5)
+					- KONTEXTOVA ponuka
+						- aj na pine, aj na thumbnaily
+						- zmazat timestamp
+						- pridat kapitolu
+					- nastavit KAPITOLU (chapter)
+						- pravym tlacidlom klikne na pin
+						- vyskoci mi kontextova ponuka
+						- kliknem pridat kapitolu
+						- vyskoci okno a zadam nazov kapitoly
+					- PIN
+						+ predstavuje timestamp
+						+ farba podla bloku
+						- kliknutim lavym, nech sa posunie currentTime
+						- posuvanie lavym - zmena startu
+
+
+//////////////////////////////////////////////////////////////////////
+
+POTREBNE VECI NA SEVERI:
+
+- ghostscript
+- chown www-data uploads/
+- chmod -R 777 tmp/
+- allow_url_fopen set to true

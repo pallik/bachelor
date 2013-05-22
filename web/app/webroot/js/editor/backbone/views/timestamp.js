@@ -9,6 +9,9 @@ Bachelor.Views.TimestampView = (function(_super) {
 
   function TimestampView() {
     var _this = this;
+    this.handleClick = function(e) {
+      return TimestampView.prototype.handleClick.apply(_this, arguments);
+    };
     this.render = function() {
       return TimestampView.prototype.render.apply(_this, arguments);
     };
@@ -21,14 +24,18 @@ Bachelor.Views.TimestampView = (function(_super) {
 
   TimestampView.prototype.id = '';
 
+  TimestampView.prototype.events = {
+    'click': 'handleClick'
+  };
+
   TimestampView.prototype.initialize = function() {
-    this.model.on('change', this.render);
     return this.model.view = this;
   };
 
   TimestampView.prototype.render = function() {
     this.setContent();
     this.appendAttachment();
+    this.setOpacity();
     return this;
   };
 
@@ -56,12 +63,81 @@ Bachelor.Views.TimestampView = (function(_super) {
     var img, thumbUrl, urlInfo;
     urlInfo = pathinfo(app.url + this.attachment.url);
     thumbUrl = urlInfo.dirname + '/thumb/' + urlInfo.basename;
-    img = "<img src=\"" + thumbUrl + "\" />";
+    img = "<img src=\"" + thumbUrl + "\" class='thumbnail-content' />";
     return this.$el.append(img);
   };
 
   TimestampView.prototype.appendText = function() {
-    return this.$el.append(this.attachment.name);
+    var textDiv;
+    textDiv = "<div class='text thumbnail-content'>" + this.attachment.name + "</div>";
+    return this.$el.append(textDiv);
+  };
+
+  TimestampView.prototype.setOpacity = function() {
+    if (this.model.isSet()) {
+      return this.$el.find('.thumbnail-content').css('opacity', 0.7);
+    }
+  };
+
+  TimestampView.prototype.handleClick = function(e) {
+    var LEFT_CLICK, RIGHT_CLICK;
+    LEFT_CLICK = 1;
+    RIGHT_CLICK = 3;
+    if (e.which === LEFT_CLICK) {
+      this.toggleStartEnd();
+    }
+    if (e.which === RIGHT_CLICK) {
+      return this.showContext();
+    }
+  };
+
+  TimestampView.prototype.toggleStartEnd = function() {
+    var blockCid, currentTime;
+    if (this.model.get('status')) {
+      return;
+    }
+    currentTime = Bachelor.App.pop.popcorn.currentTime();
+    if (!this.model.get('timing')) {
+      blockCid = this.model.get('blockCid');
+      Bachelor.App.Views.blocksRowsView.setAllTimestampsTimingEnd(blockCid, currentTime);
+      return this.setTimingStart(currentTime);
+    } else {
+      return this.setTimingEnd(currentTime);
+    }
+  };
+
+  TimestampView.prototype.setTimingStart = function(currentTime) {
+    this.model.set('timing', true);
+    this.model.set('start', currentTime);
+    return this.$el.toggleClass('timing');
+  };
+
+  TimestampView.prototype.setTimingEnd = function(currentTime) {
+    if (currentTime == null) {
+      currentTime = Bachelor.App.pop.popcorn.currentTime();
+    }
+    this.model.set('timing', false);
+    this.model.set('end', currentTime);
+    this.model.set('status', true);
+    this.$el.toggleClass('timing');
+    this.render();
+    return this.addTimestampToPopcorn();
+  };
+
+  TimestampView.prototype.addTimestampToPopcorn = function() {
+    var timestamp, type;
+    type = this.model.get('Attachment').Type.name;
+    timestamp = this.model.attributes;
+    if (type === 'image') {
+      Bachelor.App.pop.addPopcornImage(timestamp);
+    }
+    if (type === 'text') {
+      return Bachelor.App.pop.addPopcornText(timestamp);
+    }
+  };
+
+  TimestampView.prototype.showContext = function() {
+    return debug('showContext');
   };
 
   return TimestampView;

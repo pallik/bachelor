@@ -9,9 +9,6 @@ Bachelor.Views.PinView = (function(_super) {
 
   function PinView() {
     var _this = this;
-    this.setRatioAndPosition = function() {
-      return PinView.prototype.setRatioAndPosition.apply(_this, arguments);
-    };
     this.render = function() {
       return PinView.prototype.render.apply(_this, arguments);
     };
@@ -26,23 +23,22 @@ Bachelor.Views.PinView = (function(_super) {
 
   PinView.prototype.initialize = function() {
     this.model.pinView = this;
-    Backbone.Events.on('durationchange', this.setRatioAndPosition);
+    Backbone.Events.on('durationchange', this.render);
     return this.setContent();
   };
 
   PinView.prototype.render = function() {
+    this.setRatio();
+    this.setPosition();
     return this;
-    return this.setPosition();
   };
 
   PinView.prototype.setContent = function() {
-    var block, blockId, blockIndexOf, color, marginTop;
-    blockId = this.model.get('block_id');
-    block = Bachelor.App.Collections.blocks.where({
-      id: blockId
-    })[0];
+    var block, blockCid, blockIndexOf, color, marginTop;
+    blockCid = this.model.get('blockCid');
+    block = Bachelor.App.Collections.blocks.get(blockCid);
     blockIndexOf = Bachelor.App.Collections.blocks.indexOf(block);
-    marginTop = (blockIndexOf - 1) * -10;
+    marginTop = (blockIndexOf - 1) * -13;
     color = block.get('color');
     return this.$el.css({
       color: color,
@@ -59,9 +55,9 @@ Bachelor.Views.PinView = (function(_super) {
     }
   };
 
-  PinView.prototype.setRatioAndPosition = function() {
-    this.ratio = Bachelor.App.pop.getRatio();
-    return this.setPosition();
+  PinView.prototype.setRatio = function() {
+    var _ref;
+    return (_ref = this.ratio) != null ? _ref : this.ratio = Bachelor.App.Views.timelineView.ratio;
   };
 
   return PinView;

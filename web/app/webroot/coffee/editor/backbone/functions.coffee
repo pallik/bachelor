@@ -21,6 +21,17 @@ adjustBlocksContainerHeight = ->
 	divBlocks.height blocksContainerHeight + reserve
 
 
+ajaxPost = (url, data, onSuccess, onError) ->
+	$.ajax
+		type: "POST"
+		url: url
+		contentType: 'application/json'
+		data: data
+		dataType: "json"
+		success: onSuccess
+		error: onError
+
+
 getRandomColor = ->
 	Colors.current = 0 if Colors.current is Colors.names.length
 	Colors.names[Colors.current++]
@@ -32,12 +43,11 @@ Colors.names = [
 	"#a52a2a"
 	"#0000ff"
 	"#008000"
-	"#00ff00"
+	"#ff0000"
 	"#ff00ff"
 	"#ffa500"
+	"#800080"
 	"#ffc0cb"
-	"#800080"
-	"#800080"
-	"#ff0000"
+	"#00ff00"
 	"#ffff00"
 ]

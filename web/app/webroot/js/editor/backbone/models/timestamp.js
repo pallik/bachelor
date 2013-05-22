@@ -11,9 +11,16 @@ Bachelor.Models.Timestamp = (function(_super) {
   }
 
   Timestamp.prototype.defaults = {
-    status: true,
+    status: false,
+    timing: false,
     start: 0,
-    end: 0
+    end: 0,
+    blockCid: null,
+    block_id: null
+  };
+
+  Timestamp.prototype.isSet = function() {
+    return this.get('status');
   };
 
   return Timestamp;
@@ -32,8 +39,43 @@ Bachelor.Collections.Timestamps = (function(_super) {
 
   Timestamps.prototype.url = "" + app.url + "/admin/timestamps";
 
-  Timestamps.prototype.comparator = function(timestamp) {
-    return timestamp.get('start');
+  Timestamps.prototype.comparator = function(m1, m2) {
+    var name1, name2, start1, start2, status1, status2;
+    status1 = m1.get('status');
+    status2 = m2.get('status');
+    if (!status1 && !status2) {
+      name1 = parseInt(m1.get('Attachment').name);
+      name2 = parseInt(m2.get('Attachment').name);
+      if (isNaN(name1)) {
+        name1 = 0;
+      }
+      if (isNaN(name2)) {
+        name2 = 0;
+      }
+      if (name1 < name2) {
+        return -1;
+      }
+      if (name1 > name2) {
+        return 1;
+      }
+      return 0;
+    } else if (!status1 && status2) {
+      return -1;
+    } else if (status1 && !status2) {
+      return 1;
+    } else if (status1 && status2) {
+      start1 = parseInt(m1.get('start'));
+      start2 = parseInt(m2.get('start'));
+      if (start1 < start2) {
+        return -1;
+      }
+      if (start1 === start2) {
+        return 0;
+      }
+      if (start1 > start2) {
+        return 1;
+      }
+    }
   };
 
   return Timestamps;
