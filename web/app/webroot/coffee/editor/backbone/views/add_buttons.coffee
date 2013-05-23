@@ -46,6 +46,8 @@ class Bachelor.Views.AddButtonsView extends Backbone.View
 				'Add attachments to block': =>
 					@attachmentDialog.dialog 'close'
 					@getDataForRequest()
+				'Cancel': ->
+					$(@).dialog 'close'
 
 
 	loadTemplate: (data) ->

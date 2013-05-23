@@ -7,6 +7,7 @@
 	'editor/backbone/views/add_buttons', 'editor/backbone/views/save_button', 'editor/backbone/views/block',
 		'editor/backbone/views/blocks', 'editor/backbone/views/blocks_rows', 'editor/backbone/views/block_row',
 		'editor/backbone/views/lesson',	'editor/backbone/views/timestamp', 'editor/backbone/views/timeline', 'editor/backbone/views/pin',
+		'editor/backbone/views/chapters', 'editor/backbone/views/chapter',
 	'editor/backbone/_app', 'editor/main', 'editor/effects'],
 	{'inline': false}) }}
 
@@ -49,6 +50,14 @@
 
 
 <div class="chapters">
+	{# template #}
+	{% include 'Elements/editor/set_chapter.tpl' %}
+
+	<div class="edit-chapter-dialog" title="Set chapter">
+		{# loaded template goes here #}
+	</div>
+
+	<h4>Chapters</h4>
 	<ul>
 		{# chapters #}
 	</ul>

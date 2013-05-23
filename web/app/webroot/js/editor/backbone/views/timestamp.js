@@ -84,32 +84,58 @@ Bachelor.Views.TimestampView = (function(_super) {
     LEFT_CLICK = 1;
     RIGHT_CLICK = 3;
     if (e.which === LEFT_CLICK) {
-      this.toggleStartEnd();
+      this.handleLeftClick();
     }
     if (e.which === RIGHT_CLICK) {
       return this.showContext();
     }
   };
 
+  TimestampView.prototype.handleLeftClick = function() {
+    if (this.model.get('status')) {
+      return this.toggleDraggable();
+    } else {
+      return this.toggleStartEnd();
+    }
+  };
+
+  TimestampView.prototype.toggleDraggable = function() {
+    var blockCid;
+    if (this.$el.hasClass('highlight')) {
+      return this.disableDraggable();
+    } else {
+      blockCid = this.model.get('blockCid');
+      Bachelor.App.Views.blocksRowsView.disableAllTimestampsDraggable(blockCid);
+      this.model.pinStartView.enableDraggable();
+      this.model.pinEndView.enableDraggable();
+      this.model.set('highlight', true);
+      return this.$el.addClass('highlight');
+    }
+  };
+
+  TimestampView.prototype.disableDraggable = function() {
+    this.model.pinStartView.disableDraggable();
+    this.model.pinEndView.disableDraggable();
+    this.model.set('highlight', false);
+    return this.$el.removeClass('highlight');
+  };
+
   TimestampView.prototype.toggleStartEnd = function() {
     var blockCid, currentTime;
-    if (this.model.get('status')) {
-      return;
-    }
     currentTime = Bachelor.App.pop.popcorn.currentTime();
-    if (!this.model.get('timing')) {
+    if (this.model.get('timing')) {
+      return this.setTimingEnd(currentTime);
+    } else {
       blockCid = this.model.get('blockCid');
       Bachelor.App.Views.blocksRowsView.setAllTimestampsTimingEnd(blockCid, currentTime);
       return this.setTimingStart(currentTime);
-    } else {
-      return this.setTimingEnd(currentTime);
     }
   };
 
   TimestampView.prototype.setTimingStart = function(currentTime) {
     this.model.set('timing', true);
     this.model.set('start', currentTime);
-    return this.$el.toggleClass('timing');
+    return this.$el.toggleClass('highlight');
   };
 
   TimestampView.prototype.setTimingEnd = function(currentTime) {
@@ -119,9 +145,10 @@ Bachelor.Views.TimestampView = (function(_super) {
     this.model.set('timing', false);
     this.model.set('end', currentTime);
     this.model.set('status', true);
-    this.$el.toggleClass('timing');
+    this.$el.toggleClass('highlight');
     this.render();
-    return this.addTimestampToPopcorn();
+    this.addTimestampToPopcorn();
+    return Backbone.Events.trigger('renderAllTimestamps');
   };
 
   TimestampView.prototype.addTimestampToPopcorn = function() {

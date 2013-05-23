@@ -24,6 +24,7 @@ class Bachelor.Views.SaveButtonView extends Backbone.View
 			block = _.find returnedData.blocks, (block) ->
 				return block.cid is timestamp.get 'blockCid'
 
+			timestamp.set 'block_id', block.id if block.id?
 			timestamp.set 'block_id', block.insertedId if block.insertedId?
 			timestamp.view.setTimingEnd() if timestamp.get 'timing'
 			return timestamp.get 'status'

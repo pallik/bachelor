@@ -117,16 +117,17 @@ funkcny proces 	+ ucitel sa zaregistruje
 						- aj na pine, aj na thumbnaily
 						- zmazat timestamp
 						- pridat kapitolu
+						- pripadne na zvyraznit timestamp (to hlavne kvoli pinu)
 					- nastavit KAPITOLU (chapter)
 						- pravym tlacidlom klikne na pin
 						- vyskoci mi kontextova ponuka
 						- kliknem pridat kapitolu
 						- vyskoci okno a zadam nazov kapitoly
-					- PIN
+					+ PIN
 						+ predstavuje timestamp
 						+ farba podla bloku
-						- kliknutim lavym, nech sa posunie currentTime
-						- posuvanie lavym - zmena startu
+						+ kliknutim lavym, nech sa posunie currentTime
+						+ posuvanie lavym - zmena startu
 
 
 //////////////////////////////////////////////////////////////////////

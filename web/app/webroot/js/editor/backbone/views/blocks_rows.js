@@ -9,6 +9,9 @@ Bachelor.Views.BlocksRowsView = (function(_super) {
 
   function BlocksRowsView() {
     var _this = this;
+    this.disableAllTimestampsDraggable = function(blockCid) {
+      return BlocksRowsView.prototype.disableAllTimestampsDraggable.apply(_this, arguments);
+    };
     this.setAllTimestampsTimingEnd = function(blockCid, currentTime) {
       return BlocksRowsView.prototype.setAllTimestampsTimingEnd.apply(_this, arguments);
     };
@@ -85,6 +88,15 @@ Bachelor.Views.BlocksRowsView = (function(_super) {
       timing: true
     }), function(timestamp) {
       return timestamp.view.setTimingEnd(currentTime);
+    });
+  };
+
+  BlocksRowsView.prototype.disableAllTimestampsDraggable = function(blockCid) {
+    return _.each(Bachelor.App.Collections.timestamps.where({
+      blockCid: blockCid,
+      highlight: true
+    }), function(timestamp) {
+      return timestamp.view.disableDraggable();
     });
   };
 

@@ -13,14 +13,20 @@ Bachelor.Models.Timestamp = (function(_super) {
   Timestamp.prototype.defaults = {
     status: false,
     timing: false,
+    highlight: false,
     start: 0,
     end: 0,
+    chapter: null,
     blockCid: null,
     block_id: null
   };
 
   Timestamp.prototype.isSet = function() {
     return this.get('status');
+  };
+
+  Timestamp.prototype.setChapterNull = function() {
+    return this.set('chapter', null);
   };
 
   return Timestamp;

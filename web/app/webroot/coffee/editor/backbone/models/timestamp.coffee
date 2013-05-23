@@ -3,8 +3,10 @@ class Bachelor.Models.Timestamp extends Backbone.Model
 	defaults:
 		status: false
 		timing: false
+		highlight: false
 		start: 0
 		end: 0
+		chapter: null
 		blockCid: null
 		block_id: null
 
@@ -12,6 +14,9 @@ class Bachelor.Models.Timestamp extends Backbone.Model
 	isSet: ->
 		@get 'status'
 
+
+	setChapterNull: ->
+		@set 'chapter', null
 
 class Bachelor.Collections.Timestamps extends Backbone.Collection
 

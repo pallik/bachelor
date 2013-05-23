@@ -16,6 +16,9 @@ this.Bachelor.App =
 		addButtonsView: null
 		blocksView: null
 		blocksRowsView: null
+		chaptersView: null
+		timelineView: null
+		saveButtonView: null
 
 
 	create: ->
@@ -36,6 +39,7 @@ this.Bachelor.App =
 		@Views.addButtonsView = new Bachelor.Views.AddButtonsView()
 		@Views.timelineView = new Bachelor.Views.TimelineView()
 		@Views.saveButtonView = new Bachelor.Views.SaveButtonView()
+		@Views.chaptersView = new Bachelor.Views.ChaptersView()
 
 
 		@addBlocksToCollection()

@@ -74,6 +74,9 @@ Bachelor.Views.AddButtonsView = (function(_super) {
         'Add attachments to block': function() {
           _this.attachmentDialog.dialog('close');
           return _this.getDataForRequest();
+        },
+        'Cancel': function() {
+          return $(this).dialog('close');
         }
       }
     });

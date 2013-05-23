@@ -17,7 +17,6 @@ $(function() {
   });
   return adjustBlocksContainerHeight = function() {
     var blocksContainerHeight, divBlocks, maxYposition;
-    console.log('adjusting');
     divBlocks = $('.blocks');
     maxYposition = 0;
     $('.block').each(function() {

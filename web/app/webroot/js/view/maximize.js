@@ -49,6 +49,7 @@ $(function() {
 
   $('.block').resize(function() {
     var blockHeight, blockWidth, images, maximized, minimized, style;
+    console.log('resizing');
     blockWidth = $(this).width();
     blockHeight = $(this).height();
     images = $(this).find('.popcorn-container img');

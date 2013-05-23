@@ -43,3 +43,8 @@ class Bachelor.Views.BlocksRowsView extends Backbone.View
 	setAllTimestampsTimingEnd: (blockCid, currentTime) =>
 		_.each Bachelor.App.Collections.timestamps.where(blockCid: blockCid, status: false, timing: true), (timestamp) ->
 			timestamp.view.setTimingEnd currentTime
+
+
+	disableAllTimestampsDraggable: (blockCid) =>
+		_.each Bachelor.App.Collections.timestamps.where(blockCid: blockCid, highlight: true), (timestamp) ->
+			timestamp.view.disableDraggable()

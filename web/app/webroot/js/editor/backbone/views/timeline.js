@@ -9,8 +9,8 @@ Bachelor.Views.TimelineView = (function(_super) {
 
   function TimelineView() {
     var _this = this;
-    this.pinStatusChanged = function(timestamp) {
-      return TimelineView.prototype.pinStatusChanged.apply(_this, arguments);
+    this.togglePin = function(timestamp) {
+      return TimelineView.prototype.togglePin.apply(_this, arguments);
     };
     this.addPinView = function(timestamp) {
       return TimelineView.prototype.addPinView.apply(_this, arguments);
@@ -41,7 +41,7 @@ Bachelor.Views.TimelineView = (function(_super) {
     Backbone.Events.on('popcornTimeUpdate', this.setSliderValue);
     Backbone.Events.on('durationchange', this.setRatioAndEnableSlider);
     Bachelor.App.Collections.timestamps.on('add', this.addPinView);
-    return Bachelor.App.Collections.timestamps.on('change:status', this.pinStatusChanged);
+    return Bachelor.App.Collections.timestamps.on('change:status', this.togglePin);
   };
 
   TimelineView.prototype.setSlider = function() {
@@ -80,19 +80,26 @@ Bachelor.Views.TimelineView = (function(_super) {
   };
 
   TimelineView.prototype.addPinView = function(timestamp) {
-    var view;
-    return view = new Bachelor.Views.PinView({
-      model: timestamp
+    var viewEnd, viewStart;
+    viewStart = new Bachelor.Views.PinView({
+      model: timestamp,
+      side: 'start'
+    });
+    return viewEnd = new Bachelor.Views.PinView({
+      model: timestamp,
+      side: 'end'
     });
   };
 
-  TimelineView.prototype.pinStatusChanged = function(timestamp) {
+  TimelineView.prototype.togglePin = function(timestamp) {
     var status;
     status = timestamp.get('status');
     if (status) {
-      return this.$el.append(timestamp.pinView.render().el);
+      this.$el.append(timestamp.pinStartView.render().el);
+      return this.$el.append(timestamp.pinEndView.render().el);
     } else {
-      return timestamp.pinView.remove();
+      timestamp.pinStartView.remove();
+      return timestamp.pinEndView.remove();
     }
   };
 

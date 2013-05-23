@@ -15,7 +15,6 @@ $ ->
 
 
 	adjustBlocksContainerHeight = ->
-		console.log 'adjusting'
 		divBlocks = $('.blocks')
 		maxYposition = 0
 

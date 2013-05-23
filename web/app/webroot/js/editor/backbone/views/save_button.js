@@ -53,6 +53,9 @@ Bachelor.Views.SaveButtonView = (function(_super) {
       block = _.find(returnedData.blocks, function(block) {
         return block.cid === timestamp.get('blockCid');
       });
+      if (block.id != null) {
+        timestamp.set('block_id', block.id);
+      }
       if (block.insertedId != null) {
         timestamp.set('block_id', block.insertedId);
       }

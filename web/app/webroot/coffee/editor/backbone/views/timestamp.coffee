@@ -55,35 +55,61 @@ class Bachelor.Views.TimestampView extends Backbone.View
 	handleClick: (e) =>
 		LEFT_CLICK = 1
 		RIGHT_CLICK = 3
-		@toggleStartEnd() if e.which is LEFT_CLICK
+		@handleLeftClick() if e.which is LEFT_CLICK
 		@showContext() if e.which is RIGHT_CLICK
 
 
-	toggleStartEnd: ->
-		return if @model.get 'status'
+	handleLeftClick: ->
+		if @model.get 'status'
+			@toggleDraggable()
+		else
+			@toggleStartEnd()
 
+
+	toggleDraggable: ->
+		if @$el.hasClass 'highlight'
+			@disableDraggable()
+		else
+			blockCid = @model.get 'blockCid'
+			Bachelor.App.Views.blocksRowsView.disableAllTimestampsDraggable blockCid
+
+			@model.pinStartView.enableDraggable()
+			@model.pinEndView.enableDraggable()
+			@model.set 'highlight', true
+			@$el.addClass 'highlight'
+
+
+	disableDraggable: ->
+		@model.pinStartView.disableDraggable()
+		@model.pinEndView.disableDraggable()
+		@model.set 'highlight', false
+		@$el.removeClass 'highlight'
+
+
+	toggleStartEnd: ->
 		currentTime = Bachelor.App.pop.popcorn.currentTime()
-		if not @model.get 'timing'
+		if @model.get 'timing'
+			@setTimingEnd currentTime
+		else
 			blockCid = @model.get 'blockCid'
 			Bachelor.App.Views.blocksRowsView.setAllTimestampsTimingEnd blockCid, currentTime
 			@setTimingStart currentTime
-		else
-			@setTimingEnd currentTime
 
 
 	setTimingStart: (currentTime) ->
 		@model.set 'timing', true
 		@model.set 'start', currentTime
-		@$el.toggleClass 'timing'
+		@$el.toggleClass 'highlight'
 
 
 	setTimingEnd: (currentTime = Bachelor.App.pop.popcorn.currentTime()) ->
 		@model.set 'timing', false
 		@model.set 'end', currentTime
 		@model.set 'status', true
-		@$el.toggleClass 'timing'
+		@$el.toggleClass 'highlight'
 		@render()
 		@addTimestampToPopcorn()
+		Backbone.Events.trigger 'renderAllTimestamps'
 
 
 	addTimestampToPopcorn: ->

@@ -38,6 +38,7 @@ $ ->
         when block changes its size, update img max dimensions
 	###
 	$('.block').resize ->
+		console.log 'resizing'
 		blockWidth = $(@).width()
 		blockHeight = $(@).height()
 		images = $(@).find '.popcorn-container img'

@@ -15,7 +15,10 @@ this.Bachelor.App = {
   Views: {
     addButtonsView: null,
     blocksView: null,
-    blocksRowsView: null
+    blocksRowsView: null,
+    chaptersView: null,
+    timelineView: null,
+    saveButtonView: null
   },
   create: function() {
     this.Models.lesson = new Bachelor.Models.Lesson({
@@ -33,6 +36,7 @@ this.Bachelor.App = {
     this.Views.addButtonsView = new Bachelor.Views.AddButtonsView();
     this.Views.timelineView = new Bachelor.Views.TimelineView();
     this.Views.saveButtonView = new Bachelor.Views.SaveButtonView();
+    this.Views.chaptersView = new Bachelor.Views.ChaptersView();
     this.addBlocksToCollection();
     this.addTimestampsToCollection();
     return this.initPopcorn();

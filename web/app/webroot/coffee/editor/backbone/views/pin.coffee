@@ -1,19 +1,37 @@
 class Bachelor.Views.PinView extends Backbone.View
 
 	tagName: 'span'
-	className: 'timeline-pin typicn location'
+	className: 'timeline-pin typcn'
+
+	disabledClasses:
+		start: 'typcn-arrow-down-thick'
+		end: 'typcn-arrow-up-thick'
+
+	enabledClasses:
+		start: 'typcn-arrow-down-outline'
+		end: 'typcn-arrow-up-outline'
+
 
 	ratio: null
 
-#	events:
-#	todo: tahanie mysou, kliknutie lavym = zmena slajdera, kliknutie pravym = kontextova ponuka
+
+	events:
+		'click': 'updateTime'
+
+#	todo: kliknutie pravym = kontextova ponuka
 
 
 	initialize: ->
-#		@model.on 'change', @render #asi nebude
-		@model.pinView = @
+		@side = @options.side
+		@$el.addClass @side
+		@$el.addClass @disabledClasses[@side]
+
+		@model.pinStartView = @ if @side is 'start'
+		@model.pinEndView = @ if @side is 'end'
+
 		Backbone.Events.on 'durationchange', @render
 		@setContent()
+		@setDraggable()
 
 
 	render: =>
@@ -27,18 +45,59 @@ class Bachelor.Views.PinView extends Backbone.View
 		block = Bachelor.App.Collections.blocks.get blockCid
 		blockIndexOf = Bachelor.App.Collections.blocks.indexOf block
 
-		marginTop = (blockIndexOf - 1) * -13
+		constant = -13 if @side is 'start'
+		constant = 13 if @side is 'end'
+
+		marginTop = (blockIndexOf - 1) * constant
 		color = block.get 'color'
 
-		@$el.css color: color, marginTop: marginTop
+		@$el.css color: color, marginTop: marginTop, position: 'absolute'
+
+
+	setDraggable: ->
+		@$el.draggable
+			axis: 'x'
+			containment: 'parent'
+			disabled: true
+			stop: @updateModelOnStopDragging
+
+
+	enableDraggable: ->
+		@$el.removeClass @disabledClasses[@side]
+		@$el.addClass @enabledClasses[@side]
+		@$el.addClass 'highlight'
+
+		@$el.draggable 'option', 'disabled', false
+
+
+	disableDraggable: ->
+		@$el.removeClass @enabledClasses[@side]
+		@$el.addClass @disabledClasses[@side]
+		@$el.removeClass 'highlight'
+
+		@$el.draggable 'option', 'disabled', true
+		@$el.removeClass 'ui-state-disabled'
 
 
 	setPosition: ->
 		if @ratio
-			start = @model.get 'start'
+			start = @model.get @side
 			position = start / @ratio
 			@$el.css 'left', "#{position}%"
 
 
 	setRatio: ->
 		@ratio ?= Bachelor.App.Views.timelineView.ratio
+
+
+	updateModelOnStopDragging: (event, ui) =>
+		totalWidth = @$el.closest('.timeline').width()
+		pinPosition = ui.position.left
+		positionInPercentage = pinPosition / totalWidth * 100
+		newTimeMark = positionInPercentage * @ratio
+		@model.set @side, newTimeMark
+
+
+	updateTime: =>
+		time = @model.get @side
+		Bachelor.App.pop.jumpTo time
