@@ -15,6 +15,9 @@ Bachelor.Views.ChapterView = (function(_super) {
     this.checkChapterActiveInTime = function(currentTime) {
       return ChapterView.prototype.checkChapterActiveInTime.apply(_this, arguments);
     };
+    this.highlightTimestamp = function() {
+      return ChapterView.prototype.highlightTimestamp.apply(_this, arguments);
+    };
     this.editChapter = function() {
       return ChapterView.prototype.editChapter.apply(_this, arguments);
     };
@@ -29,6 +32,7 @@ Bachelor.Views.ChapterView = (function(_super) {
   ChapterView.prototype.events = {
     'click .delete-chapter': 'deleteChapter',
     'click .edit-chapter': 'editChapter',
+    'click .highlight-timestamp': 'highlightTimestamp',
     'click a': 'jumpToTime'
   };
 
@@ -50,7 +54,8 @@ Bachelor.Views.ChapterView = (function(_super) {
     this.$el.html(link);
     this.$el.find('a').text(chapterName);
     this.addEditChapterIcon();
-    return this.addDeleteChapterIcon();
+    this.addDeleteChapterIcon();
+    return this.addHighlightTimestampIcon();
   };
 
   ChapterView.prototype.addDeleteChapterIcon = function() {
@@ -59,18 +64,32 @@ Bachelor.Views.ChapterView = (function(_super) {
     return this.$el.append(icon);
   };
 
-  ChapterView.prototype.deleteChapter = function() {
-    return this.model.setChapterNull();
-  };
-
   ChapterView.prototype.addEditChapterIcon = function() {
     var icon;
     icon = "<span class='typcn typcn-edit edit-chapter'></span>";
     return this.$el.append(icon);
   };
 
+  ChapterView.prototype.addHighlightTimestampIcon = function() {
+    var icon;
+    icon = "<span class='typcn typcn-zoom highlight-timestamp'></span>";
+    return this.$el.append(icon);
+  };
+
+  ChapterView.prototype.deleteChapter = function() {
+    return this.model.setChapterNull();
+  };
+
   ChapterView.prototype.editChapter = function() {
     return Bachelor.App.Views.chaptersView.loadEditChapterDialogTemplate(this.model);
+  };
+
+  ChapterView.prototype.highlightTimestamp = function() {
+    return this.model.highlightTimestamp();
+  };
+
+  ChapterView.prototype.toggleHighlightTimestampIcon = function() {
+    return this.$el.toggleClass('highlight-timestamp-icon');
   };
 
   ChapterView.prototype.hideChapter = function() {

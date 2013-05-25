@@ -9,9 +9,6 @@ Bachelor.Views.SaveButtonView = (function(_super) {
 
   function SaveButtonView() {
     var _this = this;
-    this.refreshLesson = function(e) {
-      return SaveButtonView.prototype.refreshLesson.apply(_this, arguments);
-    };
     this.onError = function(returnedData) {
       return SaveButtonView.prototype.onError.apply(_this, arguments);
     };
@@ -29,13 +26,15 @@ Bachelor.Views.SaveButtonView = (function(_super) {
 
   SaveButtonView.prototype.el = $('.save-lesson');
 
+  SaveButtonView.prototype.$link = null;
+
   SaveButtonView.prototype.events = {
-    'click .save-button': 'saveLesson',
-    'click .refresh-lesson': 'refreshLesson'
+    'click .save-button': 'saveLesson'
   };
 
   SaveButtonView.prototype.saveLesson = function(e) {
     var blocks, blocksAjaxUrl, blocksData;
+    this.$link = $(e.target);
     e.preventDefault();
     blocks = Bachelor.App.Collections.blocks.filter(function(block) {
       block.set('cid', block.cid);
@@ -49,7 +48,7 @@ Bachelor.Views.SaveButtonView = (function(_super) {
   SaveButtonView.prototype.onBlocksSuccess = function(returnedData) {
     var timestampsAjaxUrl, timestampsData, timestampsFinished;
     timestampsFinished = Bachelor.App.Collections.timestamps.filter(function(timestamp) {
-      var block;
+      var block, hasId, status;
       block = _.find(returnedData.blocks, function(block) {
         return block.cid === timestamp.get('blockCid');
       });
@@ -62,28 +61,25 @@ Bachelor.Views.SaveButtonView = (function(_super) {
       if (timestamp.get('timing')) {
         timestamp.view.setTimingEnd();
       }
-      return timestamp.get('status');
+      status = timestamp.get('status');
+      hasId = timestamp.get('id') != null;
+      return status || hasId;
     });
     timestampsData = JSON.stringify(timestampsFinished);
-    timestampsAjaxUrl = Bachelor.App.Collections.timestamps.url + "/saveAll";
+    timestampsAjaxUrl = Bachelor.App.Collections.timestamps.url + "/updateAll";
     return ajaxPost(timestampsAjaxUrl, timestampsData, this.onTimestampsSuccess, this.onError);
   };
 
   SaveButtonView.prototype.onTimestampsSuccess = function(returnedData) {
     var nextUrl;
     if (returnedData.success) {
-      nextUrl = this.$el.find('.save-button').attr('href');
+      nextUrl = this.$link.attr('href');
       return window.location.href = nextUrl;
     }
   };
 
   SaveButtonView.prototype.onError = function(returnedData) {
     return debug(returnedData);
-  };
-
-  SaveButtonView.prototype.refreshLesson = function(e) {
-    e.preventDefault();
-    return window.location.href = app.request.here;
   };
 
   return SaveButtonView;

@@ -33,7 +33,7 @@ class Bachelor.Views.ChaptersView extends Backbone.View
 			autoOpen: false
 			width: 450
 			buttons:
-				'Edit chapter': =>
+				'Set chapter': =>
 					@setNewChapter() if @validateNewChapter()
 				'Cancel': ->
 					$(@).dialog 'close'

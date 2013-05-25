@@ -101,13 +101,28 @@ class TimestampsController extends AppController {
 		$this->redirect(array('action' => 'index'));
 	}
 
-
-	public function admin_saveAll() {
+	/**
+	 * @return string
+	 */
+	public function admin_updateAll() {
 		$this->redirectIfNotAjax();
 
-		$result['success'] = $this->Timestamp->saveMany($this->request->data);
+		$result['toSave'] = array();
+		$result['toDelete'] = array();
+
+		foreach ($this->request->data as $timestamp) {
+			if ($timestamp['status']) {
+				$result['toSave'][] = $timestamp;
+			} else {
+				$result['toDelete'][] = $timestamp['id'];
+			}
+		}
+
+		$result['success'] = $this->Timestamp->saveMany($result['toSave']);
+		$result['success'] = $result['success'] && $this->Timestamp->deleteAll(array(
+				'Timestamp.id' => $result['toDelete']
+		));
 		$result['log'] = $this->Timestamp->getDataSource()->getLog(false, false);
-		$result['data'] = $this->request->data;
 
 		$this->autoRender = false;
 		return json_encode($result);

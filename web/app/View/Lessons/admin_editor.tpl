@@ -1,6 +1,8 @@
-{{ html.css(['smoothness/jquery-ui-1.10.3.custom.min', 'typicons_kit/css/typicons', 'view', 'editor'], null, {'inline': false}) }}
+{{ html.css(['smoothness/jquery-ui-1.10.3.custom.min', 'typicons_kit/css/typicons', 'context_menu/jquery.contextMenu',
+	'view', 'editor'], null, {'inline': false}) }}
 
 {{ html.script(['lib/jquery-ui-1.10.3.custom.min', 'view/popcorn', 'lib/phpJS/dirname', 'lib/phpJS/basename', 'lib/phpJS/pathinfo',
+	'lib/jquery.contextMenu',
 	'editor/backbone/globals', 'editor/backbone/functions',
 	'editor/backbone/models/attachment', 'editor/backbone/models/block', 'editor/backbone/models/lesson',
 		'editor/backbone/models/timestamp',
@@ -64,11 +66,15 @@
 </div>
 
 
-{# Buttons for save, apply, refresh #}
+{# Buttons for save, apply #}
 <div class="save-lesson">
 	{{ html.link('Save', {'admin': true, 'action': 'index'}, {'class': 'save-button'}) }}
 	|
-	{{ html.link('[Apply]', {'admin': true, 'action': 'index'}, {'class': 'save-button'}) }}
+	{{ html.link('Apply', {1: _view.params.pass[0]}, {'class': 'save-button'}) }}
+</div>
+
+<div class="refresh-view-lesson">
+	{{ html.link('Refresh lesson', {1: _view.params.pass[0]}, {'class': 'refresh-lesson'}) }}
 	|
-	{{ html.link('Refresh lesson', '#', {'class': 'refresh-lesson'}) }}
+	{{ html.link('View lesson', {'admin': false, 'action': 'view', 1: _view.params.pass[0]}, {'class': 'refresh-lesson'}) }}
 </div>

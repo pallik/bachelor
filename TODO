@@ -81,7 +81,8 @@ funkcny proces 	+ ucitel sa zaregistruje
 					+ vyberie video, ktore bude masterVideo (attachment_id)
 						+ automaticky sa vytvori blok - master = true
 					+ lekcia ma v tomto bode len 1 okno - video
-					+ moze vytvorit dalsie bloky
+					- moze vytvorit dalsie bloky
+						- osetrit zle vykreslovanie blokov pri presuvani, asi to na ma starosti position: absolute
 						+ resizovanie, posuvanie - meni sa styl hned
 						+ kazdy blok bude mat svoju farbu, na zaklade ktorej bude zafarbeny PIN na casovej osy
 						+ kazdy blok bude mat svoju lajnu pod casovou osou
@@ -112,22 +113,23 @@ funkcny proces 	+ ucitel sa zaregistruje
 							tak beziaci sa zastavi (end mark) a startne sa tento prvok
 						+ na konci sa ulozia len tie, ktore maju STATUS true, tie ktore maju TMING true, tak sa ulozia tiez s konecnym casom
 						+ pridavat ich hned do POPCORNu
-						+ prvok, ktory uz ma nejaky timestamp bude oznaceny (napriklad opacity 0.5)
-					- KONTEXTOVA ponuka
-						- aj na pine, aj na thumbnaily
-						- zmazat timestamp
-						- pridat kapitolu
-						- pripadne na zvyraznit timestamp (to hlavne kvoli pinu)
-					- nastavit KAPITOLU (chapter)
-						- pravym tlacidlom klikne na pin
-						- vyskoci mi kontextova ponuka
-						- kliknem pridat kapitolu
-						- vyskoci okno a zadam nazov kapitoly
-					+ PIN
+						+ prvok, ktory uz ma nejaky timestamp bude oznaceny
+					+ KONTEXTOVA ponuka
+						+ aj na pine, aj na thumbnaily
+						+ zmazat timestamp
+						+ pridat kapitolu
+						+ pripadne na zvyraznit timestamp (to hlavne kvoli pinu)
+					+ nastavit KAPITOLU (chapter)
+						+ pravym tlacidlom klikne na pin
+						+ vyskoci mi kontextova ponuka
+						+ kliknem pridat kapitolu
+						+ vyskoci okno a zadam nazov kapitoly
+					- PIN
 						+ predstavuje timestamp
 						+ farba podla bloku
 						+ kliknutim lavym, nech sa posunie currentTime
 						+ posuvanie lavym - zmena startu
+						- start nesmie byt vacsi ako end a opacne
 
 
 //////////////////////////////////////////////////////////////////////

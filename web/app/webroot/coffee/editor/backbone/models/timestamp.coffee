@@ -1,6 +1,7 @@
 class Bachelor.Models.Timestamp extends Backbone.Model
 
 	defaults:
+		id: null
 		status: false
 		timing: false
 		highlight: false
@@ -17,6 +18,20 @@ class Bachelor.Models.Timestamp extends Backbone.Model
 
 	setChapterNull: ->
 		@set 'chapter', null
+
+
+	setChapter: =>
+		Bachelor.App.Views.chaptersView.loadEditChapterDialogTemplate @
+
+
+	setTimestampFalse: =>
+		@.set 'status', false
+		Backbone.Events.trigger 'renderAllTimestamps'
+
+
+	highlightTimestamp: =>
+		@view.toggleDraggable()
+
 
 class Bachelor.Collections.Timestamps extends Backbone.Collection
 

@@ -6,6 +6,7 @@ class Bachelor.Views.ChapterView extends Backbone.View
 	events:
 		'click .delete-chapter': 'deleteChapter'
 		'click .edit-chapter': 'editChapter'
+		'click .highlight-timestamp': 'highlightTimestamp'
 		'click a': 'jumpToTime'
 
 
@@ -27,6 +28,7 @@ class Bachelor.Views.ChapterView extends Backbone.View
 		@$el.find('a').text chapterName
 		@addEditChapterIcon()
 		@addDeleteChapterIcon()
+		@addHighlightTimestampIcon()
 
 
 	addDeleteChapterIcon: ->
@@ -34,17 +36,30 @@ class Bachelor.Views.ChapterView extends Backbone.View
 		@$el.append icon
 
 
-	deleteChapter: =>
-		@model.setChapterNull()
-
-
 	addEditChapterIcon: ->
 		icon = "<span class='typcn typcn-edit edit-chapter'></span>"
 		@$el.append icon
 
 
+	addHighlightTimestampIcon: ->
+		icon = "<span class='typcn typcn-zoom highlight-timestamp'></span>"
+		@$el.append icon
+
+
+	deleteChapter: =>
+		@model.setChapterNull()
+
+
 	editChapter: =>
 		Bachelor.App.Views.chaptersView.loadEditChapterDialogTemplate @model
+
+
+	highlightTimestamp: =>
+		@model.highlightTimestamp()
+
+
+	toggleHighlightTimestampIcon: ->
+		@$el.toggleClass 'highlight-timestamp-icon'
 
 
 	hideChapter: ->

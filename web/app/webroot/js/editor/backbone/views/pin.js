@@ -23,7 +23,7 @@ Bachelor.Views.PinView = (function(_super) {
 
   PinView.prototype.tagName = 'span';
 
-  PinView.prototype.className = 'timeline-pin typcn';
+  PinView.prototype.className = 'timeline-pin typcn with-context-menu';
 
   PinView.prototype.disabledClasses = {
     start: 'typcn-arrow-down-thick',
@@ -52,6 +52,9 @@ Bachelor.Views.PinView = (function(_super) {
       this.model.pinEndView = this;
     }
     Backbone.Events.on('durationchange', this.render);
+    this.$el.on('setChapter', this.model.setChapter);
+    this.$el.on('deleteTimestamp', this.model.setTimestampFalse);
+    this.$el.on('highlightTimestamp', this.model.highlightTimestamp);
     this.setContent();
     return this.setDraggable();
   };
@@ -126,7 +129,8 @@ Bachelor.Views.PinView = (function(_super) {
     pinPosition = ui.position.left;
     positionInPercentage = pinPosition / totalWidth * 100;
     newTimeMark = positionInPercentage * this.ratio;
-    return this.model.set(this.side, newTimeMark);
+    this.model.set(this.side, newTimeMark);
+    return Backbone.Events.trigger('renderAllTimestamps');
   };
 
   PinView.prototype.updateTime = function() {

@@ -1,7 +1,7 @@
 class Bachelor.Views.PinView extends Backbone.View
 
 	tagName: 'span'
-	className: 'timeline-pin typcn'
+	className: 'timeline-pin typcn with-context-menu'
 
 	disabledClasses:
 		start: 'typcn-arrow-down-thick'
@@ -18,8 +18,6 @@ class Bachelor.Views.PinView extends Backbone.View
 	events:
 		'click': 'updateTime'
 
-#	todo: kliknutie pravym = kontextova ponuka
-
 
 	initialize: ->
 		@side = @options.side
@@ -30,6 +28,10 @@ class Bachelor.Views.PinView extends Backbone.View
 		@model.pinEndView = @ if @side is 'end'
 
 		Backbone.Events.on 'durationchange', @render
+		@$el.on 'setChapter', @model.setChapter
+		@$el.on 'deleteTimestamp', @model.setTimestampFalse
+		@$el.on 'highlightTimestamp', @model.highlightTimestamp
+
 		@setContent()
 		@setDraggable()
 
@@ -96,6 +98,7 @@ class Bachelor.Views.PinView extends Backbone.View
 		positionInPercentage = pinPosition / totalWidth * 100
 		newTimeMark = positionInPercentage * @ratio
 		@model.set @side, newTimeMark
+		Backbone.Events.trigger 'renderAllTimestamps'
 
 
 	updateTime: =>

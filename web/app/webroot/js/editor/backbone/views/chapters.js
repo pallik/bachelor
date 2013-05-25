@@ -63,7 +63,7 @@ Bachelor.Views.ChaptersView = (function(_super) {
       autoOpen: false,
       width: 450,
       buttons: {
-        'Edit chapter': function() {
+        'Set chapter': function() {
           if (_this.validateNewChapter()) {
             return _this.setNewChapter();
           }
