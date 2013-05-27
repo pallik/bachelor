@@ -26,10 +26,14 @@ class FilesComponent extends Component {
 
 		$youtube_email = "palli@kominak.sk"; // Change this to your youtube sign in email.
 		$youtube_password = "flash5flash"; // Change this to your youtube sign in password.
-		// Developer key: Get your key here: http://code.google.com/apis/youtube/dashboard/.
 		$key = "AI39si6KHEDR4RtxM9uIAe3ZBMd7bmX5edEn9iUtPYxTbQsvBfFosswBasi53KJSwmML1J_RDwRhWatJxTKKKPe2H0q3i6E7-g";
+//		 Developer key: Get your key here: http://code.google.com/apis/youtube/dashboard/.
 
-		$source = 'mojeVideo'; // A short string that identifies your application for logging purposes.
+//		$youtube_email = "synchronized.presentations@gmail.com"; // Change this to your youtube sign in email.
+//		$youtube_password = "5ynchr0n1z3d"; // Change this to your youtube sign in password.
+//		$key = "AI39si7keFiaZ7u8Zk_LJVOHw76he2ekay94cUj9sFLzbTNTtx7v79ysgfiHTRdvqcN-yZvVXlhfORq03CFXGKHi_Y872qH1RQ";
+
+		$source = 'synchronized.presentations'; // A short string that identifies your application for logging purposes.
 		$postdata = "Email=".$youtube_email."&Passwd=".$youtube_password."&service=youtube&source=" . $source;
 		$curl = curl_init( "https://www.google.com/youtube/accounts/ClientLogin" );
 		curl_setopt( $curl, CURLOPT_HEADER, "Content-Type:application/x-www-form-urlencoded" );

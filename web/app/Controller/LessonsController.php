@@ -7,6 +7,17 @@ App::uses('AppController', 'Controller');
  */
 class LessonsController extends AppController {
 
+
+	public function beforeFilter() {
+		parent::beforeFilter();
+
+		if (isset($this->params['prefix']) && $this->params['prefix'] == 'admin') {
+			if (!$this->Auth->loggedIn()) {
+				$this->redirect($this->Auth->loginRedirect);
+			}
+		}
+	}
+
 	/**
 	 * admin_index method
 	 *
@@ -41,6 +52,8 @@ class LessonsController extends AppController {
 		if (!$this->Lesson->exists($id)) {
 			throw new NotFoundException(__('Invalid lesson'));
 		}
+
+		$this->redirectIfNotAjax();
 
 //		$courseIds = $this->Lesson->Course->find('list', array(
 //			'conditions' => array(
@@ -95,13 +108,29 @@ class LessonsController extends AppController {
 				$this->Session->setFlash(__('The lesson could not be saved. Please, try again.'));
 			}
 		}
-		$courses = $this->Lesson->Course->find('list');
+
+		$courseConditions = array(
+			'Course.user_id' => $this->Auth->user('id'),
+			'Course.status' => true
+		);
+		if (isset($this->request->params['named']['course'])) {
+			$courseConditions['Course.id'] = $this->request->params['named']['course'];
+		}
+		$courses = $this->Lesson->Course->find('list', array(
+			'conditions' => $courseConditions
+		));
+
 		$videoId = $this->Lesson->Attachment->Type->field('id', array('Type.name' => 'video'));
+		$attachmentConditions = array(
+			'Attachment.user_id' => $this->Auth->user('id'),
+			'Attachment.type_id' => $videoId,
+			'Attachment.status' => true
+		);
+		if (isset($this->request->params['named']['attachment'])) {
+			$attachmentConditions['Attachment.id'] = $this->request->params['named']['attachment'];
+		}
 		$attachments = $this->Lesson->Attachment->find('list', array(
-			'conditions' => array(
-				'Attachment.type_id' => $videoId,
-				'Attachment.status' => true
-			)
+			'conditions' => $attachmentConditions
 		));
 		$this->set(compact('courses', 'attachments'));
 	}
@@ -125,16 +154,31 @@ class LessonsController extends AppController {
 				$this->Session->setFlash(__('The lesson could not be saved. Please, try again.'));
 			}
 		} else {
-			$options = array('conditions' => array('Lesson.' . $this->Lesson->primaryKey => $id));
-			$this->request->data = $this->Lesson->find('first', $options);
+			$lessonConditions = array(
+				'Lesson.' . $this->Lesson->primaryKey => $id
+			);
+			$this->request->data = $this->Lesson->find('first', array('conditions' => $lessonConditions));
+			if ($this->request->data['Course']['user_id'] != $this->Auth->user('id')) {
+				$this->redirect($this->Auth->loginRedirect);
+			}
 		}
-		$courses = $this->Lesson->Course->find('list');
+
+		$courseConditions = array(
+			'Course.user_id' => $this->Auth->user('id'),
+			'Course.status' => true
+		);
+		$courses = $this->Lesson->Course->find('list', array(
+			'conditions' => $courseConditions
+		));
+
 		$videoId = $this->Lesson->Attachment->Type->field('id', array('Type.name' => 'video'));
+		$attachmentConditions = array(
+			'Attachment.user_id' => $this->Auth->user('id'),
+			'Attachment.type_id' => $videoId,
+			'Attachment.status' => true
+		);
 		$attachments = $this->Lesson->Attachment->find('list', array(
-			'conditions' => array(
-				'Attachment.type_id' => $videoId,
-				'Attachment.status' => true
-			)
+			'conditions' => $attachmentConditions
 		));
 		$this->set(compact('courses', 'attachments'));
 	}
@@ -147,6 +191,10 @@ class LessonsController extends AppController {
 	public function admin_editor($id) {
 		if (!$this->Lesson->exists($id)) {
 			throw new NotFoundException(__('Invalid lesson'));
+		}
+		$lesson = $this->Lesson->findById($id);
+		if ($lesson['Course']['user_id'] != $this->Auth->user('id')) {
+			$this->redirect($this->Auth->loginRedirect);
 		}
 	}
 
@@ -163,6 +211,12 @@ class LessonsController extends AppController {
 		if (!$this->Lesson->exists()) {
 			throw new NotFoundException(__('Invalid lesson'));
 		}
+
+		$lesson = $this->Lesson->findById($id);
+		if ($lesson['Course']['user_id'] != $this->Auth->user('id')) {
+			$this->redirect($this->Auth->loginRedirect);
+		}
+
 		$this->request->onlyAllow('post', 'delete');
 		if ($this->Lesson->delete()) {
 			$this->Session->setFlash(__('Lesson deleted'));

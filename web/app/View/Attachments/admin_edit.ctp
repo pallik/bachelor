@@ -17,15 +17,16 @@
 	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
 
-		<li><?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $this->Form->value('Attachment.id')), null, __('Are you sure you want to delete # %s?', $this->Form->value('Attachment.id'))); ?></li>
-		<li><?php echo $this->Html->link(__('List Attachments'), array('action' => 'index')); ?></li>
-		<li><?php echo $this->Html->link(__('List Users'), array('controller' => 'users', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New User'), array('controller' => 'users', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Types'), array('controller' => 'types', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Type'), array('controller' => 'types', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Lessons'), array('controller' => 'lessons', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Lesson'), array('controller' => 'lessons', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Timestamps'), array('controller' => 'timestamps', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Timestamp'), array('controller' => 'timestamps', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('Back to attachment'), array('action' => 'view', $this->request->data['Attachment']['id'])); ?></li>
+<!--		<li>--><?php //echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $this->Form->value('Attachment.id')), null, __('Are you sure you want to delete # %s?', $this->Form->value('Attachment.id'))); ?><!--</li>-->
+<!--		<li>--><?php //echo $this->Html->link(__('List Attachments'), array('action' => 'index')); ?><!--</li>-->
+<!--		<li>--><?php //echo $this->Html->link(__('List Users'), array('controller' => 'users', 'action' => 'index')); ?><!-- </li>-->
+<!--		<li>--><?php //echo $this->Html->link(__('New User'), array('controller' => 'users', 'action' => 'add')); ?><!-- </li>-->
+<!--		<li>--><?php //echo $this->Html->link(__('List Types'), array('controller' => 'types', 'action' => 'index')); ?><!-- </li>-->
+<!--		<li>--><?php //echo $this->Html->link(__('New Type'), array('controller' => 'types', 'action' => 'add')); ?><!-- </li>-->
+<!--		<li>--><?php //echo $this->Html->link(__('List Lessons'), array('controller' => 'lessons', 'action' => 'index')); ?><!-- </li>-->
+<!--		<li>--><?php //echo $this->Html->link(__('New Lesson'), array('controller' => 'lessons', 'action' => 'add')); ?><!-- </li>-->
+<!--		<li>--><?php //echo $this->Html->link(__('List Timestamps'), array('controller' => 'timestamps', 'action' => 'index')); ?><!-- </li>-->
+<!--		<li>--><?php //echo $this->Html->link(__('New Timestamp'), array('controller' => 'timestamps', 'action' => 'add')); ?><!-- </li>-->
 	</ul>
 </div>

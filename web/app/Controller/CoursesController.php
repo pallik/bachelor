@@ -33,8 +33,15 @@ class CoursesController extends AppController {
 		if (!$this->Course->exists($id)) {
 			throw new NotFoundException(__('Invalid course'));
 		}
-		$options = array('conditions' => array('Course.' . $this->Course->primaryKey => $id));
-		$this->set('course', $this->Course->find('first', $options));
+
+		$this->redirectIfNotOwn('Course', $id);
+
+		$options = array('conditions' => array(
+			'Course.' . $this->Course->primaryKey => $id,
+			'Course.user_id' => $this->Auth->user('id')
+		));
+		$course = $this->Course->find('first', $options);
+		$this->set(compact('course'));
 	}
 
 /**
@@ -68,16 +75,21 @@ class CoursesController extends AppController {
 		if (!$this->Course->exists($id)) {
 			throw new NotFoundException(__('Invalid course'));
 		}
+		$this->redirectIfNotOwn('Course', $id);
+
 		if ($this->request->is('post') || $this->request->is('put')) {
 			$this->request->data['Course']['year'] = $this->request->data['Course']['year']['year'];
 			if ($this->Course->save($this->request->data)) {
 				$this->Session->setFlash(__('The course has been saved'));
-				$this->redirect(array('action' => 'index'));
+				$this->redirect(array('action' => 'view', $id));
 			} else {
 				$this->Session->setFlash(__('The course could not be saved. Please, try again.'));
 			}
 		} else {
-			$options = array('conditions' => array('Course.' . $this->Course->primaryKey => $id));
+			$options = array('conditions' => array(
+				'Course.' . $this->Course->primaryKey => $id,
+				'Course.user_id' => $this->Auth->user('id')
+			));
 			$this->request->data = $this->Course->find('first', $options);
 		}
 		$users = $this->Course->User->find('list');
@@ -97,6 +109,9 @@ class CoursesController extends AppController {
 		if (!$this->Course->exists()) {
 			throw new NotFoundException(__('Invalid course'));
 		}
+
+		$this->redirectIfNotOwn('Course', $id);
+
 		$this->request->onlyAllow('post', 'delete');
 		if ($this->Course->delete()) {
 			$this->Session->setFlash(__('Course deleted'));

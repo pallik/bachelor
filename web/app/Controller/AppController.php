@@ -49,8 +49,8 @@ class AppController extends Controller {
 		'Session',
 		'RequestHandler',
 		'Auth' => array(
-			'loginRedirect' => array('controller' => 'courses', 'action' => 'index'),
-			'logoutRedirect' => array('controller' => 'users', 'action' => 'login')
+			'loginRedirect' => array('admin' => true, 'controller' => 'courses', 'action' => 'index'),
+			'logoutRedirect' => array('admin' => true, 'controller' => 'users', 'action' => 'login')
 		)
 	);
 
@@ -100,6 +100,23 @@ class AppController extends Controller {
 	 */
 	public function redirectIfNotAjax() {
 		if (!$this->request->is('ajax')) {
+			$this->redirect($this->Auth->loginRedirect);
+		}
+	}
+
+
+	/**
+	 * @param $modelAlias
+	 * @param $id
+	 */
+	public function redirectIfNotOwn($modelAlias, $id) {
+		$count = $this->$modelAlias->find('count', array(
+			'conditions' => array(
+				$modelAlias . '.user_id' => $this->Auth->user('id'),
+				$modelAlias . '.id' => $id
+		)));
+
+		if ($count == 0) {
 			$this->redirect($this->Auth->loginRedirect);
 		}
 	}

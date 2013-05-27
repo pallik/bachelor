@@ -34,7 +34,7 @@ class Bachelor.Views.BlockView extends Backbone.View
 
 		@$el.attr 'style', style
 		@$el.addClass target
-		@$el.css position: 'absolute', borderColor: @model.get 'color'
+		@$el.css borderColor: @model.get 'color'
 
 
 	addPopcornContainer: ->

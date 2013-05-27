@@ -1,6 +1,3 @@
-TODO:
-
-
 //////////////////////////////////////////////////////////////////////
 
 USERS VIEW
@@ -21,22 +18,22 @@ ADMINS VIEW
 					+ target je css .class
 					+ masterVideo - jedina prednastavene classa
 
-				- users 	- schovat heslo
+				- users 	+ schovat heslo
 							+ REGISTRACIA uzivatelov
 							+ autorizaciu uzivatelov, registracia, heslo musim hashovat sam...
-							- uniq username
-							- PRIDAT NAME (aj do db) - cele meno ucitela, zobrazi sa vo view lekcii
+							+ uniq username
+							+ PRIDAT NAME (aj do db) - cele meno ucitela, zobrazi sa vo view lekcii
+							- zmena hesla
 
-				- courses 	+ add/edit userId podla prihlaseneho uzivatela
-							- pri danom kurze bude moznost vytvorit lekciu - lessons/add/id
+				+ courses 	+ add/edit userId podla prihlaseneho uzivatela
+							+ pri danom kurze bude moznost vytvorit lekciu - lessons/add/id
 
-				- lessons	- add() s parametrom course_id
+				+ lessons	+ add() s parametrom course_id alebo attachment_id
 							+ add() pri ukladani, nech sa vytvori aj masterVideo blok - saveAssociated()
 
-				- attachments	? add timestamp pre konkretny attachment, predvyplneny attachment_id v timestamp
-								+ pri zobrazovani, sa zobrazia, len s parent_id == null
+				- attachments	+ pri zobrazovani, sa zobrazia, len s parent_id == null
 								- text - zmenit na wysiwyg, moze si uz dopredu podavat nejake texty
-								- file - pridat novy typ, bude v lekcii zobrazeny ako subory na stiahnutie
+								x file - pridat novy typ, bude v lekcii zobrazeny ako subory na stiahnutie
 								+ add()
 									+ prepinanie medzi typmi => zobrazovanie spravnych policok
 									+ prepinanie upload, direct url
@@ -46,11 +43,10 @@ ADMINS VIEW
 								- delete() - zmazat aj subory
 
 
-				- OPRAVIT
-					- treba popridavat ku linkom prefix => admin, kvoli oprave routes
-					- BEZPECNOST
-						- aby uzivatel mohol vidiet/menit len svoje [modely]
-						- takisto aby pri pridavanie lessons videl len svoje courses, attachments
+				+ OPRAVIT
+					+ BEZPECNOST
+						+ aby uzivatel mohol vidiet/menit len svoje [modely]
+						+ takisto aby pri pridavanie lessons videl len svoje courses, attachments
 
 				- upload suborov 	+ pdf a nasledna konverzia do obrazkov
 									+ obrazkov
@@ -59,8 +55,7 @@ ADMINS VIEW
 									+ vytvorit aj thumbnails pre kazdy jeden obrazok
 									- vytvaranie thumbnails pre prezentacie cez php a nie cez script
 
-				- nastavit conditions pri listoch status => true
-				- bud nastavit v modely na status => true pri hasMany, alebo v metodach (asi v metodach)
+				+ nastavit conditions pri listoch status => true
 
 				- upload videa
 				 	- dat obmedzenie na velkost
@@ -81,8 +76,8 @@ funkcny proces 	+ ucitel sa zaregistruje
 					+ vyberie video, ktore bude masterVideo (attachment_id)
 						+ automaticky sa vytvori blok - master = true
 					+ lekcia ma v tomto bode len 1 okno - video
-					- moze vytvorit dalsie bloky
-						- osetrit zle vykreslovanie blokov pri presuvani, asi to na ma starosti position: absolute
+					+ moze vytvorit dalsie bloky
+						+ osetrit zle vykreslovanie blokov pri presuvani, asi to na ma starosti position: absolute
 						+ resizovanie, posuvanie - meni sa styl hned
 						+ kazdy blok bude mat svoju farbu, na zaklade ktorej bude zafarbeny PIN na casovej osy
 						+ kazdy blok bude mat svoju lajnu pod casovou osou

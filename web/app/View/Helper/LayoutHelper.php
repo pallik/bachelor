@@ -33,9 +33,9 @@ class LayoutHelper extends AppHelper {
  */
 	public function status($value) {
 		if ($value == 1) {
-			$output = $this->Html->image('/img/icons/tick.png');
+			$output = "<span class='typcn typcn-tick' style='font-size: 25px; color: green'></span>";
 		} else {
-			$output = $this->Html->image('/img/icons/cross.png');
+			$output = "<span class='typcn typcn-times' style='font-size: 25px; color: red'></span>";
 		}
 		return $output;
 	}

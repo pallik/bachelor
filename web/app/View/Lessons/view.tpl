@@ -1,4 +1,4 @@
-{{ html.css(['smoothness/jquery-ui-1.10.3.custom.min', 'typicons_kit/css/typicons', 'view'], null, {'inline': false}) }}
+{{ html.css(['smoothness/jquery-ui-1.10.3.custom.min', 'view'], null, {'inline': false}) }}
 
 {{ html.script(['lib/jquery-ui-1.10.3.custom.min', 'lib/jcarousel/core', 'lib/jcarousel/core_plugin',
 	'view/main', 'view/popcorn', 'view/scroller', 'view/chapter', 'view/maximize', 'view/content', 'view/functions'],

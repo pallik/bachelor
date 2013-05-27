@@ -57,7 +57,6 @@ Bachelor.Views.BlockView = (function(_super) {
     this.$el.attr('style', style);
     this.$el.addClass(target);
     return this.$el.css({
-      position: 'absolute',
       borderColor: this.model.get('color')
     });
   };

@@ -13,7 +13,7 @@
 	<?php
 		echo $this->Html->meta('icon');
 
-		echo $this->Html->css(array('cake.generic'));
+		echo $this->Html->css(array('cake.generic', 'typicons_kit/css/typicons'));
 
 		echo $this->Html->script(array(
 			'lib/jquery-1.9.1.min',
@@ -39,15 +39,17 @@
 		<div id="header">
 			<?php
 			if ($authUser) {
-				echo $this->Html->link('[Users]', array('admin' => true, 'controller' => 'users', 'action' => 'index'));
+//				echo $this->Html->link('[Users]', array('admin' => true, 'controller' => 'users', 'action' => 'index'));
 				echo $this->Html->link('Courses', array('admin' => true, 'controller' => 'courses', 'action' => 'index'));
 				echo $this->Html->link('Lessons', array('admin' => true, 'controller' => 'lessons', 'action' => 'index'));
-				echo $this->Html->link('[Blocks]', array('admin' => true, 'controller' => 'blocks', 'action' => 'index'));
+//				echo $this->Html->link('[Blocks]', array('admin' => true, 'controller' => 'blocks', 'action' => 'index'));
 				echo $this->Html->link('Attachments', array('admin' => true, 'controller' => 'attachments', 'action' => 'index'));
-				echo $this->Html->link('[Types]', array('admin' => true, 'controller' => 'types', 'action' => 'index'));
-				echo $this->Html->link('[Timestamps]', array('admin' => true, 'controller' => 'timestamps', 'action' => 'index'));
+//				echo $this->Html->link('[Types]', array('admin' => true, 'controller' => 'types', 'action' => 'index'));
+//				echo $this->Html->link('[Timestamps]', array('admin' => true, 'controller' => 'timestamps', 'action' => 'index'));
 				echo ' | ';
-				echo 'Logged in as: <i>' . $authUser['username'] . '</i> | ';
+				echo 'Logged in as: <i>' .
+					$this->Html->link($authUser['username'], array('admin' => true, 'controller' => 'users', 'action' => 'view')) .
+					'</i> | ';
 				echo $this->Html->link('Log out', array('admin' => true, 'controller' => 'users', 'action' => 'logout'));
 			} else {
 				echo $this->Html->link('Log in', array('admin' => true, 'controller' => 'users', 'action' => 'login'));
@@ -63,7 +65,7 @@
 			<?php echo $this->fetch('content'); ?>
 		</div>
 		<div id="footer">
-			<i>by Palli &copy; 2013</i>
+			<i>by Palli Kominak &copy; 2013</i>
 		</div>
 	</div>
 <?php echo $this->fetch('script'); ?>

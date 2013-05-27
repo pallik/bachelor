@@ -512,7 +512,8 @@ p.error em {
 /* Buttons and button links */
 input[type=submit],
 .actions ul li a,
-.actions a {
+.actions a,
+.button-link {
 	font-weight:normal;
 	padding: 4px 8px;
 	background: #dcdcdc;
@@ -537,14 +538,16 @@ input[type=submit],
 	user-select: none;
 }
 .actions ul li a:hover,
-.actions a:hover {
+.actions a:hover,
+.button-link:hover {
 	background: #ededed;
 	border-color: #acacac;
 	text-decoration: none;
 }
 input[type=submit]:active,
 .actions ul li a:active,
-.actions a:active {
+.actions a:active,
+.button-link:active {
 	background: #eee;
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#dfdfdf), to(#eee));
 	background-image: -webkit-linear-gradient(top, #dfdfdf, #eee);
@@ -558,6 +561,10 @@ input[type=submit]:active,
 	box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.3);
 	border-color: #aaa;
 	text-decoration: none;
+}
+
+.button-link {
+
 }
 
 /** Related **/

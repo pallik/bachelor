@@ -7,6 +7,16 @@ App::uses('AppController', 'Controller');
  */
 class TypesController extends AppController {
 
+
+	/**
+	 * all methods are useless, except for ajax
+	 */
+	public function beforeFilter() {
+		parent::beforeFilter();
+
+		$this->redirectIfNotAjax();
+	}
+
 /**
  * admin_index method
  *

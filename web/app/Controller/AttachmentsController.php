@@ -18,15 +18,26 @@ class AttachmentsController extends AppController {
 	/**
 	 * admin_index method
 	 *
+	 * @param $type string
 	 * @return void
 	 */
-	public function admin_index() {
+	public function admin_index($type = null) {
+		$conditions = array(
+			'Attachment.user_id' => $this->Auth->user('id'),
+			'Attachment.parent_id' => null
+		);
+
+		if ($type) {
+			$typeId = $this->Attachment->Type->field('id', array('Type.name' => $type));
+			if (!empty($typeId)) {
+				$conditions['Attachment.type_id'] = $typeId;
+			}
+		}
+
 		$this->Attachment->recursive = 0;
 		$this->paginate = array(
-			'conditions' => array(
-				'Attachment.user_id' => $this->Auth->user('id'),
-				'Attachment.parent_id' => null
-			)
+			'conditions' => $conditions
+
 		);
 		$this->set('attachments', $this->paginate());
 	}
@@ -34,7 +45,7 @@ class AttachmentsController extends AppController {
 
 	/**
 	 * shows only presentations and images without parent_id
-	 *
+	 * TODO: pridat parameter $type, aby si mohol vybrat user ake attachmenty chce pridavat
 	 * @return string
 	 */
 	public function admin_list() {
@@ -96,6 +107,9 @@ class AttachmentsController extends AppController {
 		if (!$this->Attachment->exists($id)) {
 			throw new NotFoundException(__('Invalid attachment'));
 		}
+
+		$this->redirectIfNotOwn('Attachment', $id);
+
 		$options = array('conditions' => array('Attachment.' . $this->Attachment->primaryKey => $id));
 		$this->set('attachment', $this->Attachment->find('first', $options));
 	}
@@ -151,11 +165,14 @@ class AttachmentsController extends AppController {
 		if (!$this->Attachment->exists($id)) {
 			throw new NotFoundException(__('Invalid attachment'));
 		}
+
+		$this->redirectIfNotOwn('Attachment', $id);
+
 		if ($this->request->is('post') || $this->request->is('put')) {
 			$this->request->data['Attachment']['user_id'] = $this->Auth->user('id');
 			if ($this->Attachment->save($this->request->data)) {
 				$this->Session->setFlash(__('The attachment has been saved'));
-				$this->redirect(array('action' => 'index'));
+				$this->redirect(array('action' => 'view', $id));
 			} else {
 				$this->Session->setFlash(__('The attachment could not be saved. Please, try again.'));
 			}
@@ -188,6 +205,9 @@ class AttachmentsController extends AppController {
 		if (!$this->Attachment->exists()) {
 			throw new NotFoundException(__('Invalid attachment'));
 		}
+
+		$this->redirectIfNotOwn('Attachment', $id);
+
 		$this->request->onlyAllow('post', 'delete');
 		if ($this->Attachment->delete()) {
 			$this->Session->setFlash(__('Attachment deleted'));
