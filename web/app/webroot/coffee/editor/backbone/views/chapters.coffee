@@ -8,6 +8,7 @@ class Bachelor.Views.ChaptersView extends Backbone.View
 	initialize: ->
 		Bachelor.App.Collections.timestamps.on 'add', @addChapterView
 		Bachelor.App.Collections.timestamps.on 'change:status change:chapter', @rearrangeChapter
+		Backbone.Events.on 'renderAllTimestamps', @rearrangeChapter
 		@editChapterDialog = @$el.find '.edit-chapter-dialog'
 		@initEditChapterDialog()
 

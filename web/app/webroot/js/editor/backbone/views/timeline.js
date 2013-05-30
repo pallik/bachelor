@@ -98,8 +98,8 @@ Bachelor.Views.TimelineView = (function(_super) {
       this.$el.append(timestamp.pinStartView.render().el);
       return this.$el.append(timestamp.pinEndView.render().el);
     } else {
-      timestamp.pinStartView.remove();
-      return timestamp.pinEndView.remove();
+      timestamp.pinStartView.$el.hide();
+      return timestamp.pinEndView.$el.hide();
     }
   };
 

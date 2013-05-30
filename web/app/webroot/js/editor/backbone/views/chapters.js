@@ -31,6 +31,7 @@ Bachelor.Views.ChaptersView = (function(_super) {
   ChaptersView.prototype.initialize = function() {
     Bachelor.App.Collections.timestamps.on('add', this.addChapterView);
     Bachelor.App.Collections.timestamps.on('change:status change:chapter', this.rearrangeChapter);
+    Backbone.Events.on('renderAllTimestamps', this.rearrangeChapter);
     this.editChapterDialog = this.$el.find('.edit-chapter-dialog');
     return this.initEditChapterDialog();
   };

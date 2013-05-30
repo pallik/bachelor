@@ -4,8 +4,9 @@
 	'view/main', 'view/popcorn', 'view/scroller', 'view/chapter', 'view/maximize', 'view/content', 'view/functions'],
 	{'inline': false}) }}
 
-<h2>Lekcia: {{ lesson.Lesson.name }}</h2>
-<h3>Kurz: {{ lesson.Course.name }}</h3>
+<h2>Lesson: {{ lesson.Lesson.name }}</h2>
+<h3>Course: {{ lesson.Course.name }}</h3>
+<p><b>Description: </b>{{ lesson.Lesson.description }}</p>
 
 <div class="blocks">
 	{% for block in lesson.Block %}

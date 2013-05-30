@@ -57,5 +57,7 @@ class Bachelor.Views.TimelineView extends Backbone.View
 			@$el.append( timestamp.pinStartView.render().el )
 			@$el.append( timestamp.pinEndView.render().el )
 		else
-			timestamp.pinStartView.remove()
-			timestamp.pinEndView.remove()
+			timestamp.pinStartView.$el.hide()
+			timestamp.pinEndView.$el.hide()
+#			timestamp.pinStartView.remove()
+#			timestamp.pinEndView.remove()

@@ -88,8 +88,12 @@ Bachelor.Views.ChapterView = (function(_super) {
     return this.model.highlightTimestamp();
   };
 
-  ChapterView.prototype.toggleHighlightTimestampIcon = function() {
-    return this.$el.toggleClass('highlight-timestamp-icon');
+  ChapterView.prototype.highlightTimestampIcon = function() {
+    return this.$el.addClass('highlight-timestamp-icon');
+  };
+
+  ChapterView.prototype.unHighlightTimestampIcon = function() {
+    return this.$el.removeClass('highlight-timestamp-icon');
   };
 
   ChapterView.prototype.hideChapter = function() {

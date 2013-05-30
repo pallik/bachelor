@@ -62,6 +62,7 @@ Bachelor.Views.PinView = (function(_super) {
   PinView.prototype.render = function() {
     this.setRatio();
     this.setPosition();
+    this.$el.show();
     return this;
   };
 

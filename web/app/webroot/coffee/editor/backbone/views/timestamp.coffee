@@ -12,7 +12,7 @@ class Bachelor.Views.TimestampView extends Backbone.View
 	initialize: ->
 		@model.view = @
 		@$el.on 'setChapter', @model.setChapter
-		@$el.on 'deleteTimestamp', @model.setTimestampFalse
+		@$el.on 'deleteTimestamp', @onDeleteTimestamp
 		@$el.on 'highlightTimestamp', @model.highlightTimestamp
 
 
@@ -61,9 +61,7 @@ class Bachelor.Views.TimestampView extends Backbone.View
 
 	handleClick: (e) =>
 		LEFT_CLICK = 1
-#		RIGHT_CLICK = 3
 		@handleLeftClick() if e.which is LEFT_CLICK
-#		@showContext() if e.which is RIGHT_CLICK
 
 
 	handleLeftClick: ->
@@ -82,7 +80,7 @@ class Bachelor.Views.TimestampView extends Backbone.View
 
 			@model.pinStartView.enableDraggable()
 			@model.pinEndView.enableDraggable()
-			@model.chapterView.toggleHighlightTimestampIcon()
+			@model.chapterView.highlightTimestampIcon()
 			@model.set 'highlight', true
 			@$el.addClass 'highlight'
 
@@ -90,7 +88,7 @@ class Bachelor.Views.TimestampView extends Backbone.View
 	disableDraggable: ->
 		@model.pinStartView.disableDraggable()
 		@model.pinEndView.disableDraggable()
-		@model.chapterView.toggleHighlightTimestampIcon()
+		@model.chapterView.unHighlightTimestampIcon()
 		@model.set 'highlight', false
 		@$el.removeClass 'highlight'
 
@@ -126,3 +124,8 @@ class Bachelor.Views.TimestampView extends Backbone.View
 		timestamp = @model.attributes
 		Bachelor.App.pop.addPopcornImage(timestamp) if type is 'image'
 		Bachelor.App.pop.addPopcornText(timestamp) if type is 'text'
+
+
+	onDeleteTimestamp: =>
+		@disableDraggable()
+		@model.setTimestampFalse()

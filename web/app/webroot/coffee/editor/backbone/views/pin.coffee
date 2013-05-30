@@ -39,6 +39,7 @@ class Bachelor.Views.PinView extends Backbone.View
 	render: =>
 		@setRatio()
 		@setPosition()
+		@$el.show()
 		return @
 
 

@@ -58,8 +58,12 @@ class Bachelor.Views.ChapterView extends Backbone.View
 		@model.highlightTimestamp()
 
 
-	toggleHighlightTimestampIcon: ->
-		@$el.toggleClass 'highlight-timestamp-icon'
+	highlightTimestampIcon: ->
+		@$el.addClass 'highlight-timestamp-icon'
+
+
+	unHighlightTimestampIcon: ->
+		@$el.removeClass 'highlight-timestamp-icon'
 
 
 	hideChapter: ->

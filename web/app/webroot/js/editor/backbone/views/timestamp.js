@@ -9,6 +9,9 @@ Bachelor.Views.TimestampView = (function(_super) {
 
   function TimestampView() {
     var _this = this;
+    this.onDeleteTimestamp = function() {
+      return TimestampView.prototype.onDeleteTimestamp.apply(_this, arguments);
+    };
     this.toggleDraggable = function() {
       return TimestampView.prototype.toggleDraggable.apply(_this, arguments);
     };
@@ -34,7 +37,7 @@ Bachelor.Views.TimestampView = (function(_super) {
   TimestampView.prototype.initialize = function() {
     this.model.view = this;
     this.$el.on('setChapter', this.model.setChapter);
-    this.$el.on('deleteTimestamp', this.model.setTimestampFalse);
+    this.$el.on('deleteTimestamp', this.onDeleteTimestamp);
     return this.$el.on('highlightTimestamp', this.model.highlightTimestamp);
   };
 
@@ -115,7 +118,7 @@ Bachelor.Views.TimestampView = (function(_super) {
       Bachelor.App.Views.blocksRowsView.disableAllTimestampsDraggable(blockCid);
       this.model.pinStartView.enableDraggable();
       this.model.pinEndView.enableDraggable();
-      this.model.chapterView.toggleHighlightTimestampIcon();
+      this.model.chapterView.highlightTimestampIcon();
       this.model.set('highlight', true);
       return this.$el.addClass('highlight');
     }
@@ -124,7 +127,7 @@ Bachelor.Views.TimestampView = (function(_super) {
   TimestampView.prototype.disableDraggable = function() {
     this.model.pinStartView.disableDraggable();
     this.model.pinEndView.disableDraggable();
-    this.model.chapterView.toggleHighlightTimestampIcon();
+    this.model.chapterView.unHighlightTimestampIcon();
     this.model.set('highlight', false);
     return this.$el.removeClass('highlight');
   };
@@ -170,6 +173,11 @@ Bachelor.Views.TimestampView = (function(_super) {
     if (type === 'text') {
       return Bachelor.App.pop.addPopcornText(timestamp);
     }
+  };
+
+  TimestampView.prototype.onDeleteTimestamp = function() {
+    this.disableDraggable();
+    return this.model.setTimestampFalse();
   };
 
   return TimestampView;
