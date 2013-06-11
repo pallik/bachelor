@@ -37,3 +37,7 @@
 		{% endfor %}
 	</ul>
 </div>
+
+<div class="global-restore">
+	<span class="typcn typcn-arrow-minimise-outline restore"></span>
+</div>

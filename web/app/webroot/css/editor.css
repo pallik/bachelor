@@ -88,7 +88,7 @@
 }
 
 .block-row .thumbnail.highlight {
-	border: 1px solid #ffff00;
+	border: 1px solid #00ffff;
 }
 
 .block-row .thumbnail img {
@@ -118,7 +118,7 @@
 }
 
 .chapters .highlight-timestamp-icon .highlight-timestamp {
-	color: #ffff00;
+	color: #00ffff;
 }
 
 

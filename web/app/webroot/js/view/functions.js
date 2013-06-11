@@ -5,6 +5,9 @@ $(function() {
   $('.block').resizable({
     stop: function(event, ui) {
       return $(this).trigger('resize');
+    },
+    start: function(event, ui) {
+      return $(this).trigger('startedResizing');
     }
   }).draggable({
     handle: '.move',
@@ -14,6 +17,13 @@ $(function() {
   });
   $('.blocks').on('adjustBlocksContainerHeight', function() {
     return adjustBlocksContainerHeight();
+  });
+  $('.block').on('startedResizing', function() {
+    var minimized;
+    minimized = $(this).hasClass('minimized');
+    if (minimized) {
+      return $(this).css('position', 'fixed');
+    }
   });
   return adjustBlocksContainerHeight = function() {
     var blocksContainerHeight, divBlocks, maxYposition;

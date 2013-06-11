@@ -59,6 +59,14 @@
 	display: none;
 }
 
+.global-restore {
+	z-index: 10;
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	color: #ff0000;
+}
+
 .masterVideo .tools {
 	bottom: -25px;
 }
@@ -103,7 +111,7 @@
 
 /*.jcarousel-skin-default li:hover, */
 .jcarousel-skin-default li.active {
-	border: 2px solid #ffff00;
+	border: 2px solid #00ffff;
 	/*opacity: 1;*/
 }
 

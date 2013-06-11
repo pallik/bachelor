@@ -1,5 +1,7 @@
 $ ->
 
+	$globalRestore = $('.global-restore')
+
 	###
         handle on click maximize icon
     ###
@@ -38,7 +40,6 @@ $ ->
         when block changes its size, update img max dimensions
 	###
 	$('.block').resize ->
-		console.log 'resizing'
 		blockWidth = $(@).width()
 		blockHeight = $(@).height()
 		images = $(@).find '.popcorn-container img'
@@ -81,6 +82,10 @@ $ ->
 		$jcarouselContainer.show()
 		$tools.hide()
 		$restoreIcon.show()
+
+		$globalRestore.hide()
+		$('body').css 'overflow', 'hidden'
+
 		$block.trigger 'resize'
 
 	###
@@ -115,6 +120,9 @@ $ ->
         restore default position
 	###
 	restoreAll = ->
+		$globalRestore.show()
+		$('body').css 'overflow', 'auto'
+
 		$('.block').each ->
 			style = $(@).data 'style'
 			$tools = $(@).find '.tools'

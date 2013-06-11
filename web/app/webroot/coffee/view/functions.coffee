@@ -3,6 +3,8 @@ $ ->
 	$('.block').resizable({
 		stop: (event, ui) ->
 			$(@).trigger 'resize'
+		start: (event, ui) ->
+			$(@).trigger 'startedResizing'
 	}).draggable({
 		handle: '.move'
 		stop: (event, ui) ->
@@ -12,6 +14,11 @@ $ ->
 
 	$('.blocks').on 'adjustBlocksContainerHeight', ->
 		adjustBlocksContainerHeight()
+
+
+	$('.block').on 'startedResizing', ->
+		minimized = $(@).hasClass 'minimized'
+		$(@).css('position', 'fixed') if minimized
 
 
 	adjustBlocksContainerHeight = ->
